@@ -25,7 +25,7 @@ CREATE TABLE users (
 CREATE TABLE favorites (
   favorites_id SERIAL PRIMARY KEY,
   recipe_id INTEGER REFERENCES recipes,
-  user_id INTEGER);
+  user_id INTEGER REFERENCES users);
 
 CREATE TABLE followings (
   follows_id SERIAL PRIMARY KEY,
