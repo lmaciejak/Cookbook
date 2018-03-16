@@ -13,7 +13,6 @@ function getSingleUser(req, res, next) {
   console.log(req.params.userID);
   db.any("SELECT user_id, username, email, first_name, last_name FROM users WHERE user_id=$1", [req.params.userID])
     .then(data => {
-      console.log(data);
       res.json(data);
     })
     .catch(error => {
@@ -21,12 +20,29 @@ function getSingleUser(req, res, next) {
     });
 }
 
-router.get('/profile/:userID/favorites', db.getSingleUserFavorites)
-
 function getSingleUserFavorites(req, res, next) {
   db.any("SELECT * FROM favorites WHERE user_id=$1", [req.params.userID])
     .then(data => {
-      console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getFollowers(req, res, next) {
+  db.any("SELECT user_id, username, email, first_name, last_name FROM users INNER JOIN followings ON(users.user_id=followings.followee_id) WHERE follower_id=$1", [req.params.userID])
+  .then(data => {
+    res.json(data);
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
+function getFollowing(req, res, next) {
+  db.any("SELECT user_id, username, email, first_name, last_name FROM users INNER JOIN followings ON(users.user_id=followings.follower_id) WHERE followee_id=$1;", [req.params.userID])
+    .then(data => {
       res.json(data);
     })
     .catch(error => {
@@ -81,4 +97,8 @@ function loginUser(req, res, next) {
 module.exports = {
   logoutUser,
   getSingleUser,
+  getSingleUserFavorites,
+  getFollowers,
+  getFollowing,
+
 };
