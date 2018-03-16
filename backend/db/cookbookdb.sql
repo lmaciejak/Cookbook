@@ -12,6 +12,16 @@ CREATE TABLE users (
   first_name VARCHAR,
   last_name VARCHAR);
 
+  CREATE TABLE recipes (
+  recipe_id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+  recipe_name VARCHAR,
+  recipe VARCHAR,
+  img VARCHAR,
+  isVegeterian BOOLEAN,
+  isVegan BOOLEAN,
+  recipe_timestamp timestamp not null default CURRENT_TIMESTAMP);
+
 CREATE TABLE favorites (
   favorites_id SERIAL PRIMARY KEY,
   recipe_id INTEGER REFERENCES recipes,
@@ -41,13 +51,3 @@ CREATE TABLE ingredients (
   food_id INTEGER REFERENCES foods,
   amount VARCHAR,
   notes VARCHAR);
-
-CREATE TABLE recipes (
-  recipe_id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users,
-  recipe_name VARCHAR,
-  recipe VARCHAR,
-  img VARCHAR,
-  isVegeterian BOOLEAN,
-  isVegan BOOLEAN
-  recipe_timestamp NOT NULL  CURRENT_TIMESTAMP);
