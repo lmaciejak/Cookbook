@@ -29,7 +29,6 @@ class LoginUser extends Component {
       modalIsOpen: false
     }
     this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
@@ -37,13 +36,8 @@ class LoginUser extends Component {
     this.setState({modalIsOpen: true});
   }
 
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // this.subtitle.style.color = '#fa0';
-  }
-
   closeModal() {
-    this.setState({modalIsOpen: false});
+    this.setState({modalIsOpen: false, message: ''});
   }
 
   handleFormInput = e => {
@@ -57,7 +51,7 @@ class LoginUser extends Component {
 
     const { username, password } = this.state;
     axios
-      .post("/login", {
+      .post("/users/login", {
         username: username,
         password: password
       })
@@ -71,7 +65,7 @@ class LoginUser extends Component {
         this.setState({
           username: "",
           password: "",
-          message: `Error logging in.  Error message: ${err}`
+          message: `Error logging in. ${err}`
         });
       });  
   }
@@ -87,20 +81,20 @@ class LoginUser extends Component {
       <button onClick={this.openModal}>Log in</button>
       <Modal
         isOpen={this.state.modalIsOpen}
-        onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
         style={customStyles}
       >
 
         <h2 ref={subtitle => this.subtitle = subtitle}>Log In</h2>
-        <form>
+        <form onSubmit={this.handleLoginFormSubmit}>
           <input className="input" type="text" placeholder="Username" onChange={this.handleFormInput} name='username'></input>
           <input className="input" type="password" placeholder="Password" onChange={this.handleFormInput} name='password'></input>
           <button>Log in</button>
         </form>
+        <p> {this.state.message} </p>
         <button onClick={this.closeModal}>close</button>
       </Modal>
-    </div>
+      </div>
       </div>
     );
   }
