@@ -222,6 +222,7 @@ function unfollowUser(req, res, next) {
 function loginUser(req, res, next) {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
+        console.log(err);
         res.status(500).send("error while trying to log in");
       } else if (!user) {
         res.status(401).send("invalid username/password");
