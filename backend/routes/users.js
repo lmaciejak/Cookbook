@@ -28,7 +28,7 @@ router.post('/login', db.loginUser)
 
 /*PATCH Request*/
 router.patch('/edit/:userID', loginRequired, db.editUser)
-router.patch('/edit/:userID/:recipeID', loginRequired, db.editRecipe)
-router.patch('/editComment/:recipeID', loginRequired, db.editRecipeComment)
+router.patch('/editRecipe/:recipeID', loginRequired, db.editRecipe) // route altered
+router.patch('/editComment/:commentID', loginRequired, db.editRecipeComment) // route altered
 
 module.exports = router;
