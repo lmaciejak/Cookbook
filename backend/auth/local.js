@@ -12,7 +12,7 @@ init();
 passport.use(
   new LocalStrategy(options, (username, password, done) => {
     db
-      .any("SELECT * FROM accounts WHERE username=$1", [username])
+      .any("SELECT * FROM users WHERE username=$1", [username])
       .then(rows => {
         const user = rows[0];
         if (!user) {
