@@ -13,6 +13,11 @@ router.get('/profile/:userID/favorites', db.getSingleUserFavorites)
 router.get('/followers/:userID', db.getFollowers)
 router.get('/following/:userID', db.getFollowing)
 router.get('/comment/:recipeID', db.getRecipeComments)
+router.get('/allusers', db.getAllUsers);
+router.get('/allrecipes', db.getAllResipes);
+router.get('/allrecipes/:userID', db.getAllResipesByUserID);
+router.get('/allfollowersrecipes/:userID', db.getAllFollowersRecipes);
+
 
 /*POST Request*/
 router.post('/register', db.registerUser)
