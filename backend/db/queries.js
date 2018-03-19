@@ -75,6 +75,55 @@ function getRecipeComments(req, res, next) {
     });
 }
 
+function getAllUsers(req, res, next) {
+  db.any(`SELECT USER_id, username, email, first_name, last_name
+          FROM users;`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
+function getAllResipes(req, res, next) {
+  db.any(`SELECT *
+          FROM recipes;`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
+function getAllResipesByUserID(req, res, next) {
+  db.any(`SELECT *
+          FROM recipes
+          WHERE user_id=${req.params.userID};`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
+function getAllFollowersRecipes(req, res, next) {
+  db.any(`SELECT users.user_id, recipe_name, recipe_id, recipe, img, isvegeterian, isvegan, recipe_timestamp
+          FROM users
+          INNER JOIN followings ON(users.user_id=followings.follower_id)
+          INNER JOIN recipes
+          ON(users.user_id=recipes.user_id)
+          WHERE followee_id=${req.params.userID};`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
 /*-------------------------------POST Request----------------------------------*/
 
 function registerUser(req, res, next) {
@@ -317,5 +366,9 @@ module.exports = {
   loginUser,
   editUser,
   editRecipe,
-  editRecipeComment
+  editRecipeComment,
+  getAllUsers,
+  getAllResipes,
+  getAllResipesByUserID,
+  getAllFollowersRecipes,
 };
