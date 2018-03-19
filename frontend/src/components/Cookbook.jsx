@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { Route, Switch } from 'react-router'
+import Feed from './Feed/Feed'
+import List from './List/List'
 
 class Cookbook extends React.Component {
   constructor() {
@@ -11,13 +13,12 @@ class Cookbook extends React.Component {
       user: '',
       allUsers: '',
       allRecipes: '',
-      featuredRecipes: ''
     }
   }
 
   componentDidMount() {
     /* Axios calls to get users, all users, all recipes, and highesr rated recipes*/
-    const getUser = () => axios.get('/users/').then(
+    const getUser = () => axios.get('/users').then(
       response => {
         this.setState({
           user: response,
@@ -36,17 +37,8 @@ class Cookbook extends React.Component {
           allRecipes: response
         })
       })
-    const getFeaturedRecipes = () => axios.get(
-        'request for feautured recipes').then(
-        response => {
-          this.setState({
-            featuredRecipes: response
-          })
-        }
-      )
       /* Making all axios calls at once*/
-    axios.all([getUser(), getAllUsers(), getAllRecipes(),
-        getFeaturedRecipes()
+    axios.all([getUser(), getAllUsers(), getAllRecipes()
       ])
       .then(axios.spread(function(response1, response2, response3,
         response4) {
@@ -70,6 +62,7 @@ class Cookbook extends React.Component {
         /*User Recipes props = user, loggedIn, allRecipes*/
         /*Feed recieves user, loggedIn and allRecipes on cookbook/profile/:userID*/
         /**/
+        <Route exact path='/feed' component={Feed}/>
       </Switch>
     </div> )
   }
