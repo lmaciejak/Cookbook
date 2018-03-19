@@ -124,6 +124,30 @@ function getAllFollowersRecipes(req, res, next) {
           });
 }
 
+function getUser(req, res, next) {
+  db.any(`SELECT user_id, username, email, first_name, last_name
+          FROM users
+          WHERE user_id=$1`, [req.user.user_id])
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getSortedRecipes(req, res, next) {
+  db.any(`SELECT recipe_name, recipe, img, favorites.user_id
+          FROM recipes
+          INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id);`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
 /*-------------------------------POST Request----------------------------------*/
 
 function registerUser(req, res, next) {
@@ -371,4 +395,6 @@ module.exports = {
   getAllResipes,
   getAllResipesByUserID,
   getAllFollowersRecipes,
+  getUser,
+  getSortedRecipes,
 };

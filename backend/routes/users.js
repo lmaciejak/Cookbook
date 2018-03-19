@@ -17,6 +17,9 @@ router.get('/allusers', db.getAllUsers);
 router.get('/allrecipes', db.getAllResipes);
 router.get('/allrecipes/:userID', db.getAllResipesByUserID);
 router.get('/allfollowersrecipes/:userID', db.getAllFollowersRecipes);
+router.get('/', loginRequired, db.getUser);
+router.get('/sortedrecipes', db.getSortedRecipes);
+
 
 
 /*POST Request*/
