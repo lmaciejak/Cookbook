@@ -5,7 +5,7 @@ class Home extends React.Component {
     render() {
         
         return (
-            <div className="landingPhoto">
+            <div className="banner">
                 <div className="header"> 
                     <div></div>               
                     <h1>Welcome to CookBook </h1>  
