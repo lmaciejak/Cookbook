@@ -74,7 +74,7 @@ class RegisterUser extends Component {
       })
       .catch(err => {
         this.setState({
-          message: `Error registering. ${err}`, 
+          message: `Error registering. ${err.response.data.detail}`, 
         });
       });  
   }
