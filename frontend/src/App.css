@@ -26,3 +26,39 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+h1{
+  color:#D82929;
+}
+a{
+  background-color: wheat;
+  color:#D82929;
+  border-radius: 5px;
+  padding: 3px;
+  border: solid 1px;
+  border-color: #D82929;
+}
+.landingPhoto{
+  height: 300px;
+  border-radius: 5px;
+  background-image: url('https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&dl=maarten-van-den-heuvel-400626-unsplash.jpg&s=9509ba35b5e71ce1c654cc3e3e04cd7b,');
+  background-size:     cover;                     
+  background-repeat:   no-repeat;
+  background-position: center center; 
+  background-color: rgba(255, 255, 255, 0.2);
+  background-blend-mode: lighten;
+}
+
+
+.header{
+  display: flex;
+  justify-content: space-around;
+}
+
+.landButton{
+  float: right;
+  margin-top: 25px;
+}
+.button{
+  margin-left: 10px;
+}
