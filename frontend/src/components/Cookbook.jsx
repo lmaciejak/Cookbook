@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Route, Switch } from 'react-router'
 import Feed from './Feed/Feed'
 import List from './List/List'
+import UserEdit from './Profile/UserEdit'
 
 class Cookbook extends React.Component {
   constructor() {
@@ -40,8 +41,7 @@ class Cookbook extends React.Component {
       /* Making all axios calls at once*/
     axios.all([getUser(), getAllUsers(), getAllRecipes()
       ])
-      .then(axios.spread(function(response1, response2, response3,
-        response4) {
+      .then(axios.spread(function(response1, response2, response3) {
         console.log('worked')
       }))
       .catch(error => {
@@ -62,7 +62,8 @@ class Cookbook extends React.Component {
         /*User Recipes props = user, loggedIn, allRecipes*/
         /*Feed recieves user, loggedIn and allRecipes on cookbook/profile/:userID*/
         /**/
-        <Route exact path='/feed' component={Feed}/>
+        // <Route  path='/feed' component={Feed}/>
+        <Route  exact path='/editUser' render={() => <UserEdit user={this.state.user}/>}/>
       </Switch>
     </div> )
   }
