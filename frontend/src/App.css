@@ -62,3 +62,9 @@ a{
 .button{
   margin-left: 10px;
 }
+
+/* SearchBar styling */
+.searchbarLogo { 
+  display: inline; 
+  margin-left: -70%; 
+}
