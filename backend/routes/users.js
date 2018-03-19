@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db/queries')
-const {
-  loginRequired
-} = require("../auth/helpers");
+const { loginRequired } = require("../auth/helpers");
 
 
 /*GET Request*/
@@ -16,11 +14,9 @@ router.get('/comment/:recipeID', db.getRecipeComments)
 router.get('/allusers', db.getAllUsers);
 router.get('/allrecipes', db.getAllResipes);
 router.get('/allrecipes/:userID', db.getAllResipesByUserID);
-router.get('/allfollowersrecipes/:userID', db.getAllFollowersRecipes);
+router.get('/allfollowersrecipes/:userID', loginRequired, db.getAllFollowersRecipes);
 router.get('/', loginRequired, db.getUser);
 router.get('/sortedrecipes', db.getSortedRecipes);
-
-
 
 /*POST Request*/
 router.post('/register', db.registerUser)
