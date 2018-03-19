@@ -75,6 +75,86 @@ function getRecipeComments(req, res, next) {
     });
 }
 
+function getAllUsers(req, res, next) {
+  db.any(`SELECT USER_id, username, email, first_name, last_name
+          FROM users;`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
+function getAllResipes(req, res, next) {
+  db.any(`SELECT *
+          FROM recipes;`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
+function getAllResipesByUserID(req, res, next) {
+  db.any(`SELECT *
+          FROM recipes
+          WHERE user_id=${req.params.userID};`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
+function getAllFollowersRecipes(req, res, next) {
+ db.any(`SELECT users.user_id, recipe_name, recipe_id, recipe, img, isvegeterian, isvegan, recipe_timestamp
+         FROM users
+         INNER JOIN followings ON(users.user_id=followings.followee_id)
+         INNER JOIN recipes
+         ON(users.user_id=recipes.user_id)
+         WHERE follower_id=${req.params.userID}
+         ORDER BY recipe_timestamp DESC;`)
+         .then(data => {
+           res.json(data);
+         })
+         .catch(error => {
+           res.json(error);
+         });
+}
+
+function getUser(req, res, next) {
+  db.any(`SELECT user_id, username, email, first_name, last_name
+          FROM users
+          WHERE user_id=$1`, [req.user.user_id])
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getSortedRecipes(req, res, next) {
+  db.any(`SELECT
+          COUNT(recipes.recipe_id)
+          AS favorites_count, recipe_name, recipe, img
+          FROM recipes
+          INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
+          WHERE recipes.recipe_id
+          IN (SELECT recipes.recipe_id FROM recipes)
+          GROUP BY recipes.recipe_id
+          ORDER BY favorites_count DESC;`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
 /*-------------------------------POST Request----------------------------------*/
 
 function registerUser(req, res, next) {
@@ -317,5 +397,11 @@ module.exports = {
   loginUser,
   editUser,
   editRecipe,
-  editRecipeComment
+  editRecipeComment,
+  getAllUsers,
+  getAllResipes,
+  getAllResipesByUserID,
+  getAllFollowersRecipes,
+  getUser,
+  getSortedRecipes,
 };
