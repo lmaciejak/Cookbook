@@ -1,32 +1,4 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
+/* landing page */
 h1{
   color:#D82929;
 }
@@ -38,7 +10,8 @@ a{
   border: solid 1px;
   border-color: #D82929;
 }
-.landingPhoto{
+
+.banner{
   height: 300px;
   border-radius: 5px;
   background-image: url('https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&dl=maarten-van-den-heuvel-400626-unsplash.jpg&s=9509ba35b5e71ce1c654cc3e3e04cd7b,');
@@ -62,3 +35,75 @@ a{
 .button{
   margin-left: 10px;
 }
+
+/* SearchBar styling */
+.searchbarLogo { 
+  display: inline; 
+  margin-left: 0%; 
+}
+
+.addRecipeButton { 
+  background-color: #DD7459; 
+  border-radius: 3px; 
+  height: 20px; 
+  margin-left: 60%; 
+}
+
+.searchbar { 
+  border: 1px solid rgb(161, 161, 161);  
+}
+
+.feedLink { 
+  background-color: transparent; 
+  border: transparent; 
+}
+
+/* userProfile */
+
+.userProfile{
+  width: 90%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.userProfileBanner{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5px;
+  border-bottom: .09px;
+  border-bottom-style: solid;
+  padding-bottom: 9px;
+  border-bottom-color: gainsboro
+}
+
+.userPhotoSpace {
+  width: 200px;
+  height: 200px;
+  border-radius:50%;
+  border-style: solid;
+  overflow:hidden;
+}
+
+.profilePhoto {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: auto;
+}
+
+.userInfo{
+ width: 28%;
+ padding-top:10%;
+}
+
+.followInfo{
+  display: flex;
+  justify-content: space-between
+}
+
+.userProfileTitle{
+  width: 190px;
+  margin-right: auto;
+  margin-left: auto;
+}
+

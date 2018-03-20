@@ -110,18 +110,24 @@ function getAllResipesByUserID(req, res, next) {
 }
 
 function getAllFollowersRecipes(req, res, next) {
-  db.any(`SELECT users.user_id, recipe_name, recipe_id, recipe, img, isvegeterian, isvegan, recipe_timestamp
-          FROM users
-          INNER JOIN followings ON(users.user_id=followings.follower_id)
-          INNER JOIN recipes
-          ON(users.user_id=recipes.user_id)
-          WHERE followee_id=${req.params.userID};`)
-          .then(data => {
-            res.json(data);
-          })
-          .catch(error => {
-            res.json(error);
-          });
+ db.any(`SELECT recipe_name, recipes.recipe_id, recipe, recipe_name, img, recipe_timestamp, isVegeterian, 
+ isVegan, COUNT(favorites.recipe_id) AS favorites_count, users.username, users.user_id
+        FROM recipes
+        JOIN favorites
+        ON recipes.recipe_id = favorites.recipe_id
+        JOIN users 
+        ON recipes.user_id = users.user_id
+        WHERE recipes.user_id IN (SELECT followee_id
+                          FROM followings
+                          WHERE follower_id =${req.params.userID})
+ GROUP BY recipes.recipe_id, users.user_id
+ ORDER BY recipe_timestamp DESC;`)
+         .then(data => {
+           res.json(data);
+         })
+         .catch(error => {
+           res.json(error);
+         });
 }
 
 function getUser(req, res, next) {
@@ -138,9 +144,16 @@ function getUser(req, res, next) {
 }
 
 function getSortedRecipes(req, res, next) {
-  db.any(`SELECT recipe_name, recipe, img, favorites.user_id
+  db.any(`SELECT
+          COUNT(recipes.recipe_id)
+          AS favorites_count, recipe_name, recipe, img, USERs.username
           FROM recipes
-          INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id);`)
+          INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
+          INNER JOIN users
+          ON(recipes.user_id=users.user_id)
+          WHERE recipes.recipe_id IN (SELECT recipes.recipe_id FROM recipes)
+          GROUP BY recipes.recipe_id, users.username
+          ORDER BY favorites_count DESC;`)
     .then(data => {
       res.json(data);
     })
@@ -203,10 +216,12 @@ function removeRecipeComment(req, res, next) {
 }
 
 function addRecipe(req, res, next) {
-  return db.none(
-    "INSERT INTO recipes (user_id, recipe_name, recipe, img, isvegeterian, isvegan) VALUES (${user_id}, ${recipe_name}, ${recipe}, ${img}, ${isvegeterian}, ${isvegan})",
+  return db.one(
+    "INSERT INTO recipes (user_id, recipe_name, recipe, img, isvegeterian, isvegan)"
+    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${img}, ${isvegeterian}, ${isvegan})"
+    + " RETURNING recipe_id",
     {
-      user_id: req.user.user_id,
+      user_id: req.body.user_id,
       recipe_name: req.body.recipe_name,
       recipe: req.body.recipe,
       img: req.body.img,
@@ -215,11 +230,36 @@ function addRecipe(req, res, next) {
     }
   )
   .then(data => {
-    res.json("success");
+     res.json({recipe_id: data.recipe_id});
   })
   .catch(error => {
     res.json(error);
   });
+}
+
+function addIngredients(req, res, next) {
+  return db.task(t => {
+      const ingredients  = JSON.parse(req.body.ingredients);
+      const queries = ingredients.map(ingredient => {
+            return t.none("INSERT INTO ingredients (recipe_id, amount, name, notes) "
+            + " VALUES (${recipe_id}, ${amount}, ${name}, ${notes})",
+            {
+              recipe_id: req.params.recipeID,
+              // food_id: req.body.food_id,
+              amount: ingredient.amount,
+              name: ingredient.name,
+              notes: ingredient.notes
+            }
+          );
+      });
+      return t.batch(queries);
+    })
+    .then(data => {
+      res.json("success");
+    })
+    .catch(error => {
+      res.json(error);
+    });
 }
 
 function removeRecipe(req, res, next) {
@@ -384,6 +424,7 @@ module.exports = {
   addRecipeComment,
   removeRecipeComment,
   addRecipe,
+  addIngredients,
   removeRecipe,
   favoriteRecipe,
   unfavoriteRecipe,
