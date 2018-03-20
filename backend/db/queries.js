@@ -215,10 +215,12 @@ function removeRecipeComment(req, res, next) {
 }
 
 function addRecipe(req, res, next) {
-  return db.none(
-    "INSERT INTO recipes (user_id, recipe_name, recipe, img, isvegeterian, isvegan) VALUES (${user_id}, ${recipe_name}, ${recipe}, ${img}, ${isvegeterian}, ${isvegan})",
+  return db.one(
+    "INSERT INTO recipes (user_id, recipe_name, recipe, img, isvegeterian, isvegan)"
+    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${img}, ${isvegeterian}, ${isvegan})"
+    + " RETURNING recipe_id",
     {
-      user_id: req.user.user_id,
+      user_id: req.body.user_id,
       recipe_name: req.body.recipe_name,
       recipe: req.body.recipe,
       img: req.body.img,
@@ -227,11 +229,36 @@ function addRecipe(req, res, next) {
     }
   )
   .then(data => {
-    res.json("success");
+     res.json({recipe_id: data.recipe_id});
   })
   .catch(error => {
     res.json(error);
   });
+}
+
+function addIngredients(req, res, next) {
+  return db.task(t => {
+      const ingredients  = JSON.parse(req.body.ingredients);
+      const queries = ingredients.map(ingredient => {
+            return t.none("INSERT INTO ingredients (recipe_id, amount, name, notes) "
+            + " VALUES (${recipe_id}, ${amount}, ${name}, ${notes})",
+            {
+              recipe_id: req.params.recipeID,
+              // food_id: req.body.food_id,
+              amount: ingredient.amount,
+              name: ingredient.name,
+              notes: ingredient.notes
+            }
+          );
+      });
+      return t.batch(queries);
+    })
+    .then(data => {
+      res.json("success");
+    })
+    .catch(error => {
+      res.json(error);
+    });
 }
 
 function removeRecipe(req, res, next) {
@@ -395,6 +422,7 @@ module.exports = {
   addRecipeComment,
   removeRecipeComment,
   addRecipe,
+  addIngredients,
   removeRecipe,
   favoriteRecipe,
   unfavoriteRecipe,
