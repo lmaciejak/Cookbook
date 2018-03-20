@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Route, Link, Switch} from 'react-router-dom';
-import ShowAllComments from './components/Comments/Comments'
 
 import logo from './logo.svg';
 import './App.css';
@@ -16,7 +15,6 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <ShowAllComments comments={['red','green','blue']}/>
       </div>
     );
   }

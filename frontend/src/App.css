@@ -66,5 +66,21 @@ a{
 /* SearchBar styling */
 .searchbarLogo { 
   display: inline; 
-  margin-left: -70%; 
+  margin-left: 0%; 
+}
+
+.addRecipeButton { 
+  background-color: #DD7459; 
+  border-radius: 3px; 
+  height: 20px; 
+  margin-left: 60%; 
+}
+
+.searchbar { 
+  border: 1px solid rgb(161, 161, 161);  
+}
+
+.feedLink { 
+  background-color: transparent; 
+  border: transparent; 
 }
