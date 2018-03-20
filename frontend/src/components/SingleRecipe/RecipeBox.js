@@ -2,8 +2,8 @@ import React from "react"
 
 const styles = {
   img: {
-    width: "400px",
-    height: "400px"
+    width: "300px",
+    height: "300px"
   }
 }
 
@@ -13,21 +13,23 @@ class RecipeBox extends React.Component{
     super(props)
 
     this.state = {
-      recipe: this.props.recipe.recipe_name,
+      recipeName: this.props.recipe.recipe_name,
       recipeImg: this.props.recipe.img,
-      user: this.props.user,
-      favorites: this.props.favorites
+      user: this.props.recipe.username,
+      favorites: this.props.recipe.favorites_count
     }
   }
 
   render(){
-    const { recipe, recipeImg, user, favorites } = this.state
+    const { recipeName, recipeImg, user, favorites, recipe } = this.state
     return(
-      <div>
-        <h3>{recipe}</h3>
-        <img src={recipeImg} style={styles.img} />
-        <h4>{user.username}</h4>
-        <p>{favorites}</p>
+      <div className="recipeBox">
+        <h3>{recipeName}</h3>
+        <img src={recipeImg} alt="recipeImg" style={styles.img} />
+        <div className="recipeInfo">
+        <h4>Chef {user}</h4>
+        <div className="favorites"> <i class="fas fa-file-alt"></i> <p>{favorites}</p> </div>
+        </div>
       </div>
     )
   }

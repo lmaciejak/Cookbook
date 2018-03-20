@@ -11,7 +11,7 @@ a{
   border-color: #D82929;
 }
 
-.banner{
+.landingPhoto{
   height: 300px;
   border-radius: 5px;
   background-image: url('https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&dl=maarten-van-den-heuvel-400626-unsplash.jpg&s=9509ba35b5e71ce1c654cc3e3e04cd7b,');
@@ -20,6 +20,19 @@ a{
   background-position: center center; 
   background-color: rgba(255, 255, 255, 0.2);
   background-blend-mode: lighten;
+}
+
+.landingPageFeatured{
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.landingPageHeader{
+  width:50%;
+  margin: 10px auto;
 }
 
 
@@ -83,4 +96,25 @@ a{
   width: 190px;
   margin-right: auto;
   margin-left: auto;
+}
+
+/* recipeBox */
+
+.recipeBox{
+  border: 1px;
+  border-style: solid;
+  border-color: gainsboro;
+  border-radius: 10px;
+  width: 300px;
+  margin: 10px 50px;
+}
+
+.favorites{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recipeInfo{
+  display: flex;
+  
 }
