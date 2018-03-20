@@ -110,13 +110,18 @@ function getAllResipesByUserID(req, res, next) {
 }
 
 function getAllFollowersRecipes(req, res, next) {
- db.any(`SELECT users.user_id, recipe_name, recipe_id, recipe, img, isvegeterian, isvegan, recipe_timestamp
-         FROM users
-         INNER JOIN followings ON(users.user_id=followings.followee_id)
-         INNER JOIN recipes
-         ON(users.user_id=recipes.user_id)
-         WHERE follower_id=${req.params.userID}
-         ORDER BY recipe_timestamp DESC;`)
+ db.any(`SELECT recipe_name, recipes.recipe_id, recipe, recipe_name, img, recipe_timestamp, isVegeterian, 
+ isVegan, COUNT(favorites.recipe_id) AS favorites_count, users.username, users.user_id
+        FROM recipes
+        JOIN favorites
+        ON recipes.recipe_id = favorites.recipe_id
+        JOIN users 
+        ON recipes.user_id = users.user_id
+        WHERE recipes.user_id IN (SELECT followee_id
+                          FROM followings
+                          WHERE follower_id =${req.params.userID})
+ GROUP BY recipes.recipe_id, users.user_id
+ ORDER BY recipe_timestamp DESC;`)
          .then(data => {
            res.json(data);
          })
