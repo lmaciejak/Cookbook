@@ -39,13 +39,14 @@ class Feed extends React.Component{
         <button> See your favorite recipes </button> 
 
         <p> {this.state.followeedata ? this.state.followeedata.map((elem) => { 
-          return(<div>        
+          return(<div>   
+                    <h3> username: {elem.username} </h3>      
                     <h3>{elem.recipe_name}</h3>
                     <Link to={`/user/recipe/${elem.recipe_id}`} className="feedLink">
                     <img src={elem.img} />
                     </Link> 
                     <h4>{elem.user_id}</h4>
-                    <p>favorites go here</p>  </div>)
+                    <p>favorites: {elem.favorites_count}</p>  </div>)
         }) : ''} </p>
  
       </div>
@@ -54,3 +55,35 @@ class Feed extends React.Component{
 }
 
 export default Feed 
+
+
+// favorites_count
+// :
+// "2"
+// img
+// :
+// "https://www.fifteenspatulas.com/wp-content/uploads/2016/01/Fried-Calamari-Recipe-Fifteen-Spatulas-1.jpg"
+// isvegan
+// :
+// false
+// isvegeterian
+// :
+// false
+// recipe
+// :
+// "Fry the calamari"
+// recipe_id
+// :
+// 2
+// recipe_name
+// :
+// "Fried Calamari"
+// recipe_timestamp
+// :
+// "2018-03-17T22:35:48.369Z"
+// user_id
+// :
+// 1
+// username
+// :
+// "test"
