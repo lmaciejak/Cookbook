@@ -145,12 +145,13 @@ function getUser(req, res, next) {
 function getSortedRecipes(req, res, next) {
   db.any(`SELECT
           COUNT(recipes.recipe_id)
-          AS favorites_count, recipe_name, recipe, img
+          AS favorites_count, recipe_name, recipe, img, USERs.username
           FROM recipes
           INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
-          WHERE recipes.recipe_id
-          IN (SELECT recipes.recipe_id FROM recipes)
-          GROUP BY recipes.recipe_id
+          INNER JOIN users
+          ON(recipes.user_id=users.user_id)
+          WHERE recipes.recipe_id IN (SELECT recipes.recipe_id FROM recipes)
+          GROUP BY recipes.recipe_id, users.username
           ORDER BY favorites_count DESC;`)
     .then(data => {
       res.json(data);
