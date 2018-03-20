@@ -131,6 +131,7 @@ function getAllFollowersRecipes(req, res, next) {
 }
 
 function getUser(req, res, next) {
+  console.log(req.user)
   db.any(`SELECT user_id, username, email, first_name, last_name
           FROM users
           WHERE user_id=$1`, [req.user.user_id])
@@ -354,12 +355,13 @@ function loginUser(req, res, next) {
 /*------------------------------PATCH Request-----------------------------------*/
 
 function editUser(req, res, next) {
+  console.log('EDIT USER',req.body)
   return db.none(
     `UPDATE users
-     SET username=$1, password=$2, email=$3, first_name=$4, last_name=$5
+     SET username=$1, email=$2, first_name=$3, last_name=$4
      WHERE user_id=${req.params.userID};`,
     [
-      req.body.username, req.body.password,
+      req.body.username,
       req.body.email, req.body.first_name,
       req.body.last_name
     ]

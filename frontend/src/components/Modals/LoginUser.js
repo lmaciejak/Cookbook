@@ -23,7 +23,7 @@ class LoginUser extends Component {
 
     this.state = {
       username: '',
-      password: '', 
+      password: '',
       isLoggedIn: false,
       message: '',
       modalIsOpen: false
@@ -57,7 +57,7 @@ class LoginUser extends Component {
       })
       .then(res => {
         this.setState({
-          message: 'success', 
+          message: 'success',
           isLoggedIn: true,
         });
       })
@@ -67,14 +67,14 @@ class LoginUser extends Component {
           password: "",
           message: `Error logging in. ${err}`
         });
-      });  
+      });
   }
 
   render() {
-    if(this.state.isLoggedIn === true) { 
+    console.log('LOGIN PROPS',this.props)
+    if(this.state.isLoggedIn === true) {
       return <Redirect to='/feed' />
     }
-    console.log('this.state', this.state)
     return (
       <div className="Modal">
       <div>
