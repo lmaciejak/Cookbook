@@ -2,150 +2,190 @@ import React from "react";
 import axios from "axios";
 
 class AddRecipe extends React.Component {
-    constructor(user){
-        super(user)
-        this.state={
-            user_id:"yurr",
-            recipeName : "",
-            directions : "",
-            ingredients: [{name:'' , amount:'',notes:''}] ,
-            img: "",
-            isVegetarian: false ,
-            isVegan:false ,
-            ingredientsList: ["","eggs","chicken","potatoes"]
-            }
-        }
-    
-        handleChange = e => {
-            this.setState({
-                [e.target.name]: e.target.value
-            })
-        }
+  constructor(){
+    super()
+    this.state = {
+      recipe_name : "",
+      recipe : "",
+      ingredients: [{name:'' , amount:'',notes:''}],
+      img: "",
+      isvegeterian: false ,
+      isvegan:false ,
+      ingredientsList: ["","eggs","chicken","potatoes"]
+    }
+  }
 
-        handleIngredientChange = (idx) => (e) => {
-            const newIngredient = this.state.ingredients.map((ingredient, sidx) => {
-                if (idx !== sidx) return ingredient;
-                return { ...ingredient, name: e.target.value };
-              });
-            this.setState({ ingredients: newIngredient });
-        }
-        handleAmountChange = (idx) => (e) => {
-            const newIngredient = this.state.ingredients.map((ingredient, sidx) => {
-                if (idx !== sidx) return ingredient;
-                return { ...ingredient, [e.target.name]: e.target.value };
-              });
-            this.setState({ ingredients: newIngredient });
-        }
-        
+  handleChange = e => {
+    this.setState({
+        [e.target.name]: e.target.value
+    })
+  }
 
-        handleAddIngredient = () => {
-            this.setState({ 
-                ingredients: [...this.state.ingredients , { name: '', amount: '' }] 
-            });
-          }
+  handleIngredientChange = (idx) => (e) => {
+    const newIngredient = this.state.ingredients.map((ingredient, sidx) => {
+      if (idx !== sidx) return ingredient;
+        return { ...ingredient, name: e.target.value };
+      });
+    this.setState({ ingredients: newIngredient });
+  }
 
-        handleRemoveIngredient = idx => () => {
-            const {ingredients} = this.state
-            this.setState({ 
-                ingredients: ingredients.filter((s, sidx) => idx !== sidx) 
-            });
-        }
-        handleChecked = (e) => {
-            this.setState({ 
-                [e.target.name]: e.target.checked
-            });
-        }
+  handleAmountChange = (idx) => (e) => {
+    const newIngredient = this.state.ingredients.map((ingredient, sidx) => {
+      if (idx !== sidx) return ingredient;
+        return { ...ingredient, [e.target.name]: e.target.value };
+      });
+    this.setState({ ingredients: newIngredient });
+  }
 
-        handleSubmit = (e) => {
-            e.preventDefault();
+  handleAddIngredient = () => {
+    this.setState({
+      ingredients: [...this.state.ingredients , { name: '', amount: '' }]
+    });
+  }
 
-        }
+  handleRemoveIngredient = idx => () => {
+    const {ingredients} = this.state;
+    this.setState({
+      ingredients: ingredients.filter((s, sidx) => idx !== sidx)
+    });
+  }
 
-    render(){
-        const{ recipeName, directions, ingredients, ingredientsList, isVegetarian, isVegan, img } = this.state
-        const a = 1
-        console.log('isVeg' , this.state.isVegetarian , 'isVegan', this.state.isVegan )
+  handleChecked = (e) => {
+    this.setState({
+      [e.target.name]: e.target.checked
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const {recipe_name, recipe,
+           ingredients, ingredientsList,
+           isvegeterian, isvegan, img } = this.state
+    axios
+			.post('/users/addRecipe', {
+        recipe_name: recipe_name,
+        recipe: recipe,
+        img: img,
+        isvegeterian: isvegeterian,
+        isvegan: isvegan
+			})
+			.then(res => {
+        axios
+          .post(`/users/addIngredients/${res.data.recipe_id}`, {
+            ingredients: ingredients
+			    })
+      })
+      .then( () => {
+        this.setState({
+          recipe_name : "",
+          recipe : "",
+          ingredients: [{name:'' , amount:'',notes:''}],
+          img: "",
+          isvegeterian: false,
+          isvegan: false,
+          ingredientsList: ["","eggs","chicken","potatoes"]
+        })
+      })
+			.catch(err => {
+				this.setState({
+					message: "Error posting new image"
+				})
+			})
+  }
+
+    render() {
+      const {recipe_name, recipe,
+             ingredients, ingredientsList,
+             isvegeterian, isvegan, img } = this.state
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
                 <p>Recipe Name
-                    <input 
-                        type= "text" 
-                        name="recipeName" 
-                        onChange={this.handleChange} 
-                        value={recipeName} 
-                        className= "addRecipe"/>
+                    <input
+                      type= "text"
+                      name="recipe_name"
+                      onChange={this.handleChange}
+                      value={recipe_name}
+                      className= "addRecipe"
+                    />
                 </p>
-                <p>image
-                    <input 
-                        type= "url" 
-                        name="imgURL" 
-                        onChange={this.handleChange} 
-                        value={img} 
-                        className= "addRecipe"/>
+                <p>ImageURL
+                    <input
+                      type= "url"
+                      name="img"
+                      onChange={this.handleChange}
+                      value={img}
+                      className= "addRecipe"
+                    />
                 </p>
                 Ingredients
                     {ingredients.map((ingredient, idx) =>(
                         <div className="ingredients">
-                           {`Ingredient ${idx + 1}`} 
+                           {`Ingredient ${idx + 1}`}
                         <select
                             value ={ingredient.name}
                             onChange={this.handleIngredientChange(idx)}
                          >
-                            {ingredientsList.map(ingredient => 
+                            {ingredientsList.map(ingredient =>
                             <option value={ingredient}> {ingredient}</option>)}
-                        </select> 
-                Amount: 
-                    <input 
-                        type="text" 
-                        name="amount" 
-                        onChange={this.handleAmountChange(idx)} 
-                        value={ingredient.amount} 
-                        className= "addRecipe"
-                    />
+                        </select>
+                Amount:
+                  <input
+                    type="text"
+                    name="amount"
+                    onChange={this.handleAmountChange(idx)}
+                    value={ingredient.amount}
+                    className= "addRecipe"
+                  />
                 Notes
-                    <input 
-                        type="text" 
-                        name="notes" 
-                        onChange={this.handleAmountChange(idx)} 
-                        value={ingredient.notes} 
-                        className= "addRecipe"
-                    />
-                    <button 
-                        type="button" 
-                        onClick={this.handleRemoveIngredient(idx)}>x
-                    </button>
-                        </div> 
+                  <input
+                    type="text"
+                    name="notes"
+                    onChange={this.handleAmountChange(idx)}
+                    value={ingredient.notes}
+                    className= "addRecipe"
+                  />
+                  <button
+                    type="button"
+                    onClick={this.handleRemoveIngredient(idx)}>x
+                  </button>
+                  </div>
                     ))}
-                    <button 
-                        type="button" 
-                        onClick={this.handleAddIngredient}> 
-                        CHILL ... ANOTHER ONE 
+                    <button
+                      type="button"
+                      onClick={this.handleAddIngredient}>
+                      CHILL ... ANOTHER ONE
                     </button>
-                <p>Directions</p>
-                <textarea placeholder="eg(1. Melt two table spoons of butter...)" />
+                <p>
+                Directions
+                  <textarea
+                    type="text"
+                    name="recipe"
+                    value={recipe}
+                    placeholder="eg(1. Melt two table spoons of butter...)"
+                    onChange={this.handleChange}
+                  />
+                </p>
                 <p>
                 Vegeterian
-                    <input type="checkbox"  
-                    name="isVegetarian" 
-                    checked={isVegetarian} 
-                    onChange={this.handleChecked}/>
+                  <input type="checkbox"
+                    name="isvegeterian"
+                    checked={isvegeterian}
+                    onChange={this.handleChecked}
+                  />
                 </p>
-
                 <p>
                 Vegan
-                    <input type="checkbox"  
-                        name="isVegan" 
-                        checked={isVegan} 
-                        onChange={this.handleChecked}
-                    />
+                  <input type="checkbox"
+                    name="isvegan"
+                    checked={isvegan}
+                    onChange={this.handleChecked}
+                  />
                 </p>
-                {/* <input type= 'radio' onclick ={this.handleChange} name="isVegan"  className= "addRecipe"/>Vegan */}
                 <button>Submit</button>
-             </form>   
+             </form>
             </div>
         )
     }
 }
-
-export default AddRecipe
+export default AddRecipe;
