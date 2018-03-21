@@ -57,14 +57,21 @@ class Cookbook extends React.Component {
     )
   }
 
+  renderUserFeed = () =>{
+    const { user, allUsers, loggedIn } = this.state
+    return(
+      <Feed user={user} allUsers={allUsers} loggedIn={loggedIn}/>
+    )
+  }
+
 
   render() {
     console.log(this.state)
     const { user } = this.state
     return (
      <div>
-       <LoginUser />
       <Switch>
+      <Route exact path='/feed' render={this.renderUserFeed} />
         /*User Profile props = user, loggedIn */
         /*User Edit props = user, loggedIn*/
         /*User Faves props = user, loggedIn*/
