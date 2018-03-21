@@ -1,21 +1,64 @@
 .searchbarLogo { 
   display: inline; 
-  margin-left: 0%; 
+  margin-left: 1%; 
+  width: 15%; 
 }
 
 .addRecipeButton { 
-  background-color: #DD7459; 
-  border-radius: 3px; 
+  background-color: white; 
+  border-radius: 6px; 
   height: 20px; 
-  margin-left: 60%; 
+  margin-left: 10%; 
+  padding-bottom: 5px; 
+  position: fixed; 
+  margin-left: 60%;
+  margin-top: 0.5%;  
 }
 
 .searchbar { 
   position: fixed; 
   width: 100%; 
-  background-color: #ED6C4B; 
-  padding-top: 4px; 
-  padding-bottom: 2px; 
+  /* background-color: #ff5f00; */
+  padding-top: 5px; 
+  padding-bottom: 5px;
+  border-bottom-width: 3px;  
+  border-bottom-style: solid; 
+  border-bottom-color: rgb(235, 232, 232); 
+  background-color: white; 
+}
+
+.searchInput { 
+  width: 25%; 
+  margin-left: 21%; 
+  display: inline;
+  position: fixed; 
+  margin-top: 0.7%; 
+}
+
+.writingIcon { 
+  width: 2.5%; 
+  position: fixed; 
+  margin-left: 72%; 
+}
+
+.addTagline { 
+  position: fixed; 
+  font-size: 0.8em; 
+  margin-left: 83%;
+  margin-top: -1.4%;   
+}
+
+.heartIcon { 
+  width: 2.5%; 
+  position: fixed; 
+  margin-left: 62.5%; 
+}
+
+.heartTagline { 
+  position: fixed; 
+  font-size: 0.8em; 
+  margin-left: 72%;
+  margin-top: -1.4%;  
 }
 
 .feedLink { 
@@ -31,28 +74,30 @@
   width: 25px;
   height: 15px;
   left: 95%;
-  top: 1%;
+  top: 1.9%;
 }
 
 .bm-burger-bars {
-  background: #373a47;
+  background: #696969;
   height: 1%; 
 }
 
 .bm-menu {
-  background: #373a47;
+  background: #333333;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
   color: white; 
 }
 
 .bm-item-list {
-  color: #373a47;
+  color: #265b75;
   padding: 0.8em;
 }
 
 .menu-item { 
-  background-color: #373a47;
+  background-color: #333333;
   border: none; 
   text-decoration: none; 
+  color: white; 
 }
+

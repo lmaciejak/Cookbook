@@ -71,7 +71,7 @@ class Cookbook extends React.Component {
     return (
      <div>
       <Switch>
-      <Route exact path='/feed' render={this.renderUserFeed} />
+      <Route exact path='/feed' component={Feed} />
         /*User Profile props = user, loggedIn */
         /*User Edit props = user, loggedIn*/
         /*User Faves props = user, loggedIn*/

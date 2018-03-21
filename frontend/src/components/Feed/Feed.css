@@ -1,3 +1,13 @@
 .feedImage { 
-  width: 30%; 
+  width: 460px; 
+  height: 300px; 
+ 
+}
+
+.feedBox { 
+  float: left;
+}
+
+.feedContainer { 
+  text-align: center; 
 }
