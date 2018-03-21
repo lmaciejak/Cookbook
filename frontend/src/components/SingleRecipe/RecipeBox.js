@@ -28,7 +28,7 @@ class RecipeBox extends React.Component{
         <img src={recipeImg} alt="recipeImg" style={styles.img} />
         <div className="recipeInfo">
         <h4>Chef {user}</h4>
-        <div className="favorites"> <i class="fas fa-file-alt"></i> <p>{favorites}</p> </div>
+        <div className="favorites" title="Favorites"> <i class="fas fa-file-alt"></i> <p className="fav">{favorites}</p> </div>
         </div>
       </div>
     )

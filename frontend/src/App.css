@@ -111,10 +111,23 @@ a{
 
 .favorites{
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  width:10%;
+}
+.fav {
+  margin: 0;
 }
 
+h4{
+  margin: 0;
+}
 .recipeInfo{
   display: flex;
-  
+  justify-content: space-between;
+  padding: 0 5%;
+  margin: 2% 0;
+}
+
+i{
+  color: #FF7B00;
 }
