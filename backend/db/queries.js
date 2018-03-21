@@ -110,13 +110,18 @@ function getAllResipesByUserID(req, res, next) {
 }
 
 function getAllFollowersRecipes(req, res, next) {
- db.any(`SELECT users.user_id, recipe_name, recipe_id, recipe, img, isvegeterian, isvegan, recipe_timestamp
-         FROM users
-         INNER JOIN followings ON(users.user_id=followings.followee_id)
-         INNER JOIN recipes
-         ON(users.user_id=recipes.user_id)
-         WHERE follower_id=${req.params.userID}
-         ORDER BY recipe_timestamp DESC;`)
+ db.any(`SELECT recipe_name, recipes.recipe_id, recipe, recipe_name, img, recipe_timestamp, isVegeterian, 
+ isVegan, COUNT(favorites.recipe_id) AS favorites_count, users.username, users.user_id
+        FROM recipes
+        JOIN favorites
+        ON recipes.recipe_id = favorites.recipe_id
+        JOIN users 
+        ON recipes.user_id = users.user_id
+        WHERE recipes.user_id IN (SELECT followee_id
+                          FROM followings
+                          WHERE follower_id =${req.params.userID})
+ GROUP BY recipes.recipe_id, users.user_id
+ ORDER BY recipe_timestamp DESC;`)
          .then(data => {
            res.json(data);
          })
@@ -126,6 +131,7 @@ function getAllFollowersRecipes(req, res, next) {
 }
 
 function getUser(req, res, next) {
+  console.log(req.user)
   db.any(`SELECT user_id, username, email, first_name, last_name
           FROM users
           WHERE user_id=$1`, [req.user.user_id])
@@ -210,10 +216,12 @@ function removeRecipeComment(req, res, next) {
 }
 
 function addRecipe(req, res, next) {
-  return db.none(
-    "INSERT INTO recipes (user_id, recipe_name, recipe, img, isvegeterian, isvegan) VALUES (${user_id}, ${recipe_name}, ${recipe}, ${img}, ${isvegeterian}, ${isvegan})",
+  return db.one(
+    "INSERT INTO recipes (user_id, recipe_name, recipe, img, isvegeterian, isvegan)"
+    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${img}, ${isvegeterian}, ${isvegan})"
+    + " RETURNING recipe_id",
     {
-      user_id: req.user.user_id,
+      user_id: req.body.user_id,
       recipe_name: req.body.recipe_name,
       recipe: req.body.recipe,
       img: req.body.img,
@@ -222,11 +230,36 @@ function addRecipe(req, res, next) {
     }
   )
   .then(data => {
-    res.json("success");
+     res.json({recipe_id: data.recipe_id});
   })
   .catch(error => {
     res.json(error);
   });
+}
+
+function addIngredients(req, res, next) {
+  return db.task(t => {
+      const ingredients  = JSON.parse(req.body.ingredients);
+      const queries = ingredients.map(ingredient => {
+            return t.none("INSERT INTO ingredients (recipe_id, amount, name, notes) "
+            + " VALUES (${recipe_id}, ${amount}, ${name}, ${notes})",
+            {
+              recipe_id: req.params.recipeID,
+              // food_id: req.body.food_id,
+              amount: ingredient.amount,
+              name: ingredient.name,
+              notes: ingredient.notes
+            }
+          );
+      });
+      return t.batch(queries);
+    })
+    .then(data => {
+      res.json("success");
+    })
+    .catch(error => {
+      res.json(error);
+    });
 }
 
 function removeRecipe(req, res, next) {
@@ -322,12 +355,13 @@ function loginUser(req, res, next) {
 /*------------------------------PATCH Request-----------------------------------*/
 
 function editUser(req, res, next) {
+  console.log('EDIT USER',req.body)
   return db.none(
     `UPDATE users
-     SET username=$1, password=$2, email=$3, first_name=$4, last_name=$5
+     SET username=$1, email=$2, first_name=$3, last_name=$4
      WHERE user_id=${req.params.userID};`,
     [
-      req.body.username, req.body.password,
+      req.body.username,
       req.body.email, req.body.first_name,
       req.body.last_name
     ]
@@ -390,6 +424,7 @@ module.exports = {
   addRecipeComment,
   removeRecipeComment,
   addRecipe,
+  addIngredients,
   removeRecipe,
   favoriteRecipe,
   unfavoriteRecipe,

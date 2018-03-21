@@ -16,7 +16,7 @@ class ShowAllComments extends React.Component{
                     ))}
                 </div>
             )
-        }
+        } /* takes all comments and maps them as a pp */
     }
 export default ShowAllComments;
   
