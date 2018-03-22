@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import RecipeBox from "../SingleRecipe/RecipeBox"
 
 class Home extends React.Component {
 
@@ -25,26 +26,25 @@ class Home extends React.Component {
 
   render() {
     const { favorites } = this.state;
+    console.log(favorites)
     return (
       <div className="landingPage">
         <div className="landingPhoto">
           <div className="header">
+            <div></div>
             <h1>Welcome to CookBook </h1>
             <div className="landButton"><a className="button"> Login </a> <a className="button"> Sign Up </a>  </div>
-            </div>
         </div>
+        </div>
+
         <div>
-          <ul type="none">
+            <h2 className="landingPageHeader">The Illest Motherfucking Recipes on Cookbook</h2>
+        </div>
+
+        <div className="landingPageFeatured">
             {favorites.map( (recipe) => {
-                return <div>
-                  <li><img src={`${recipe.img}`} alt="foodimages" /></li>
-                  <li>favorites {recipe.favorites_count}</li>
-                  <li>username {recipe.username}</li>
-                  <li>{recipe.recipe_name}</li>
-                  <li>{recipe.recipe}</li>
-                </div>
+                return  <RecipeBox recipe={recipe} />
             })}
-          </ul>
         </div>
       </div>
     )
