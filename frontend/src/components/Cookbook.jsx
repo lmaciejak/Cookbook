@@ -5,6 +5,7 @@ import Feed from './Feed/Feed'
 import List from './List/List'
 import UserEdit from './Profile/UserEdit'
 import LoginUser from './Modals/LoginUser'
+import UserFaves from './Profile/UserFaves'
 
 class Cookbook extends React.Component {
   constructor() {
@@ -57,20 +58,21 @@ class Cookbook extends React.Component {
     )
   }
 
+  renderUserFaves = () =>{
+    const { user } = this.state
+    return(
+      <UserFaves user={user} />
+    )
+  }
+
 
   render() {
     console.log(this.state)
     const { user } = this.state
     return (
      <div>
-       <LoginUser />
       <Switch>
-        /*User Profile props = user, loggedIn */
-        /*User Edit props = user, loggedIn*/
-        /*User Faves props = user, loggedIn*/
-        /*User Recipes props = user, loggedIn, allRecipes*/
-        /*Feed recieves user, loggedIn and allRecipes on cookbook/profile/:userID*/
-        /**/
+
       </Switch>
     </div> )
   }

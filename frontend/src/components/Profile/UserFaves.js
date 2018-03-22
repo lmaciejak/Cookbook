@@ -12,46 +12,44 @@ class UserFaves extends React.Component{
     }
   }
 
-  getFavoriteRecipes = (id) =>{
+  getFavRecipes = () =>{
     const { favoriteRecipes } = this.state
-
-    let favesArray = []
-
-    axios.get(`/users/profile/${id}/favorites`)
+    axios.get(`/users/profile/${this.props.user.data[0].user_id}/favorites`)
     .then(response =>{
-      favesArray = response.data
       this.setState({
-        favoriteRecipes: favesArray
+        favoriteRecipes: response.data
       })
     })
     .catch(error =>{
-      console.log(error)
+      console.log('fire')
     })
   }
 
+  componentDidUpdate(prevProps, prevState){
+    if(prevProps.user.data !== this.props.user.data){
+      this.getFavRecipes()
+    }
+  }
+
+
   render(){
+
     const { favoriteRecipes } = this.state
-    if(this.props.user){
-      this.getFavoriteRecipes(this.props.user.user_id)
-      if(favoriteRecipes.length < 1){
+    if(this.props.user.data){
+      return(
         <div>
           <h2>Your Favorite Recipes</h2>
-          <p>No Favorites Yet</p>
-        </div>
-      } else{
-        return(
           <div>
-            <h2>Your Favorite Recipes</h2>
             {favoriteRecipes.map(recipe =>(
-              <RecipeBox recipe={recipe} />
+              <RecipeBox recipe={recipe} user={this.props.user.data[0]} favorites={recipe.favorites}/>
             ))}
           </div>
-        )
-      }
+        </div>
+      )
     }
-    else{
+    else {
       return(
-        <div>Loading Loading</div>
+        <div>loading</div>
       )
     }
   }
