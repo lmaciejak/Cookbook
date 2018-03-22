@@ -16,6 +16,7 @@ CREATE TABLE users (
   recipe_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users,
   recipe_name VARCHAR,
+  description VARCHAR,
   recipe VARCHAR,
   img VARCHAR,
   isVegeterian BOOLEAN,
