@@ -2,77 +2,73 @@ import React from 'react'
 import axios from 'axios'
 import { Route, Switch } from 'react-router'
 import Feed from './Feed/Feed'
-import List from './List/List'
-import UserEdit from './Profile/UserEdit'
-import LoginUser from './Modals/LoginUser'
-import UserFaves from './Profile/UserFaves'
+import UserProfile from './Profile/UserProfile'
+import Recipe from './SingleRecipe/Recipe'
 
 class Cookbook extends React.Component {
   constructor() {
     super()
 
     this.state = {
-      loggedIn: false,
-      user: '',
-      allUsers: '',
-      allRecipes: '',
+      user: ''
     }
   }
 
-  componentDidMount() {
-    /* Axios calls to get users, all users, all recipes, and highesr rated recipes*/
-    const getUser = () => axios.get('/users').then(
-      response => {
+  loggedInUser = () =>{
+    axios.get('/users')
+    .then(response =>{
+      if(response.data){
         this.setState({
-          user: response,
-          loggedIn: true
+          user: response.data
         })
-      })
-    const getAllUsers = () => axios.get('/users/allusers').then(
-      response => {
-        this.setState({
-          allUsers: response
-        })
-      })
-    const getAllRecipes = () => axios.get('/users/allrecipes').then(
-      response => {
-        this.setState({
-          allRecipes: response
-        })
-      })
-      /* Making all axios calls at once*/
-    axios.all([getUser(), getAllUsers(), getAllRecipes()
-      ])
-      .then(axios.spread(function(response1, response2, response3) {
-        console.log('worked')
-      }))
-      .catch(error => {
-        console.log('derp')
-      })
+      }
+    })
+    .catch(error =>{
+      console.log('user fetch did not work')
+    })
   }
 
-  renderUserEdit = () =>{
-    const { user, allUsers, loggedIn } = this.state
-    return(
-      <UserEdit user={user} allUsers={allUsers} loggedIn={loggedIn}/>
-    )
+  componentDidMount(){
+    this.loggedInUser()
   }
 
-  renderUserFaves = () =>{
+  renderUserProfile = props =>{
+    const { id } = props.match.params
     const { user } = this.state
     return(
-      <UserFaves user={user} />
+      <UserProfile user={user}/>
     )
   }
 
+  renderSingleRecipe = props =>{
+    const { username, recipeID } = props.match.params
+    const { user } = this.state
+    return(
+      <Recipe user={user}/>
+    )
+  }
+
+  renderUserFeed = props =>{
+    const { id } = props.match.params
+    const { user } = this.state
+    return(
+      <Feed user={user}/>
+    )
+  }
 
   render() {
-    console.log(this.state)
     const { user } = this.state
     return (
      <div>
+       <h1>Cookbook</h1>
       <Switch>
-
+        <Route exact path='/cb/profile/:id' render={this.renderUserProfile} />
+        <Route path='/cb/profile/:id/favorites' component={UserProfile} />
+        <Route path='/cb/profile/:id/edit' component={UserProfile} />
+        <Route path='/cb/profile/:id/addrecipe' component={UserProfile} />
+        <Route exact path='/cb/:username/:recipeID' render={this.renderSingleRecipe} />
+        <Route path='/cb/:username/:recipeID/edit' component={Recipe} />
+        <Route exact path='/cb/:id/feed' render={this.renderUserFeed} />
       </Switch>
     </div> )
   }

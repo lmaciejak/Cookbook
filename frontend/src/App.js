@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import {Route, Link, Switch} from 'react-router-dom';
-
-import Cookbook from './components/Home/Home'
-
-
+import { Route, Link, Switch } from 'react-router-dom';
+import Cookbook from './components/Cookbook'
+import Home from './components/Home/Home'
 import logo from './logo.svg';
 import './App.css';
 
@@ -12,7 +10,8 @@ class App extends Component {
     return (
       <div>
         <Switch>
-            <Route exact path='/' component={Cookbook} />
+          <Route exact path='/' component={Home} />
+          <Route path='/cb' component={Cookbook} />
         </Switch>
       </div>
     );
