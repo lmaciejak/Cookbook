@@ -7,6 +7,7 @@ class AddRecipe extends React.Component {
     this.state = {
       recipe_name : "",
       recipe : "",
+      description: "",
       ingredients: [{name:'' , amount:'',notes:''}],
       img: "",
       isvegeterian: false ,
@@ -94,9 +95,11 @@ class AddRecipe extends React.Component {
   }
 
     render() {
-      const {recipe_name, recipe,
+      const {recipe_name, recipe, description,
              ingredients, ingredientsList,
              isvegeterian, isvegan, img } = this.state
+
+             console.log(description)
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -118,17 +121,30 @@ class AddRecipe extends React.Component {
                       className= "addRecipe"
                     />
                 </p>
-                Ingredients
+                <h4>Description</h4>
+                <textarea
+                    type="text"
+                    name="description"
+                    value={description}
+                    placeholder="Tell your friends all about your recipe"
+                    onChange={this.handleChange}
+                  />
+                <h4>Ingredients</h4>
                     {ingredients.map((ingredient, idx) =>(
                         <div className="ingredients">
                            {`Ingredient ${idx + 1}`}
-                        <select
+                        <input
+                            list="ingredients"
                             value ={ingredient.name}
                             onChange={this.handleIngredientChange(idx)}
-                         >
+                         />
+                         <datalist id="ingredients">
                             {ingredientsList.map(ingredient =>
                             <option value={ingredient}> {ingredient}</option>)}
-                        </select>
+                         </datalist>
+                            {/* {ingredientsList.map(ingredient =>
+                            <option value={ingredient}> {ingredient}</option>)} */}
+                      
                 Amount:
                   <input
                     type="text"
