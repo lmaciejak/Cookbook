@@ -59,12 +59,13 @@ class AddRecipe extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const {recipe_name, recipe,
+    const {recipe_name, recipe, description,
            ingredients, ingredientsList,
            isvegeterian, isvegan, img } = this.state
     axios
 			.post('/users/addRecipe', {
         recipe_name: recipe_name,
+        description: description,
         recipe: recipe,
         img: img,
         isvegeterian: isvegeterian,
@@ -80,6 +81,7 @@ class AddRecipe extends React.Component {
         this.setState({
           recipe_name : "",
           recipe : "",
+          description: "",
           ingredients: [{name:'' , amount:'',notes:''}],
           img: "",
           isvegeterian: false,
