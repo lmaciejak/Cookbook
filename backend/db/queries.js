@@ -196,6 +196,36 @@ function getIngredientsByRecipeId(req, res, next) {
     });
 }
 
+function getAllRecentUsersRecipes(req, res, next) {
+  db.any(`SELECT *
+          FROM recipes 
+          WHERE user_id=${req.user.user_id}
+          ORDER BY recipe_timestamp DESC;`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getMostTopRecipes(req, res, next) {
+  db.any(`SELECT
+          COUNT(recipes.recipe_id)
+          AS favorites_count, recipe_name, recipe, img
+          FROM recipes
+          INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
+          WHERE recipes.USER_id=${req.user.user_id}
+          GROUP BY recipes.recipe, recipes.recipe_name, recipes.img
+          ORDER BY favorites_count DESC`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
 /*-------------------------------POST Request----------------------------------*/
 
 function registerUser(req, res, next) {
@@ -459,6 +489,8 @@ module.exports = {
   getRecipeComments,
   getSingleRecipeById,
   getIngredientsByRecipeId,
+  getAllRecentUsersRecipes,
+  getMostTopRecipes,
   registerUser,
   addRecipeComment,
   removeRecipeComment,
