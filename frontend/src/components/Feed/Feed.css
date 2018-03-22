@@ -6,8 +6,45 @@
 
 .feedBox { 
   float: left;
+  width: 460px; 
+  background-color: rgb(255, 254, 253); 
+  padding-right: 0.45%; 
+}
+
+.feedBoxContainer { 
+  margin-left: 1.4%; 
+  background-color: rgb(199, 199, 199); 
 }
 
 .feedContainer { 
   text-align: center; 
 }
+
+.feedRecipeName { 
+  display: inline; 
+  font-size: 1.1em;
+}
+
+.feedRecipeUsername { 
+  display: inline; 
+}
+
+.feedRecipeFavorites{ 
+  display: inline; 
+}
+
+.feedBoxDescription { 
+  margin-left: 0.6%; 
+  color: rgb(65, 65, 65); 
+  width: 100%;
+  background-color: rgb(252, 236, 165); 
+  border: 0.5px solid rgb(204, 204, 204); 
+  border-radius: 2px; 
+}
+
+.feedRecipeChefIcon { 
+  width: 3%; 
+}
+
+
+/* background-color: rgb(242, 255, 227);  */
