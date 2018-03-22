@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { slide as Menu } from 'react-burger-menu'; 
 import './SearchBar.css'
-import cookbooklogo from './cookbooklogo3.jpeg'
+import cookbooklogo from './cookbooknamelogo.png'
 import writingicon from './writingicon.png'
 import hearticon from './hearticon.png'
 
@@ -21,7 +21,8 @@ class Searchbar extends Component {
   render() {
     return (
       <div className="searchbar">
-      <img className="searchbarLogo" src={cookbooklogo} />
+      <img className="searchbarLogoName" src={cookbooklogo} />
+      <img className="searchbarLogo" src="http://irfanyurdu.org/wp-content/uploads/2017/04/eat-flat-1.png" />
       <input className="searchInput" type="search" name="search" placeholder="Search for recipes or users"/> 
       <img src={writingicon} className="writingIcon"/>
       <p className="addTagline"> Add recipe </p> 

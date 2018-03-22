@@ -1,6 +1,14 @@
 .searchbarLogo { 
+  margin-left: 16%; 
+  width: 2.5%; 
+  position: fixed; 
+
+}
+
+.searchbarLogoName { 
   margin-left: 1%; 
-  width: 15%; 
+  width: 14%; 
+  position: fixed; 
 }
 
 .addRecipeButton { 
@@ -19,7 +27,7 @@
   width: 100%; 
   /* background-color: #ff5f00; */
   padding-top: 5px; 
-  padding-bottom: 5px;
+  padding-bottom: 40px;
   border-bottom-width: 3px;  
   border-bottom-style: solid; 
   border-bottom-color: rgb(235, 232, 232); 
@@ -28,7 +36,7 @@
 
 .searchInput { 
   width: 25%; 
-  margin-left: 21%; 
+  margin-left: 37%; 
   position: fixed; 
   margin-top: 0.7%; 
 }
@@ -36,27 +44,27 @@
 .writingIcon { 
   width: 2.5%; 
   position: fixed; 
-  margin-left: 72%; 
+  margin-left: 81%; 
 }
 
 .addTagline { 
   position: fixed; 
   font-size: 0.8em; 
-  margin-left: 83%;
-  margin-top: -1.4%;   
+  margin-left: 84%;
+  margin-top: 1%;   
 }
 
 .heartIcon { 
   width: 2.5%; 
   position: fixed; 
-  margin-left: 62.5%; 
+  margin-left: 71.5%; 
 }
 
 .heartTagline { 
   position: fixed; 
   font-size: 0.8em; 
-  margin-left: 72%;
-  margin-top: -1.4%;  
+  margin-left: 74%;
+  margin-top: 1%;  
 }
 
 .feedLink { 

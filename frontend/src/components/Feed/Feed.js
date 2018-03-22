@@ -37,7 +37,7 @@ class Feed extends React.Component{
       <div>
         <Searchbar /> 
         <div className="feedContainer">
-        <h2> Explore meals from your friends and family </h2> 
+        <h2> Explore the meals your friends and family are cooking</h2> 
 
         <p> {this.state.followeedata ? this.state.followeedata.map((elem) => { 
           return(<div className="feedBox">   
