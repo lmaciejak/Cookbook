@@ -47,6 +47,11 @@
   margin-left: 81%; 
 }
 
+.writingIcon:hover { 
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
 .addTagline { 
   position: fixed; 
   font-size: 0.8em; 
@@ -58,6 +63,11 @@
   width: 2.5%; 
   position: fixed; 
   margin-left: 71.5%; 
+}
+
+.heartIcon:hover { 
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 
 .heartTagline { 
@@ -86,6 +96,17 @@
   height: 1%; 
 }
 
+.bm-cross {
+  background: #bdc3c7;
+}
+
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+  margin-right: 82%; 
+  margin-top: 4%; 
+}
+
 .bm-menu {
   background: #333333;
   padding: 2.5em 1.5em 0;
@@ -96,12 +117,14 @@
 .bm-item-list {
   color: #265b75;
   padding: 0.8em;
+  margin-left: 2%; 
+  margin-top: 4%; 
 }
 
 .menu-item { 
   background-color: #333333;
   border: none; 
   text-decoration: none; 
-  color: white; 
+  color:  #bdc3c7; 
 }
 
