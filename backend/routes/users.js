@@ -19,6 +19,8 @@ router.get('/', loginRequired, db.getUser);
 router.get('/sortedrecipes', db.getSortedRecipes);
 router.get('/singlerecipe/:recipeID', db.getSingleRecipeById);
 router.get('/getingredients/:recipeID', db.getIngredientsByRecipeId);
+router.get('/getallrecentusersrecipes/:userID', loginRequired, db.getAllRecentUsersRecipes);
+router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes);
 
 /*POST Request*/
 router.post('/register', db.registerUser);
