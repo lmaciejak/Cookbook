@@ -23,6 +23,7 @@
 .feedRecipeName { 
   display: inline; 
   font-size: 1.1em;
+  margin-left: 30%; 
 }
 
 .feedRecipeUsername { 
@@ -37,13 +38,20 @@
   margin-left: 0.6%; 
   color: rgb(65, 65, 65); 
   width: 100%;
-  background-color: rgb(252, 236, 165); 
-  border: 0.5px solid rgb(204, 204, 204); 
+  background-color: rgb(252, 239, 181); 
+  border: 0.5px solid rgb(253, 231, 231); 
   border-radius: 2px; 
+  padding-top: 2%; 
+  padding-bottom: 2%; 
 }
 
 .feedRecipeChefIcon { 
   width: 3%; 
+}
+
+.feedRecipeIcons { 
+  display: inline; 
+  margin-left: 20%; 
 }
 
 

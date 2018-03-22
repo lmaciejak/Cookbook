@@ -2,6 +2,7 @@
   margin-left: 16%; 
   width: 2.5%; 
   position: fixed; 
+  margin-top: 0.3%; 
 
 }
 
@@ -9,6 +10,7 @@
   margin-left: 1%; 
   width: 14%; 
   position: fixed; 
+  margin-top: 0.3%; 
 }
 
 .addRecipeButton { 
@@ -26,7 +28,7 @@
   position: fixed; 
   width: 100%; 
   /* background-color: #ff5f00; */
-  padding-top: 5px; 
+  padding-top: 10px; 
   padding-bottom: 40px;
   border-bottom-width: 3px;  
   border-bottom-style: solid; 
@@ -41,10 +43,17 @@
   margin-top: 0.7%; 
 }
 
+.searchLink { 
+  background-color: transparent; 
+  border: none; 
+
+}
+
 .writingIcon { 
   width: 2.5%; 
   position: fixed; 
   margin-left: 81%; 
+  margin-top: 0.4%; 
 }
 
 .writingIcon:hover { 
@@ -56,13 +65,14 @@
   position: fixed; 
   font-size: 0.8em; 
   margin-left: 84%;
-  margin-top: 1%;   
+  margin-top: -0.1%; 
 }
 
 .heartIcon { 
   width: 2.5%; 
   position: fixed; 
-  margin-left: 71.5%; 
+  margin-left: 70.5%; 
+  margin-top: 0.4%; 
 }
 
 .heartIcon:hover { 
@@ -74,7 +84,7 @@
   position: fixed; 
   font-size: 0.8em; 
   margin-left: 74%;
-  margin-top: 1%;  
+  margin-top: -0.1%;  
 }
 
 .feedLink { 

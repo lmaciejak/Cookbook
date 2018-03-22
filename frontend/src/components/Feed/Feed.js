@@ -4,8 +4,8 @@ import axios from "axios";
 import RecipeBox from "../SingleRecipe/RecipeBox";
 import { Link } from "react-router-dom";
 import "./Feed.css"
-import cheficon from '../Search/cheficon.png'
-import hearticon from '../Search/hearticon.png'
+import cheficon from '../../images/cheficon.png'
+import hearticon from '../../images/hearticon.png'
 
 class Feed extends React.Component{
   constructor(){
@@ -46,6 +46,7 @@ class Feed extends React.Component{
                   <div className="feedBoxDescription">  
                     <h4 className="feedRecipeName"> {elem.recipe_name} </h4>
                     <div className="feedRecipeIcons">
+                    
                     <img src="https://cdn0.iconfinder.com/data/icons/kitchen-and-cooking/512/salting_cooking_hand_sprinkle_salt_flat_design_icon-256.png" className="feedRecipeChefIcon"/>
                     <p className="feedRecipeUsername"> {elem.username} </p>
                     <img src="http://www.iconsplace.com/download/orange-hearts-512.gif" className="feedRecipeChefIcon"/>
