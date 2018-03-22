@@ -14,7 +14,7 @@ class UserFaves extends React.Component{
 
   getFavRecipes = () =>{
     const { favoriteRecipes } = this.state
-    axios.get(`/users/profile/${this.props.user.data[0].user_id}/favorites`)
+    axios.get(`/users/profile/${this.props.user.user_id}/favorites`)
     .then(response =>{
       this.setState({
         favoriteRecipes: response.data
@@ -33,15 +33,15 @@ class UserFaves extends React.Component{
 
 
   render(){
-
+    console.log(this.props.user.username)
     const { favoriteRecipes } = this.state
-    if(this.props.user.data){
+    if(this.props.user){
       return(
         <div>
           <h2>Your Favorite Recipes</h2>
           <div>
             {favoriteRecipes.map(recipe =>(
-              <RecipeBox recipe={recipe} user={this.props.user.data[0]} favorites={recipe.favorites}/>
+              <RecipeBox recipe={recipe} user={this.props.user} favorites={recipe.favorites}/>
             ))}
           </div>
         </div>
