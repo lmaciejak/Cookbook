@@ -73,7 +73,7 @@ class LoginUser extends Component {
   render() {
     console.log('LOGIN PROPS',this.props)
     if(this.state.isLoggedIn === true) {
-      return <Redirect to='/feed' />
+      return <Redirect to='/cb/feed' />
     }
     return (
       <div className="Modal">

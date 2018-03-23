@@ -150,13 +150,13 @@ function getUser(req, res, next) {
 function getSortedRecipes(req, res, next) {
   db.any(`SELECT
           COUNT(recipes.recipe_id)
-          AS favorites_count, recipe_name, recipe, img, USERs.username, description
+          AS favorites_count, recipe_name, recipe, img, users.username, description, recipes.recipe_id, users.user_id
           FROM recipes
           INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
           INNER JOIN users
           ON(recipes.user_id=users.user_id)
           WHERE recipes.recipe_id IN (SELECT recipes.recipe_id FROM recipes)
-          GROUP BY recipes.recipe_id, users.username
+          GROUP BY recipes.recipe_id, users.username, users.user_id
           ORDER BY favorites_count DESC;`)
     .then(data => {
       res.json(data);
@@ -166,11 +166,29 @@ function getSortedRecipes(req, res, next) {
     });
 }
 
+
+function searchByRecipe(req, res, next) {
+  db.task('get-everything', t => {
+    return t.batch([
+        t.any(`SELECT recipe_name AS identifier, recipe_id FROM recipes WHERE LOWER (recipe_name) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT username AS identifier, user_id FROM users WHERE LOWER (username) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT first_name AS identifier, user_id FROM users WHERE LOWER (first_name) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT last_name AS identifier, user_id FROM users WHERE LOWER (last_name) LIKE LOWER('%${req.params.search}%')`)
+    ]);
+})
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
 function getSingleRecipeById(req, res, next) {
   db.any(`SELECT
           COUNT(favorites.recipe_id)
           AS favorites_count,USERname,recipe_name,
-            recipe, img, isvegeterian,isvegan,recipe_timestamp, description
+            recipe, img, isvegeterian,isvegan,recipe_timestamp
           FROM recipes
           INNER JOIN USERs ON(recipes.user_id=users.user_id)
           INNER JOIN favorites ON(favorites.recipe_id=recipes.recipe_id)
@@ -188,6 +206,36 @@ function getIngredientsByRecipeId(req, res, next) {
   db.any(`SELECT *
           FROM ingredients
           WHERE recipe_id=${req.params.recipeID};`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getAllRecentUsersRecipes(req, res, next) {
+  db.any(`SELECT *
+          FROM recipes
+          WHERE user_id=${req.user.user_id}
+          ORDER BY recipe_timestamp DESC;`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getMostTopRecipes(req, res, next) {
+  db.any(`SELECT
+          COUNT(recipes.recipe_id)
+          AS favorites_count, recipe_name, recipe, img
+          FROM recipes
+          INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
+          WHERE recipes.USER_id=${req.user.user_id}
+          GROUP BY recipes.recipe, recipes.recipe_name, recipes.img
+          ORDER BY favorites_count DESC`)
     .then(data => {
       res.json(data);
     })
@@ -459,6 +507,8 @@ module.exports = {
   getRecipeComments,
   getSingleRecipeById,
   getIngredientsByRecipeId,
+  getAllRecentUsersRecipes,
+  getMostTopRecipes,
   registerUser,
   addRecipeComment,
   removeRecipeComment,
@@ -479,4 +529,5 @@ module.exports = {
   getAllFollowersRecipes,
   getUser,
   getSortedRecipes,
+  searchByRecipe,
 };
