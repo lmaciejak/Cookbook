@@ -57,7 +57,7 @@ class Cookbook extends React.Component {
       <Feed user={user} />
     )
   }
-
+  
   render() {
     const { user } = this.state
     return (
