@@ -21,7 +21,8 @@ router.get('/searchbyrecipe/:search', db.searchByRecipe);
 router.get('/singlerecipe/:recipeID', db.getSingleRecipeById);
 router.get('/getingredients/:recipeID', db.getIngredientsByRecipeId);
 router.get('/getallrecentusersrecipes/:userID', loginRequired, db.getAllRecentUsersRecipes);
-router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes);
+router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes)
+router.get('/getfolloweebyid/:userID/:followeeID', loginRequired, db.getFolloweeById);
 
 
 /*POST Request*/

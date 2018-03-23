@@ -20,7 +20,7 @@ class Cookbook extends React.Component {
     .then(response =>{
       if(response.data){
         this.setState({
-          user: response.data
+          user: response.data[0]
         })
       }
     })
