@@ -104,42 +104,57 @@ class AddRecipe extends React.Component {
              console.log(description)
         return(
             <div>
+              <div className="formStyle">
+                <h1 className="formHeader">Add a New Recipe! <span>Let Your Everyone Know Whats Cooking</span></h1>
                 <form onSubmit={this.handleSubmit}>
-                <p>Recipe Name
+                <div className="formSection"><span>1</span>Recipe Name & ImageUrl</div>
+                
+                <div className="formInnerWrap">
+                <label className="formLabels">Recipe Name
                     <input
                       type= "text"
                       name="recipe_name"
                       onChange={this.handleChange}
                       value={recipe_name}
-                      className= "addRecipe"
+                      className= "formInput"
                     />
-                </p>
-                <p>ImageURL
+                </label>
+                <label className="formLabels">ImageURL
                     <input
                       type= "url"
                       name="img"
                       onChange={this.handleChange}
                       value={img}
-                      className= "addRecipe"
+                      className= "formInput"
                     />
-                </p>
-                <h4>Description</h4>
+                </label>
+                </div>
+
+                <div className="formSection"><span>2</span>Recipe Description</div>
+                <div className="formInnerWrap">
+                <label className="formLabels">Description
                 <textarea
                     type="text"
                     name="description"
+                    className="formInput"
                     value={description}
                     placeholder="Tell your friends all about your recipe"
                     onChange={this.handleChange}
                   />
-                <h4>Ingredients</h4>
+                </label>
+                </div>
+
+                <div className="formSection"><span>3</span>Ingredients</div>
+                <div className="formInnerWrap">
                     {ingredients.map((ingredient, idx) =>(
                         <div className="ingredients">
-                           {`Ingredient ${idx + 1}`}
+                        <label className="formLabels"> <b>{`Ingredient ${idx + 1}`}</b>
                         <input
                             list="ingredients"
                             value ={ingredient.name}
                             onChange={this.handleIngredientChange(idx)}
-                         />
+                            className="formInput"
+                         /> 
                          <datalist id="ingredients">
                             {ingredientsList.map(ingredient =>
                             <option value={ingredient}> {ingredient}</option>)}
@@ -153,55 +168,71 @@ class AddRecipe extends React.Component {
                     name="amount"
                     onChange={this.handleAmountChange(idx)}
                     value={ingredient.amount}
-                    className= "addRecipe"
+                    className= "ingAmount formInput"
                   />
+                
                 Notes
                   <input
                     type="text"
                     name="notes"
                     onChange={this.handleAmountChange(idx)}
                     value={ingredient.notes}
-                    className= "addRecipe"
+                    className= "notes formInput"
                   />
+                
                   <button
                     type="button"
+                    className="xButton"
                     onClick={this.handleRemoveIngredient(idx)}>x
                   </button>
+                  </label>
                   </div>
                     ))}
+                  
                     <button
                       type="button"
+                      className="formButton"
                       onClick={this.handleAddIngredient}>
-                      CHILL ... ANOTHER ONE
+                      MORE INGREDIENTS
                     </button>
-                <p>
-                Directions
+                </div>
+                
+                <div className="formSection"><span>4</span>Directions</div>
+                <div className="formInnerWrap">
+                <label className="formLabels">Directions
                   <textarea
                     type="text"
                     name="recipe"
+                    className="formInput"
                     value={recipe}
                     placeholder="eg(1. Melt two table spoons of butter...)"
                     onChange={this.handleChange}
                   />
-                </p>
-                <p>
-                Vegeterian
+                </label>
+                </div>
+                
+                <div className="formSection"><span>5</span>Vege Friendly?</div>
+                <div className="formInnerWrap">
+                
+                <label className="formLabels">Vegeterian
                   <input type="checkbox"
                     name="isvegeterian"
                     checked={isvegeterian}
                     onChange={this.handleChecked}
                   />
-                </p>
-                <p>
-                Vegan
-                  <input type="checkbox"
-                    name="isvegan"
-                    checked={isvegan}
-                    onChange={this.handleChecked}
-                  />
-                </p>
-                <button>Submit</button>
-             </form>
+                </label>
+                <label className="formLabels">Vegan
+                    <input type="checkbox"
+                      name="isvegan"
+                      checked={isvegan}
+                      onChange={this.handleChecked}
+                    />
+                </label>
+                </div>
+
+                <button className="formButton">Submit</button>
+                </form>
+              </div>  
             </div>
         )
     }
