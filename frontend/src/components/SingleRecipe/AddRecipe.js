@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import SearchBar from "../Search/SearchBar.js"
 
 class AddRecipe extends React.Component {
   constructor(){
@@ -104,6 +105,7 @@ class AddRecipe extends React.Component {
              console.log(description)
         return(
             <div>
+              <SearchBar />
               <div className="formStyle">
                 <h1 className="formHeader">Add a New Recipe! <span>Let Your Everyone Know Whats Cooking</span></h1>
                 <form onSubmit={this.handleSubmit}>
