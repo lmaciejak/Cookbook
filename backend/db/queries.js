@@ -170,7 +170,7 @@ function getSingleRecipeById(req, res, next) {
   db.any(`SELECT
           COUNT(favorites.recipe_id)
           AS favorites_count,USERname,recipe_name,
-            recipe, img, isvegeterian,isvegan,recipe_timestamp, description
+            recipe, img, isvegeterian,isvegan,recipe_timestamp
           FROM recipes
           INNER JOIN USERs ON(recipes.user_id=users.user_id)
           INNER JOIN favorites ON(favorites.recipe_id=recipes.recipe_id)
@@ -198,7 +198,7 @@ function getIngredientsByRecipeId(req, res, next) {
 
 function getAllRecentUsersRecipes(req, res, next) {
   db.any(`SELECT *
-          FROM recipes 
+          FROM recipes
           WHERE user_id=${req.user.user_id}
           ORDER BY recipe_timestamp DESC;`)
     .then(data => {
