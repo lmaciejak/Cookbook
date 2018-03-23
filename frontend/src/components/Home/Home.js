@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import RecipeBox from "../SingleRecipe/RecipeBox"
+import LoginUser from "../Modals/LoginUser"
+import RegisterUser from "../Modals/RegisterUser";
 
 class Home extends React.Component {
 
@@ -33,7 +35,9 @@ class Home extends React.Component {
             <div className="header">
               <div></div>
               <h1>Welcome to CookBook </h1>
-              <div className="landButton"><a className="button"> Login </a> <a className="button"> Sign Up </a>  </div>
+              <div className="landButton">
+              <LoginUser className="button" /> 
+              <RegisterUser className="button" /></div>
           </div>
           </div>
 
