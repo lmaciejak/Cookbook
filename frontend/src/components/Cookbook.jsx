@@ -54,7 +54,7 @@ class Cookbook extends React.Component {
     const { id } = props.match.params
     const { user } = this.state
     return(
-      <Feed user={user} id={id}/>
+      <Feed user={user} />
     )
   }
   
@@ -71,7 +71,7 @@ class Cookbook extends React.Component {
         <Route path='/cb/profile/:id/addrecipe' component={UserProfile} />
         <Route exact path='/cb/:username/:recipeID' render={this.renderSingleRecipe} />
         <Route path='/cb/:username/:recipeID/edit' component={Recipe} />
-        <Route exact path='/cb/:id/feed' render={this.renderUserFeed} />
+        <Route exact path='/cb/feed' render={this.renderUserFeed} />
       </Switch>
     </div> )
   }

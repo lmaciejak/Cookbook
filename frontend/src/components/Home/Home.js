@@ -4,6 +4,7 @@ import RecipeBox from "../SingleRecipe/RecipeBox"
 import LoginUser from "../Modals/LoginUser"
 import RegisterUser from "../Modals/RegisterUser";
 
+
 class Home extends React.Component {
 
   constructor() {
@@ -46,9 +47,9 @@ class Home extends React.Component {
           </div>
 
           <div className="landingPageFeatured">
-              {favorites.map( (recipe) => {
-                  return  <RecipeBox recipe={recipe} />
-              })}
+              {favorites.map(recipe => (
+                    <RecipeBox recipe={recipe} />
+              ))}
           </div>
         </div>
       )
