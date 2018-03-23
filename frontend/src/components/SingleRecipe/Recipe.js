@@ -15,18 +15,25 @@ class SingleRecipe extends React.Component {
       isvegeterian: "",
       isvegan: "",
       comments: "",
-      isfavorite: false,
-      ingredients: []
+      ingredients: [],
+      canFavorite: true
     }
   }
 
   componentDidMount() {
     axios
-      .get(`/users/isfavorite/${4}/${2}`)
+      .get(`/users/isfavorite/${this.props.user.recipeID}`)
       .then( (res) => {
-        this.setState({
-          isfavorite: res.data
-        })
+        if (res.data.length === 0) {
+          this.setState({
+            canFavorite: false
+          })
+        } else {
+          this.setState({
+            canFavorite: true
+          })
+        }
+
       })
       .catch( (error) => {
         console.log(error);
@@ -69,16 +76,32 @@ class SingleRecipe extends React.Component {
       })
   }
 
-  handleSubmit = (e) => {
+  handleClickLike = (e) => {
     e.preventDefault();
-    console.log("fire from front end");
     axios
       .post("/users/favorite", {
         recipe_id: this.props.user.recipeID,
-        user_id: 2
       })
       .then( () => {
-        console.log("success");
+        this.setState({
+          canFavorite: true
+        })
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+  }
+
+  handleClickDisLike = (e) => {
+    e.preventDefault();
+    axios
+      .post(`/users/unfavorite`, {
+        recipe_id: this.props.user.recipeID,
+      })
+      .then( () => {
+        this.setState({
+          canFavorite: false
+        })
       })
       .catch( (err) => {
         console.log(err);
@@ -86,26 +109,17 @@ class SingleRecipe extends React.Component {
   }
 
   render() {
-    console.log("test: ", this.state.isfavorite)
-    let like = false;
+    console.log("test: ", this.state.canFavorite)
     const { favorites_count, username,
             recipe_name, recipe, img,
             isvegeterian, isvegan,
-            ingredients, comments } = this.state;
+            ingredients, comments, canFavorite } = this.state;
     if(this.props.user){
       return (
         <div>
           <h1>Name {recipe_name}</h1>
           <img src={img} alt="recipe_image" />
-          <form onSubmit={this.handleSubmit}>
-          { like? <button>like</button> : <button>dislike</button>}
-          {/*<input
-            type="image"
-            id="1"
-            src="http://www.iconsplace.com/download/orange-hearts-512.gif"
-            className="feedRecipeChefIcon"
-          />*/}
-          </form>
+          { !canFavorite?<button onClick={this.handleClickLike}>like</button> : <button onClick={this.handleClickDisLike}>dislike</button>}
           <p>Direction {recipe}</p>
           <ul type="none">Ingredient
             {

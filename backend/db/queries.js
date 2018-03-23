@@ -10,6 +10,21 @@ function logoutUser(req, res, next) {
   res.status(200).send("log out success");
 }
 
+function isFavorite(req, res, next) {
+  console.log("fire from isFavorite");
+  console.log(req.params);
+  db.any(`SELECT *
+          FROM favorites
+          WHERE user_id=${req.user.user_id}
+          AND recipe_id=${req.params.recipeID};`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
 function getSingleUser(req, res, next) {
   db.any(`SELECT user_id, username, email, first_name, last_name
           FROM users
@@ -256,6 +271,7 @@ function getMostTopRecipes(req, res, next) {
     });
 }
 
+
 /*-------------------------------POST Request----------------------------------*/
 
 function registerUser(req, res, next) {
@@ -372,6 +388,8 @@ function removeRecipe(req, res, next) {
 }
 
 function favoriteRecipe(req, res, next) {
+  console.log(req.body.recipe_id);
+  console.log("userrrrrr from passport: ", req.user.user_id);
   return db.none(
     "INSERT INTO favorites (recipe_id, user_id) VALUES (${recipe_id}, ${user_id});",
     {
@@ -389,8 +407,7 @@ function favoriteRecipe(req, res, next) {
 
 function unfavoriteRecipe(req, res, next) {
   return db.none(
-    "DELETE FROM favorites WHERE favorites_id=$1;",
-    [req.body.favorites_id]
+    `DELETE FROM favorites WHERE user_id=${req.user.user_id} AND recipe_id=${req.body.recipe_id};`,
   )
   .then(data => {
     res.json("deleted");
@@ -524,6 +541,7 @@ module.exports = {
   getIngredientsByRecipeId,
   getAllRecentUsersRecipes,
   getMostTopRecipes,
+  isFavorite,
   registerUser,
   addRecipeComment,
   removeRecipeComment,

@@ -21,8 +21,8 @@ router.get('/searchbyrecipe/:search', db.searchByRecipe);
 router.get('/singlerecipe/:recipeID', db.getSingleRecipeById);
 router.get('/getingredients/:recipeID', db.getIngredientsByRecipeId);
 router.get('/getallrecentusersrecipes/:userID', loginRequired, db.getAllRecentUsersRecipes);
-router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes)
-router.get('/getfolloweebyid/:userID/:followeeID', loginRequired, db.getFolloweeById);
+router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes);
+router.get('/isfavorite/:recipeID', loginRequired, db.isFavorite)
 
 
 /*POST Request*/
@@ -32,7 +32,7 @@ router.post('/removeComment/:recipeID', loginRequired, db.removeRecipeComment);
 router.post('/addRecipe', loginRequired, db.addRecipe);
 router.post('/addIngredients/:recipeID', loginRequired, db.addIngredients);
 router.post('/removeRecipe', loginRequired, db.removeRecipe);
-router.post('/favorite', loginRequired, db.favoriteRecipe);
+router.post('/favorite', db.favoriteRecipe);
 router.post('/unfavorite', loginRequired, db.unfavoriteRecipe);
 router.post('/followUser', loginRequired, db.followUser);
 router.post('/unfollowUser', loginRequired, db.unfollowUser);
