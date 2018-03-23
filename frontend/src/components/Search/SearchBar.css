@@ -29,7 +29,6 @@
   width: 100%; 
   /* background-color: #ff5f00; */
   padding-top: 10px; 
-  padding-bottom: 40px;
   border-bottom-width: 3px;  
   border-bottom-style: solid; 
   border-bottom-color: rgb(235, 232, 232); 
@@ -43,6 +42,71 @@
   margin-top: 0.7%; 
 }
 
+.react-autosuggest__container {
+  position: relative;
+  margin-left: 40%; 
+}
+
+.react-autosuggest__input {
+  width: 240px;
+  height: 10px;
+  padding: 10px 20px;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  border: 1px solid rgb(209, 209, 209);
+  border-radius: 4px; 
+}
+
+.react-autosuggest__input--focused {
+  outline: none;
+}
+
+.react-autosuggest__input--open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.react-autosuggest__suggestions-container {
+  display: none;
+}
+
+.react-autosuggest__suggestions-container--open {
+  display: block;
+  position: absolute;
+  top: 31px;
+  width: 280px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  z-index: 2;
+}
+
+.react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #ddd;
+}
+
+.footer {
+  margin: 9px 20px;
+  font-size: 12px;
+  color: #777;
+}
+
 .searchLink { 
   background-color: transparent; 
   border: none; 
@@ -53,7 +117,7 @@
   width: 2.5%; 
   position: fixed; 
   margin-left: 81%; 
-  margin-top: 0.4%; 
+  margin-top: -3%; 
 }
 
 .writingIcon:hover { 
@@ -65,14 +129,14 @@
   position: fixed; 
   font-size: 0.8em; 
   margin-left: 84%;
-  margin-top: -0.1%; 
+  margin-top: -3.6%; 
 }
 
 .heartIcon { 
   width: 2.5%; 
   position: fixed; 
   margin-left: 70.5%; 
-  margin-top: 0.4%; 
+  margin-top: -3%; 
 }
 
 .heartIcon:hover { 
@@ -84,7 +148,7 @@
   position: fixed; 
   font-size: 0.8em; 
   margin-left: 74%;
-  margin-top: -0.1%;  
+  margin-top: -3.6%;  
 }
 
 .feedLink { 
@@ -98,7 +162,7 @@
   width: 25px;
   height: 15px;
   left: 95%;
-  top: 1.9%;
+  top: 3.4%;
 }
 
 .bm-burger-bars {
