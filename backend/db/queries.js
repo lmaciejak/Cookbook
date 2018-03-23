@@ -150,13 +150,13 @@ function getUser(req, res, next) {
 function getSortedRecipes(req, res, next) {
   db.any(`SELECT
           COUNT(recipes.recipe_id)
-          AS favorites_count, recipe_name, recipe, img, USERs.username, description
+          AS favorites_count, recipe_name, recipe, img, users.username, description, recipes.recipe_id, users.user_id
           FROM recipes
           INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
           INNER JOIN users
           ON(recipes.user_id=users.user_id)
           WHERE recipes.recipe_id IN (SELECT recipes.recipe_id FROM recipes)
-          GROUP BY recipes.recipe_id, users.username
+          GROUP BY recipes.recipe_id, users.username, users.user_id
           ORDER BY favorites_count DESC;`)
     .then(data => {
       res.json(data);
@@ -164,6 +164,24 @@ function getSortedRecipes(req, res, next) {
     .catch(error => {
       res.json(error);
     });
+}
+
+
+function searchByRecipe(req, res, next) {
+  db.task('get-everything', t => {
+    return t.batch([
+        t.any(`SELECT recipe_name AS identifier, recipe_id FROM recipes WHERE LOWER (recipe_name) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT username AS identifier, user_id FROM users WHERE LOWER (username) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT first_name AS identifier, user_id FROM users WHERE LOWER (first_name) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT last_name AS identifier, user_id FROM users WHERE LOWER (last_name) LIKE LOWER('%${req.params.search}%')`)
+    ]);
+})
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
 }
 
 function getSingleRecipeById(req, res, next) {
@@ -511,4 +529,5 @@ module.exports = {
   getAllFollowersRecipes,
   getUser,
   getSortedRecipes,
+  searchByRecipe,
 };

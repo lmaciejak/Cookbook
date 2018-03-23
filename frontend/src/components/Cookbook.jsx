@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router'
 import Feed from './Feed/Feed'
 import UserProfile from './Profile/UserProfile'
 import Recipe from './SingleRecipe/Recipe'
+import LoginUser from './Modals/LoginUser'
+import RegisterUser from './Modals/RegisterUser'
 
 class Cookbook extends React.Component {
   constructor() {
@@ -36,7 +38,7 @@ class Cookbook extends React.Component {
     const { user } = this.state
     console.log(user);
     return(
-      <UserProfile user={user}/>
+      <UserProfile user={user} id={id}/>
     )
   }
 
@@ -52,7 +54,7 @@ class Cookbook extends React.Component {
     const { id } = props.match.params
     const { user } = this.state
     return(
-      <Feed user={user}/>
+      <Feed user={user} />
     )
   }
 
@@ -60,7 +62,6 @@ class Cookbook extends React.Component {
     const { user } = this.state
     return (
      <div>
-       <h1>Cookbook</h1>
       <Switch>
         <Route exact path='/cb/profile/:id' render={this.renderUserProfile} />
         <Route path='/cb/profile/:id/favorites' component={UserProfile} />
@@ -68,7 +69,7 @@ class Cookbook extends React.Component {
         <Route path='/cb/profile/:id/addrecipe' component={UserProfile} />
         <Route exact path='/cb/:username/:recipeID' render={this.renderSingleRecipe} />
         <Route path='/cb/:username/:recipeID/edit' component={Recipe} />
-        <Route exact path='/cb/:id/feed' render={this.renderUserFeed} />
+        <Route exact path='/cb/feed' render={this.renderUserFeed} />
       </Switch>
     </div> )
   }
