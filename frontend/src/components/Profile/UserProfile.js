@@ -3,7 +3,9 @@ import { Link, Route, Switch } from 'react-router-dom';
 import axios from "axios";
 import RecipeBox from "../SingleRecipe/RecipeBox";
 import Recipe from "../SingleRecipe/Recipe";
-import UserEdit from "../Profile/UserEdit";
+import UserEdit from ".//UserEdit";
+import UserFaves from './UserFaves'
+// import AddRecipe from './SingleRecipe/AddRecipe'
 
 class UserProfile extends React.Component {
 
@@ -11,6 +13,7 @@ class UserProfile extends React.Component {
     super(props);
     this.state = {
       allusersRecipes: [],
+      user: '',
       ingredients: [],
       selectedValue: "",
       favorites_count: "",
@@ -47,12 +50,21 @@ class UserProfile extends React.Component {
 
   componentDidMount() {
     axios
-			.get(`/users/allrecipes/${this.props.user}`)
+			.get(`/users/allrecipes/${this.props.id}`)
       .then( (res) => {
         this.setState({
           allusersRecipes: res.data
         })
       })
+      .then(
+        axios
+          .get(`/users/profile/${this.props.id}`)
+          .then(res =>{
+            this.setState({
+              user: res.data
+            })
+          })
+      )
 			.catch(err => {
 				console.log(err);
 			})
@@ -93,6 +105,32 @@ class UserProfile extends React.Component {
     }
   }
 
+  renderUserEdit = () =>{
+    const { user } = this.state
+    return(
+      <UserEdit user={user} />
+    )
+  }
+
+  renderAllUserRecipes = () =>{
+    const { allusersRecipes } = this.state
+    return(
+      <div>
+        <h1>All</h1>
+        {allusersRecipes.map(recipe =>(
+          <RecipeBox recipe={recipe} />
+        ))}
+      </div>
+    )
+  }
+
+  renderUserFavorites = props =>{
+    const { id } = props.match.params
+    return(
+      <UserFaves id={id} />
+    )
+  }
+
   render() {
     const { allusersRecipes } = this.state;
 
@@ -106,11 +144,10 @@ class UserProfile extends React.Component {
           </select>
           <button>Submit</button>
         </form>
-        {allusersRecipes.map( (recipe) => {
-          return  <RecipeBox recipe={recipe} />
-        })}
         <Switch>
-          <Route path="/cb/profile/:id/edit" component={UserEdit}/>
+          <Route exact path='/cb/profile/:id' render={this.renderAllUserRecipes} />
+          <Route path='/cb/profile/:id/favorites' render={this.renderUserFavorites} />
+          <Route path='/cb/profile/:id/edit' render={this.renderUserEdit} />
         </Switch>
       </div>
     )
