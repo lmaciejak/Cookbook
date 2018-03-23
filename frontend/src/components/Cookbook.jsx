@@ -9,8 +9,7 @@ import RegisterUser from './Modals/RegisterUser'
 
 class Cookbook extends React.Component {
   constructor() {
-    super()
-
+    super();
     this.state = {
       user: ''
     }
@@ -37,6 +36,7 @@ class Cookbook extends React.Component {
   renderUserProfile = props =>{
     const { id } = props.match.params
     const { user } = this.state
+    console.log(user);
     return(
       <UserProfile user={user} id={id}/>
     )
@@ -46,7 +46,7 @@ class Cookbook extends React.Component {
     const { username, recipeID } = props.match.params
     const { user } = this.state
     return(
-      <Recipe user={user}/>
+      <Recipe user={props.match.params}/>
     )
   }
 
