@@ -27,27 +27,27 @@ class Home extends React.Component {
   render() {
     const { favorites } = this.state;
     console.log(favorites)
-    return (
-      <div className="landingPage">
-        <div className="landingPhoto">
-          <div className="header">
-            <div></div>
-            <h1>Welcome to CookBook </h1>
-            <div className="landButton"><a className="button"> Login </a> <a className="button"> Sign Up </a>  </div>
-        </div>
-        </div>
+      return (
+        <div className="landingPage">
+          <div className="landingPhoto">
+            <div className="header">
+              <div></div>
+              <h1>Welcome to CookBook </h1>
+              <div className="landButton"><a className="button"> Login </a> <a className="button"> Sign Up </a>  </div>
+          </div>
+          </div>
 
-        <div>
-            <h2 className="landingPageHeader">The Illest Motherfucking Recipes on Cookbook</h2>
-        </div>
+          <div>
+              <h2 className="landingPageHeader">Best Recipes on Cookbook</h2>
+          </div>
 
-        <div className="landingPageFeatured">
-            {favorites.map( (recipe) => {
-                return  <RecipeBox recipe={recipe} />
-            })}
+          <div className="landingPageFeatured">
+              {favorites.map( (recipe) => {
+                  return  <RecipeBox recipe={recipe} />
+              })}
+          </div>
         </div>
-      </div>
-    )
+      )
   }
 }
 

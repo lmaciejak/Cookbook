@@ -14,7 +14,7 @@ class UserFaves extends React.Component{
 
   getFavRecipes = () =>{
     const { favoriteRecipes } = this.state
-    axios.get(`/users/profile/${this.props.user.user_id}/favorites`)
+    axios.get(`/users/profile/${this.props.id}/favorites`)
     .then(response =>{
       this.setState({
         favoriteRecipes: response.data
@@ -26,24 +26,20 @@ class UserFaves extends React.Component{
   }
 
   componentDidUpdate(prevProps, prevState){
-    if(prevProps.user.data !== this.props.user.data){
+    if(prevProps !== this.props){
       this.getFavRecipes()
     }
   }
 
 
   render(){
-    console.log(this.props.user.username)
     const { favoriteRecipes } = this.state
-    if(this.props.user){
+    if(this.props){
       return(
         <div>
-          <h2>Your Favorite Recipes</h2>
-          <div>
             {favoriteRecipes.map(recipe =>(
-              <RecipeBox recipe={recipe} user={this.props.user} favorites={recipe.favorites}/>
+              <RecipeBox recipe={recipe} />
             ))}
-          </div>
         </div>
       )
     }

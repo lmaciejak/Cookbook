@@ -15,7 +15,7 @@ const SingleRecipe = (props) => {
       <p>Direction {recipe}</p>
       <ul type="none">Ingredient
         {
-          ingredients.map( (ingredient) => {
+          ingredients.map(ingredient => {
             return <li key={Math.random()}>{ingredient.amount}{" "}{ingredient.name}</li>
           })
         }

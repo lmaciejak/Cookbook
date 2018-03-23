@@ -23,19 +23,12 @@ class UserEdit extends React.Component{
 
   submitEdit = () =>{
     const { usernameInput, firstnameInput, lastnameInput, emailInput, relogin } = this.state
-    const uniqueUsername = this.props.allUsers.data.find(user => user.username === usernameInput)
 
-    if(!uniqueUsername){
-      let newUsername = usernameInput ? usernameInput : this.props.user.data[0].username
-      let newFirstName = firstnameInput ? firstnameInput : this.props.user.data[0].first_name
-      let newLastName = lastnameInput ? lastnameInput : this.props.user.data[0].last_name
-      let newEmail = emailInput ? emailInput : this.props.user.data[0].email
-
-      axios.patch(`/users/edit/${this.props.user.data[0].user_id}`,{
-        username: newUsername,
-        first_name: newFirstName,
-        last_name: newLastName,
-        email: newEmail
+      axios.patch(`/users/edit/${this.props.user[0].user_id}`,{
+        username: usernameInput,
+        first_name: firstnameInput,
+        last_name: lastnameInput,
+        email: emailInput
       })
       .then(
         axios.get('/users/logout')
@@ -53,26 +46,15 @@ class UserEdit extends React.Component{
         })
       )
     }
-    else {
-      this.setState({
-        usernameInput: '',
-        firstnameInput: '',
-        lastnameInput: '',
-        emailInput: '',
-        message: 'Username is taken'
-      })
-    }
-  }
 
 
   render(){
     const {  usernameInput, relogin, firstnameInput, lastnameInput, emailInput, message } = this.state
     console.log(this.props)
-    if (this.props.user.data) {
-      if(!this.props.isProfile){
+    if (this.props.user) {
         return(
           <div>
-            <h2>Edit Profile Information for {this.props.user.data[0].username}</h2>
+            <h2>Edit Profile Information for {this.props.user.username}</h2>
             <div>
               <label>
                   New Username: {" "}
@@ -121,12 +103,6 @@ class UserEdit extends React.Component{
             <button onClick={this.submitEdit}>Submit Changes</button>
           </div>
         )
-      }
-      else {
-        return(
-          <div>This is not your profile to edit</div>
-        )
-      }
   }
     else {
       return (
