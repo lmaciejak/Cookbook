@@ -57,13 +57,11 @@ class Cookbook extends React.Component {
       <Feed user={user} />
     )
   }
-  
+
   render() {
     const { user } = this.state
     return (
      <div>
-       <h1>Cookbook</h1>
-       <LoginUser />
       <Switch>
         <Route exact path='/cb/profile/:id' render={this.renderUserProfile} />
         <Route path='/cb/profile/:id/favorites' component={UserProfile} />
