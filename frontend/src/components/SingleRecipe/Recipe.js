@@ -59,38 +59,46 @@ class SingleRecipe extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const { favorites_count, username,
             recipe_name, recipe, img,
             isvegeterian, isvegan,
             ingredients, comments } = this.state;
-    return (
-      <div>
-        <h1>Name {recipe_name}</h1>
-        <img src={img} alt="recipe_image" />
-        <p>Direction {recipe}</p>
-        <ul type="none">Ingredient
-          {
-            ingredients? ingredients.map( (ingredient) => {
-              return <li key={Math.random()}>{ingredient.amount}{" "}{ingredient.name}</li>
-            }) : "There are no any ingredients"
-          }
-        </ul>
-        <h6>Chef {username}</h6>
-        <p>
-          Vegeterian {isvegeterian}{" "}
-          Vegan {isvegan}{" "}
-          Favorites {favorites_count}{" "}
-        </p>
-        <ul type="none">Comments
-          {
-            comments? comments.map( (comment) => {
-              return <li key={Math.random()}>{comment.comment}</li>
-            }) : "There are no any comments"
-          }
-        </ul>
-        <Link to={`/cb/profile/${this.props.user.username}`}>Back</Link>
-      </div>
-    )
+    if(this.props.user){
+      return (
+        <div>
+          <h1>Name {recipe_name}</h1>
+          <img src={img} alt="recipe_image" />
+          <p>Direction {recipe}</p>
+          <ul type="none">Ingredient
+            {
+              ingredients ? ingredients.map(ingredient => (
+                 <li key={Math.random()}>{ingredient.amount}{" "}{ingredient.name}</li>
+              )) : "There are no any ingredients"
+            }
+          </ul>
+          <h6>Chef {username}</h6>
+          <p>
+            Vegeterian {isvegeterian}{" "}
+            Vegan {isvegan}{" "}
+            Favorites {favorites_count}{" "}
+          </p>
+          <ul type="none">Comments
+            {
+              comments? comments.map(comment => (
+                 <li key={Math.random()}>{comment.comment}</li>
+              )) : "There are no any comments"
+            }
+          </ul>
+          <Link to={`/cb/profile/${this.props.user.username}`}>Back</Link>
+        </div>
+      )
+    }
+    else {
+      return(
+        <div>loading feed</div>
+      )
+    }
   }
 }
 export default SingleRecipe;

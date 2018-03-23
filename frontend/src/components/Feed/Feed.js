@@ -8,9 +8,9 @@ import cheficon from '../../images/cheficon.png'
 import hearticon from '../../images/hearticon.png'
 
 class Feed extends React.Component{
-  constructor(){
-    super()
-  
+  constructor(props){
+    super(props)
+
     this.state = {
       followeedata: '',
   }
@@ -22,7 +22,7 @@ class Feed extends React.Component{
       .get(`/users/allfollowersrecipes/3`)
       .then(res => {
         this.setState({
-          message: 'success', 
+          message: 'success',
           followeedata: res.data,
         });
       })
@@ -30,7 +30,7 @@ class Feed extends React.Component{
         this.setState({
           message: `Error logging in. ${err}`
         });
-      });  
+      });
   }
 
   render(){
@@ -64,7 +64,7 @@ class Feed extends React.Component{
   }
 }
 
-export default Feed 
+export default Feed
 
 
 
