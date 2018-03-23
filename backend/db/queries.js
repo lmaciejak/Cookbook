@@ -165,10 +165,10 @@ function getSortedRecipes(req, res, next) {
 function searchByRecipe(req, res, next) {
   db.task('get-everything', t => {
     return t.batch([
-        t.any(`SELECT recipe_name, recipe_id FROM recipes WHERE LOWER (recipe_name) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT username, user_id FROM users WHERE LOWER (username) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT first_name, user_id FROM users WHERE LOWER (first_name) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT last_name, user_id FROM users WHERE LOWER (last_name) LIKE LOWER('%${req.params.search}%')`)
+        t.any(`SELECT recipe_name AS identifier, recipe_id FROM recipes WHERE LOWER (recipe_name) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT username AS identifier, user_id FROM users WHERE LOWER (username) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT first_name AS identifier, user_id FROM users WHERE LOWER (first_name) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT last_name AS identifier, user_id FROM users WHERE LOWER (last_name) LIKE LOWER('%${req.params.search}%')`)
     ]);
 })
           .then(data => {

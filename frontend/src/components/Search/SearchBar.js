@@ -8,12 +8,12 @@ import writingicon from '../../images/writingicon.png'
 import hearticon from '../../images/hearticon.png'
 
 function getSuggestionValue(suggestion) {
-  return suggestion.name;
+  return suggestion;
 }
 
 function renderSuggestion(suggestion) {
   return (
-    <span>{suggestion.name}</span>
+    <span>{suggestion}</span>
   );
 }
 
@@ -43,10 +43,15 @@ class Searchbar extends Component {
   };
   
   onSuggestionsFetchRequested = ({ value }) => {
-    fetch(`https://swapi.co/api/people/?search=${value}`)
+    fetch(`/users/searchbyrecipe/${value}`)
       .then(response => response.json())
-      .then(data => this.setState({ suggestions: data.results, 
-      searchInput: data}))
+      .then(data => {
+        const newData = data.map((elem) => elem.map((name) => name.identifier)).reduce(function(prev, curr) {
+          return prev.concat(curr)})
+
+        this.setState({
+          suggestions: newData, searchInput: data })
+        })
   }
 
   onSuggestionsClearRequested = () => {
@@ -66,9 +71,11 @@ class Searchbar extends Component {
   }
 
   render() {
+    console.log('searchinput', this.state.searchInput)
+    console.log('suggestions',this.state.suggestions)
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: "Search Star Wars",
+      placeholder: "Search by recipe name, username, full name",
       value,
       onChange: this.onChange
     };
