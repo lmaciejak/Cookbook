@@ -15,11 +15,29 @@ class SingleRecipe extends React.Component {
       isvegeterian: "",
       isvegan: "",
       comments: "",
-      ingredients: []
+      ingredients: [],
+      canFavorite: true
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    axios
+      .get(`/users/isfavorite/${this.props.user.recipeID}`)
+      .then( (res) => {
+        if (res.data.length === 0) {
+          this.setState({
+            canFavorite: false
+          })
+        } else {
+          this.setState({
+            canFavorite: true
+          })
+        }
+
+      })
+      .catch( (error) => {
+        console.log(error);
+      })
     axios
       .get(`/users/singlerecipe/${this.props.user.recipeID}`)
       .then( (res) => {
@@ -58,17 +76,50 @@ class SingleRecipe extends React.Component {
       })
   }
 
+  handleClickLike = (e) => {
+    e.preventDefault();
+    axios
+      .post("/users/favorite", {
+        recipe_id: this.props.user.recipeID,
+      })
+      .then( () => {
+        this.setState({
+          canFavorite: true
+        })
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+  }
+
+  handleClickDisLike = (e) => {
+    e.preventDefault();
+    axios
+      .post(`/users/unfavorite`, {
+        recipe_id: this.props.user.recipeID,
+      })
+      .then( () => {
+        this.setState({
+          canFavorite: false
+        })
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+  }
+
   render() {
-    console.log(this.props)
+    console.log("test: ", this.state.canFavorite)
     const { favorites_count, username,
             recipe_name, recipe, img,
             isvegeterian, isvegan,
-            ingredients, comments } = this.state;
+            ingredients, comments, canFavorite } = this.state;
     if(this.props.user){
       return (
         <div>
           <h1>Name {recipe_name}</h1>
           <img src={img} alt="recipe_image" />
+          { !canFavorite?<button onClick={this.handleClickLike}>like</button> : <button onClick={this.handleClickDisLike}>dislike</button>}
           <p>Direction {recipe}</p>
           <ul type="none">Ingredient
             {

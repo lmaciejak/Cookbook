@@ -20,7 +20,7 @@ class Cookbook extends React.Component {
     .then(response =>{
       if(response.data){
         this.setState({
-          user: response.data
+          user: response.data[0]
         })
       }
     })
@@ -46,7 +46,7 @@ class Cookbook extends React.Component {
     const { username, recipeID } = props.match.params
     const { user } = this.state
     return(
-      <Recipe user={props.match.params}/>
+      <Recipe user={props.match.params} />
     )
   }
 
@@ -57,13 +57,11 @@ class Cookbook extends React.Component {
       <Feed user={user} />
     )
   }
-  
+
   render() {
     const { user } = this.state
     return (
      <div>
-       <h1>Cookbook</h1>
-       <LoginUser />
       <Switch>
         <Route exact path='/cb/profile/:id' render={this.renderUserProfile} />
         <Route path='/cb/profile/:id/favorites' component={UserProfile} />

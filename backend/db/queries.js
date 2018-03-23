@@ -15,8 +15,8 @@ function isFavorite(req, res, next) {
   console.log(req.params);
   db.any(`SELECT *
           FROM favorites
-          WHERE user_id=2
-          AND recipe_id=4;`)
+          WHERE user_id=${req.user.user_id}
+          AND recipe_id=${req.params.recipeID};`)
     .then(data => {
       res.json(data);
     })
@@ -75,6 +75,18 @@ function getFollowing(req, res, next) {
   .catch(error => {
     res.json(error);
   });
+}
+
+function getFolloweeById(req, res, next) {
+  db.any(`SELECT *
+      FROM followings
+      WHERE follower_id=$1 AND followee_id=$2`,[req.params.userID,req.params.followeeID])
+      .then(data => {
+        res.json(data)
+      })
+      .catch(error => {
+        res.json(error)
+      })
 }
 
 function getRecipeComments(req, res, next) {
@@ -376,13 +388,13 @@ function removeRecipe(req, res, next) {
 }
 
 function favoriteRecipe(req, res, next) {
-  console.log("fire");
-  console.log(req.body.user_id);
+  console.log(req.body.recipe_id);
+  console.log("userrrrrr from passport: ", req.user.user_id);
   return db.none(
     "INSERT INTO favorites (recipe_id, user_id) VALUES (${recipe_id}, ${user_id});",
     {
       recipe_id: req.body.recipe_id,
-      user_id: req.body.user_id
+      user_id: req.user.user_id
     }
   )
   .then(data => {
@@ -395,8 +407,7 @@ function favoriteRecipe(req, res, next) {
 
 function unfavoriteRecipe(req, res, next) {
   return db.none(
-    "DELETE FROM favorites WHERE favorites_id=$1;",
-    [req.body.favorites_id]
+    `DELETE FROM favorites WHERE user_id=${req.user.user_id} AND recipe_id=${req.body.recipe_id};`,
   )
   .then(data => {
     res.json("deleted");
@@ -407,11 +418,13 @@ function unfavoriteRecipe(req, res, next) {
 }
 
 function followUser(req, res, next) {
+  console.log(req.body.follower_id)
+  console.log(req.body.followee_id)
   return db.none(
     "INSERT INTO followings (follower_id, followee_id) VALUES (${follower_id}, ${followee_id})",
     {
-      follower_id: req.user.user_id,
-      followee_id: req.body.user_id
+      follower_id: req.body.follower_id,
+      followee_id: req.body.followee_id
     }
   )
   .then(data => {
@@ -424,8 +437,8 @@ function followUser(req, res, next) {
 
 function unfollowUser(req, res, next) {
   return db.none(
-    "DELETE FROM followings WHERE follows_id=$1;",
-    [req.body.follows_id]
+    "DELETE FROM followings WHERE follower_id=$1 AND followee_id=$2",
+    [req.body.follower_id, req.body.followee_id]
   )
   .then(data => {
     res.json("deleted");
@@ -520,6 +533,7 @@ module.exports = {
   logoutUser,
   getSingleUser,
   getSingleUserFavorites,
+  getFolloweeById,
   getFollowers,
   getFollowing,
   getRecipeComments,
