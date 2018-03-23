@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import RecipeBox from "../SingleRecipe/RecipeBox"
+import LoginUser from '../Modals/LoginUser'
 
 class Home extends React.Component {
 
@@ -42,9 +43,9 @@ class Home extends React.Component {
           </div>
 
           <div className="landingPageFeatured">
-              {favorites.map( (recipe) => {
-                  return  <RecipeBox recipe={recipe} />
-              })}
+              {favorites.map(recipe => (
+                    <RecipeBox recipe={recipe} />
+              ))}
           </div>
         </div>
       )
