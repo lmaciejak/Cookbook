@@ -14,6 +14,7 @@ class UserProfile extends React.Component {
     this.state = {
       allusersRecipes: [],
       user: '',
+      canFollow: true,
       ingredients: [],
       selectedValue: "",
       favorites_count: "",
@@ -65,6 +66,27 @@ class UserProfile extends React.Component {
             })
           })
       )
+      .then(
+        axios
+          .get(`/users/getfolloweebyid/${this.props.user.user_id}/${this.props.id}`)
+          .then(res =>{
+            if(this.props.user.user_id === this.props.id){
+              this.setState({
+                canFollow: false
+              })
+            }
+            else if(res.data === []){
+              this.setState({
+                canFollow: true
+              })
+            }
+            else {
+              this.setState({
+                canFollow: false
+              })
+            }
+          })
+      )
 			.catch(err => {
 				console.log(err);
 			})
@@ -75,6 +97,41 @@ class UserProfile extends React.Component {
     this.setState({
       selectedValue: e.target.value
     })
+  }
+
+  handleUserFollow = () => {
+    axios
+      .post('/users/followUser',{
+        follower_id: this.props.user.user_id,
+        followee_id: this.props.id
+      })
+      .then(res =>{
+        this.setState({
+          canFollow: false
+        })
+        console.log('Followed success')
+      })
+      .catch(error =>{
+        console.log('Failed follow')
+      })
+  }
+
+  handleUserUnfollow = () => {
+    console.log(this.props.user)
+    axios
+      .post('/users/unfollowUser',{
+        follower_id: this.props.user.user_id,
+        followee_id: this.props.id
+      })
+      .then(res =>{
+        this.setState({
+          canFollow: true
+        })
+        console.log('unfollowed user')
+      })
+      .catch(error =>{
+        console.log('failed to unfollow')
+      })
   }
 
   handleSubmit = (e) => {
@@ -132,7 +189,8 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    const { allusersRecipes } = this.state;
+    const { allusersRecipes, canFollow } = this.state;
+    let isOwnProfile = this.props.user.user_id === this.props.id
 
     return(
       <div>
@@ -144,6 +202,13 @@ class UserProfile extends React.Component {
           </select>
           <button>Submit</button>
         </form>
+        <div>
+          {canFollow ?
+              <button onClick={this.handleUserFollow}>FOLLOW</button>
+                :
+              <button onClick={this.handleUserUnfollow}>UNFOLLOW</button>
+          }
+        </div>
         <Switch>
           <Route exact path='/cb/profile/:id' render={this.renderAllUserRecipes} />
           <Route path='/cb/profile/:id/favorites' render={this.renderUserFavorites} />

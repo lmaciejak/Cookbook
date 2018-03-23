@@ -37,11 +37,10 @@ class Home extends React.Component {
               <div></div>
               <h1>Welcome to CookBook </h1>
               <div className="landButton">
-              <LoginUser className="button" /> 
+              <LoginUser className="button" />
               <RegisterUser className="button" /></div>
           </div>
           </div>
-
           <div>
               <h2 className="landingPageHeader">Best Recipes on Cookbook</h2>
           </div>
