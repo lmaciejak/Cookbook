@@ -182,6 +182,7 @@ function searchByRecipe(req, res, next) {
           .catch(error => {
             res.json(error);
           });
+}
 
 function getSingleRecipeById(req, res, next) {
   db.any(`SELECT
