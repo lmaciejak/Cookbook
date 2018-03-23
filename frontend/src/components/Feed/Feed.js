@@ -34,28 +34,29 @@ class Feed extends React.Component{
   }
 
   render(){
-    console.log('followeedata', this.state.followeedata)
+    console.log(this.state.followeedata)
+    console.log('User:', this.props.user)
     return(
       <div>
-        <Searchbar /> 
+        <Searchbar />
         <div className="feedContainer">
-        <h2> Explore meals your friends and family are cooking</h2> 
+        <h2> Explore meals your friends and family are cooking</h2>
 
-        <div className="feedBoxContainer"> {this.state.followeedata ? this.state.followeedata.map((elem) => { 
-          return(<div className="feedBox"> 
-                  <div className="feedBoxDescription">  
+        <div className="feedBoxContainer"> {this.state.followeedata ? this.state.followeedata.map((elem) => {
+          return(<div className="feedBox">
+                  <div className="feedBoxDescription">
                     <h4 className="feedRecipeName"> {elem.recipe_name} </h4>
                     <div className="feedRecipeIcons">
-                    
+
                     <img src="https://cdn0.iconfinder.com/data/icons/kitchen-and-cooking/512/salting_cooking_hand_sprinkle_salt_flat_design_icon-256.png" className="feedRecipeChefIcon"/>
                     <p className="feedRecipeUsername"> {elem.username} </p>
                     <img src="http://www.iconsplace.com/download/orange-hearts-512.gif" className="feedRecipeChefIcon"/>
                     <p className="feedRecipeFavorites"> {elem.favorites_count} </p>
                     </div>
                     </div>
-                    <Link to={`/user/recipe/${elem.recipe_id}`} className="feedLink">
+                    <Link to={`/cb/${elem.username}/${elem.recipe_id}`} className="feedLink">
                     <img className="feedImage" src={elem.img}/>
-                    </Link> 
+                    </Link>
   </div>)
         }) : ''} </div>
         </div>
