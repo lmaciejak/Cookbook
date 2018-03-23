@@ -15,11 +15,22 @@ class SingleRecipe extends React.Component {
       isvegeterian: "",
       isvegan: "",
       comments: "",
+      isfavorite: false,
       ingredients: []
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    axios
+      .get(`/users/isfavorite/${4}/${2}`)
+      .then( (res) => {
+        this.setState({
+          isfavorite: res.data
+        })
+      })
+      .catch( (error) => {
+        console.log(error);
+      })
     axios
       .get(`/users/singlerecipe/${this.props.user.recipeID}`)
       .then( (res) => {
@@ -58,8 +69,25 @@ class SingleRecipe extends React.Component {
       })
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("fire from front end");
+    axios
+      .post("/users/favorite", {
+        recipe_id: this.props.user.recipeID,
+        user_id: 2
+      })
+      .then( () => {
+        console.log("success");
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+  }
+
   render() {
-    console.log(this.props)
+    console.log("test: ", this.state.isfavorite)
+    let like = false;
     const { favorites_count, username,
             recipe_name, recipe, img,
             isvegeterian, isvegan,
@@ -69,6 +97,15 @@ class SingleRecipe extends React.Component {
         <div>
           <h1>Name {recipe_name}</h1>
           <img src={img} alt="recipe_image" />
+          <form onSubmit={this.handleSubmit}>
+          { like? <button>like</button> : <button>dislike</button>}
+          {/*<input
+            type="image"
+            id="1"
+            src="http://www.iconsplace.com/download/orange-hearts-512.gif"
+            className="feedRecipeChefIcon"
+          />*/}
+          </form>
           <p>Direction {recipe}</p>
           <ul type="none">Ingredient
             {
