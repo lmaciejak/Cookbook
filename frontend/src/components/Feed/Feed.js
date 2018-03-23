@@ -3,10 +3,13 @@ import Searchbar from "../Search/SearchBar";
 import axios from "axios";
 import RecipeBox from "../SingleRecipe/RecipeBox";
 import { Link } from "react-router-dom";
+import "./Feed.css"
+import cheficon from '../../images/cheficon.png'
+import hearticon from '../../images/hearticon.png'
 
 class Feed extends React.Component{
-  constructor(props){
-    super(props)
+  constructor(){
+    super()
   
     this.state = {
       followeedata: '',
@@ -31,24 +34,31 @@ class Feed extends React.Component{
   }
 
   render(){
-    console.log('res', this.state.followeedata)
+    console.log('followeedata', this.state.followeedata)
     return(
       <div>
         <Searchbar /> 
-        <h2> What your loved ones are cooking </h2> 
-        <button> See your favorite recipes </button> 
+        <div className="feedContainer">
+        <h2> Explore meals your friends and family are cooking</h2> 
 
-        <p> {this.state.followeedata ? this.state.followeedata.map((elem) => { 
-          return(<div>   
-                    <h3> username: {elem.username} </h3>      
-                    <h3>{elem.recipe_name}</h3>
+        <div className="feedBoxContainer"> {this.state.followeedata ? this.state.followeedata.map((elem) => { 
+          return(<div className="feedBox"> 
+                  <div className="feedBoxDescription">  
+                    <h4 className="feedRecipeName"> {elem.recipe_name} </h4>
+                    <div className="feedRecipeIcons">
+                    
+                    <img src="https://cdn0.iconfinder.com/data/icons/kitchen-and-cooking/512/salting_cooking_hand_sprinkle_salt_flat_design_icon-256.png" className="feedRecipeChefIcon"/>
+                    <p className="feedRecipeUsername"> {elem.username} </p>
+                    <img src="http://www.iconsplace.com/download/orange-hearts-512.gif" className="feedRecipeChefIcon"/>
+                    <p className="feedRecipeFavorites"> {elem.favorites_count} </p>
+                    </div>
+                    </div>
                     <Link to={`/user/recipe/${elem.recipe_id}`} className="feedLink">
-                    <img src={elem.img} />
+                    <img className="feedImage" src={elem.img}/>
                     </Link> 
-                    <h4>{elem.user_id}</h4>
-                    <p>favorites: {elem.favorites_count}</p>  </div>)
-        }) : ''} </p>
- 
+  </div>)
+        }) : ''} </div>
+        </div>
       </div>
     )
   }
@@ -57,12 +67,13 @@ class Feed extends React.Component{
 export default Feed 
 
 
+
 // favorites_count
 // :
 // "2"
 // img
 // :
-// "https://www.fifteenspatulas.com/wp-content/uploads/2016/01/Fried-Calamari-Recipe-Fifteen-Spatulas-1.jpg"
+// "https://d1alt1wkdk73qo.cloudfront.net/images/guide/01751a3e8de64ce289286aa8b75e4bfe/640x478_ac.jpg"
 // isvegan
 // :
 // false
@@ -80,7 +91,7 @@ export default Feed
 // "Fried Calamari"
 // recipe_timestamp
 // :
-// "2018-03-17T22:35:48.369Z"
+// "2018-03-21T17:10:42.230Z"
 // user_id
 // :
 // 1

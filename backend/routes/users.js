@@ -17,10 +17,12 @@ router.get('/allrecipes/:userID', db.getAllResipesByUserID);
 router.get('/allfollowersrecipes/:userID', loginRequired, db.getAllFollowersRecipes);
 router.get('/', loginRequired, db.getUser);
 router.get('/sortedrecipes', db.getSortedRecipes);
+router.get('/searchbyrecipe/:search', db.searchByRecipe);
 router.get('/singlerecipe/:recipeID', db.getSingleRecipeById);
 router.get('/getingredients/:recipeID', db.getIngredientsByRecipeId);
 router.get('/getallrecentusersrecipes/:userID', loginRequired, db.getAllRecentUsersRecipes);
 router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes);
+
 
 /*POST Request*/
 router.post('/register', db.registerUser);
