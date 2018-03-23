@@ -110,18 +110,22 @@ function getAllResipesByUserID(req, res, next) {
 }
 
 function getAllFollowersRecipes(req, res, next) {
- db.any(`SELECT recipe_name, recipes.recipe_id, recipe, recipe_name, img, recipe_timestamp, isVegeterian, 
- isVegan, COUNT(favorites.recipe_id) AS favorites_count, users.username, users.user_id
+ db.any(`SELECT recipe_name, recipes.recipe_id, description,
+           recipe, recipe_name, img, recipe_timestamp,
+           isVegeterian, isVegan,
+        COUNT(favorites.recipe_id)
+        AS favorites_count, users.username, users.user_id
         FROM recipes
-        JOIN favorites
+        INNER JOIN favorites
         ON recipes.recipe_id = favorites.recipe_id
-        JOIN users 
+        INNER JOIN users
         ON recipes.user_id = users.user_id
-        WHERE recipes.user_id IN (SELECT followee_id
-                          FROM followings
-                          WHERE follower_id =${req.params.userID})
- GROUP BY recipes.recipe_id, users.user_id
- ORDER BY recipe_timestamp DESC;`)
+        WHERE recipes.user_id
+        IN (SELECT followee_id
+        FROM followings
+        WHERE follower_id =${req.params.userID})
+        GROUP BY recipes.recipe_id, users.user_id
+        ORDER BY recipe_timestamp DESC;`)
          .then(data => {
            res.json(data);
          })
@@ -146,7 +150,7 @@ function getUser(req, res, next) {
 function getSortedRecipes(req, res, next) {
   db.any(`SELECT
           COUNT(recipes.recipe_id)
-          AS favorites_count, recipe_name, recipe, img, USERs.username
+          AS favorites_count, recipe_name, recipe, img, USERs.username, description
           FROM recipes
           INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
           INNER JOIN users
@@ -161,6 +165,7 @@ function getSortedRecipes(req, res, next) {
       res.json(error);
     });
 }
+
 
 function searchByRecipe(req, res, next) {
   db.task('get-everything', t => {
@@ -177,6 +182,65 @@ function searchByRecipe(req, res, next) {
           .catch(error => {
             res.json(error);
           });
+
+function getSingleRecipeById(req, res, next) {
+  db.any(`SELECT
+          COUNT(favorites.recipe_id)
+          AS favorites_count,USERname,recipe_name,
+            recipe, img, isvegeterian,isvegan,recipe_timestamp
+          FROM recipes
+          INNER JOIN USERs ON(recipes.user_id=users.user_id)
+          INNER JOIN favorites ON(favorites.recipe_id=recipes.recipe_id)
+          WHERE recipes.recipe_id=${req.params.recipeID}
+          GROUP BY recipes.recipe_id, users.username;`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getIngredientsByRecipeId(req, res, next) {
+  db.any(`SELECT *
+          FROM ingredients
+          WHERE recipe_id=${req.params.recipeID};`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getAllRecentUsersRecipes(req, res, next) {
+  db.any(`SELECT *
+          FROM recipes
+          WHERE user_id=${req.user.user_id}
+          ORDER BY recipe_timestamp DESC;`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getMostTopRecipes(req, res, next) {
+  db.any(`SELECT
+          COUNT(recipes.recipe_id)
+          AS favorites_count, recipe_name, recipe, img
+          FROM recipes
+          INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
+          WHERE recipes.USER_id=${req.user.user_id}
+          GROUP BY recipes.recipe, recipes.recipe_name, recipes.img
+          ORDER BY favorites_count DESC`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
 }
 
 /*-------------------------------POST Request----------------------------------*/
@@ -234,13 +298,14 @@ function removeRecipeComment(req, res, next) {
 
 function addRecipe(req, res, next) {
   return db.one(
-    "INSERT INTO recipes (user_id, recipe_name, recipe, img, isvegeterian, isvegan)"
-    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${img}, ${isvegeterian}, ${isvegan})"
+    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan)"
+    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan})"
     + " RETURNING recipe_id",
     {
-      user_id: req.body.user_id,
+      user_id: req.user.user_id,
       recipe_name: req.body.recipe_name,
       recipe: req.body.recipe,
+      description: req.body.description,
       img: req.body.img,
       isvegeterian: req.body.isvegeterian,
       isvegan: req.body.isvegan
@@ -256,7 +321,8 @@ function addRecipe(req, res, next) {
 
 function addIngredients(req, res, next) {
   return db.task(t => {
-      const ingredients  = JSON.parse(req.body.ingredients);
+    // const ingredients  = JSON.parse(req.body.ingredients);
+      const ingredients = req.body.ingredients;
       const queries = ingredients.map(ingredient => {
             return t.none("INSERT INTO ingredients (recipe_id, amount, name, notes) "
             + " VALUES (${recipe_id}, ${amount}, ${name}, ${notes})",
@@ -394,12 +460,13 @@ function editUser(req, res, next) {
 function editRecipe(req, res, next) {
   return db.none(
     `UPDATE recipes
-     SET user_id=$1, recipe_name=$2, recipe=$3, img=$4, isvegeterian=$5, isvegan=$6
+     SET user_id=$1, recipe_name=$2, recipe=$3, description=$4, img=$5, isvegeterian=$6, isvegan=$7
      WHERE recipe_id=${req.params.recipeID};`,
     [
       req.body.user_id, req.body.recipe_name,
-      req.body.recipe, req.body.img,
-      req.body.isvegeterian, req.body.isvegan
+      req.body.recipe, req.body.description,
+      req.body.img, req.body.isvegeterian,
+      req.body.isvegan
     ]
   )
   .then(data => {
@@ -437,6 +504,10 @@ module.exports = {
   getFollowers,
   getFollowing,
   getRecipeComments,
+  getSingleRecipeById,
+  getIngredientsByRecipeId,
+  getAllRecentUsersRecipes,
+  getMostTopRecipes,
   registerUser,
   addRecipeComment,
   removeRecipeComment,
