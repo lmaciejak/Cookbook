@@ -406,11 +406,12 @@ function favoriteRecipe(req, res, next) {
 }
 
 function unfavoriteRecipe(req, res, next) {
+  console.log(req.body.recipe_id);
+  console.log("userrrrrr from passport: ", req.user.user_id);
   return db.none(
-    `DELETE FROM favorites WHERE user_id=${req.user.user_id} AND recipe_id=${req.body.recipe_id};`,
-  )
+    `DELETE FROM favorites WHERE user_id=${req.user.user_id} AND recipe_id=${req.body.recipe_id}`)
   .then(data => {
-    res.json("deleted");
+    res.json("success");
   })
   .catch(error => {
     res.json(error);
