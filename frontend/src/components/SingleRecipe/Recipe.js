@@ -18,7 +18,8 @@ class SingleRecipe extends React.Component {
       comments: "",
       ingredients: [],
       canFavorite: true,
-      comment: ""
+      comment: "",
+      comments_id: false
     }
   }
 
@@ -146,24 +147,66 @@ class SingleRecipe extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
-    axios
-      .post("/users/addComment", {
-        recipe_id: this.props.user.recipeID,
-        comment: this.state.comment
-      })
-      .then( (res) => {
-        axios
-          .get(`/users/comment/${this.props.user.recipeID}`)
-          .then( (res) => {
-            this.setState({
-              comments: res.data,
-              comment: ""
+    if (this.state.comments_id) {
+      axios
+        .patch(`/users/editComment/${this.state.comments_id}`, {
+          recipe_id: this.props.user.recipeID,
+          comment: this.state.comment,
+          comments_timestamp: new Date()
+        })
+        .then( (res) => {
+          axios
+            .get(`/users/comment/${this.props.user.recipeID}`)
+            .then( (res) => {
+              this.setState({
+                comments: res.data,
+                comment: ""
+              })
             })
+            .catch( (error) => {
+              console.log(error);
+            })
+          this.setState({
+            comments_id: false,
+            comment: ""
           })
-          .catch( (error) => {
-            console.log(error);
-          })
+        })
+        .catch( (err) => {
+          console.log(err);
+        })
+    } else {
+      axios
+        .post("/users/addComment", {
+          recipe_id: this.props.user.recipeID,
+          comment: this.state.comment
+        })
+        .then( (res) => {
+          axios
+            .get(`/users/comment/${this.props.user.recipeID}`)
+            .then( (res) => {
+              this.setState({
+                comments: res.data,
+                comment: ""
+              })
+            })
+            .catch( (error) => {
+              console.log(error);
+            })
+        })
+        .catch( (err) => {
+          console.log(err);
+        })
+    }
+  }
+
+  handleClickEdit = (e) => {
+    axios
+      .get(`/users/getsinglecomment/${e.target.id}`)
+      .then( (res) => {
+        this.setState({
+          comment: res.data[0].comment,
+          comments_id: res.data[0].comments_id
+        })
       })
       .catch( (err) => {
         console.log(err);
@@ -207,7 +250,19 @@ class SingleRecipe extends React.Component {
           <ul type="none">Comments
             {
               comments? comments.map(comment => (
-                <li key={Math.random()}>{comment.fullname}{": "}{comment.comment}</li>
+                <li key={Math.random()}>{comment.fullname}{": "}{comment.comment}{" "}
+                {comment.user_id === this.props.id?
+                  <button
+                    onClick={this.handleClickEdit}
+                    id={comment.comments_id}>
+                    edit/delete
+                  </button>: ""
+                  /*<button
+                    onClick={this.handleClickReport}
+                    id={comment.comments_id}>
+                    report abuse
+                  </button> */}
+                </li>
               )) : "There are no any comments"
             }
           </ul>

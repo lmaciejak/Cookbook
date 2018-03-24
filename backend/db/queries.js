@@ -75,7 +75,7 @@ function getFolloweeById(req, res, next) {
 }
 
 function getRecipeComments(req, res, next) {
-  db.any(`SELECT comment, users.user_id,
+  db.any(`SELECT comment, users.user_id, comments_id,
           CONCAT(first_name, ' ', last_name) AS FULLname
           FROM users
           INNER JOIN comments ON(users.user_id=comments.user_id)
@@ -269,6 +269,17 @@ function isFavorite(req, res, next) {
     .catch(error => {
       res.json(error);
     });
+}
+
+function getSingleComment(req, res, next) {
+  console.log(req.params.commentID);
+  db.any(`SELECT * FROM comments WHERE comments_id=${req.params.commentID};`)
+    .then( (data) => {
+      res.json(data);
+    })
+    .catch( (err) => {
+      res.json(err);
+    })
 }
 
 /*-------------------------------POST Request----------------------------------*/
@@ -503,22 +514,34 @@ function editRecipe(req, res, next) {
 }
 
 function editRecipeComment(req, res, next) {
-  return db.none(
-    `UPDATE comments
-     SET recipe_id=$1, user_id=$2, comment=$3
-     WHERE comments_id=${req.params.commentID};`,
-    [
-      req.body.recipe_id,
-      req.body.user_id,
-      req.body.comment
-    ]
-  )
-  .then(data => {
-    res.json("success");
-  })
-  .catch(error => {
-    res.json(error);
-  });
+  if (req.body.comment.length === 0) {
+    return db.none(
+        `DELETE FROM comments WHERE comments_id=${req.params.commentID}`)
+      .then(data => {
+        res.json("deleted");
+      })
+      .catch(error => {
+        res.json(error);
+      });
+  } else {
+    return db.none(
+      `UPDATE comments
+       SET recipe_id=$1, user_id=$2, comment=$3, comments_timestamp=$4
+       WHERE comments_id=${req.params.commentID};`,
+      [
+        req.body.recipe_id,
+        req.user.user_id,
+        req.body.comment,
+        req.body.comments_timestamp
+      ]
+    )
+    .then(data => {
+      res.json("success");
+    })
+    .catch(error => {
+      res.json(error);
+    });
+  }
 }
 
 
@@ -535,6 +558,7 @@ module.exports = {
   getAllRecentUsersRecipes,
   getMostTopRecipes,
   isFavorite,
+  getSingleComment,
   registerUser,
   addRecipeComment,
   removeRecipeComment,
