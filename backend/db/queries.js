@@ -10,21 +10,6 @@ function logoutUser(req, res, next) {
   res.status(200).send("log out success");
 }
 
-function isFavorite(req, res, next) {
-  console.log("fire from isFavorite");
-  console.log(req.params);
-  db.any(`SELECT *
-          FROM favorites
-          WHERE user_id=${req.user.user_id}
-          AND recipe_id=${req.params.recipeID};`)
-    .then(data => {
-      res.json(data);
-    })
-    .catch(error => {
-      res.json(error);
-    });
-}
-
 function getSingleUser(req, res, next) {
   db.any(`SELECT user_id, username, email, first_name, last_name
           FROM users
@@ -90,10 +75,13 @@ function getFolloweeById(req, res, next) {
 }
 
 function getRecipeComments(req, res, next) {
-  db.any(`SELECT comment
-          FROM comments
+  db.any(`SELECT comment, users.user_id,
+          CONCAT(first_name, ' ', last_name) AS FULLname
+          FROM users
+          INNER JOIN comments ON(users.user_id=comments.user_id)
           INNER JOIN recipes ON(recipes.recipe_id=comments.recipe_id)
-          WHERE recipes.recipe_id=$1;`, [req.params.recipeID])
+          WHERE recipes.recipe_id=$1
+          ORDER BY comments_timestamp DESC;`, [req.params.recipeID])
     .then(data => {
       res.json(data);
     })
@@ -162,7 +150,6 @@ function getAllFollowersRecipes(req, res, next) {
 }
 
 function getUser(req, res, next) {
-  console.log(req.user)
   db.any(`SELECT user_id, username, email, first_name, last_name
           FROM users
           WHERE user_id=$1`, [req.user.user_id])
@@ -271,6 +258,18 @@ function getMostTopRecipes(req, res, next) {
     });
 }
 
+function isFavorite(req, res, next) {
+  db.any(`SELECT *
+          FROM favorites
+          WHERE user_id=${req.user.user_id}
+          AND recipe_id=${req.params.recipeID};`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
 
 /*-------------------------------POST Request----------------------------------*/
 
@@ -300,7 +299,7 @@ function addRecipeComment(req, res, next) {
   return db.none(
     "INSERT INTO comments (recipe_id, user_id, comment) VALUES (${recipe_id}, ${user_id}, ${comment})",
     {
-      recipe_id: req.params.recipeID,
+      recipe_id: req.body.recipe_id,
       user_id: req.user.user_id,
       comment: req.body.comment
     }
@@ -388,8 +387,6 @@ function removeRecipe(req, res, next) {
 }
 
 function favoriteRecipe(req, res, next) {
-  console.log(req.body.recipe_id);
-  console.log("userrrrrr from passport: ", req.user.user_id);
   return db.none(
     "INSERT INTO favorites (recipe_id, user_id) VALUES (${recipe_id}, ${user_id});",
     {
@@ -406,8 +403,6 @@ function favoriteRecipe(req, res, next) {
 }
 
 function unfavoriteRecipe(req, res, next) {
-  console.log(req.body.recipe_id);
-  console.log("userrrrrr from passport: ", req.user.user_id);
   return db.none(
     `DELETE FROM favorites WHERE user_id=${req.user.user_id} AND recipe_id=${req.body.recipe_id}`)
   .then(data => {
@@ -419,8 +414,6 @@ function unfavoriteRecipe(req, res, next) {
 }
 
 function followUser(req, res, next) {
-  console.log(req.body.follower_id)
-  console.log(req.body.followee_id)
   return db.none(
     "INSERT INTO followings (follower_id, followee_id) VALUES (${follower_id}, ${followee_id})",
     {
@@ -471,7 +464,6 @@ function loginUser(req, res, next) {
 /*------------------------------PATCH Request-----------------------------------*/
 
 function editUser(req, res, next) {
-  console.log('EDIT USER',req.body)
   return db.none(
     `UPDATE users
      SET username=$1, email=$2, first_name=$3, last_name=$4

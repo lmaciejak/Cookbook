@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+let styles = {height: "200px", width: "200px"};
 
 class SingleRecipe extends React.Component {
 
@@ -16,11 +17,13 @@ class SingleRecipe extends React.Component {
       isvegan: "",
       comments: "",
       ingredients: [],
-      canFavorite: true
+      canFavorite: true,
+      comment: ""
     }
   }
 
   componentDidMount() {
+
     axios
       .get(`/users/isfavorite/${this.props.user.recipeID}`)
       .then( (res) => {
@@ -38,6 +41,7 @@ class SingleRecipe extends React.Component {
       .catch( (error) => {
         console.log(error);
       })
+
     axios
       .get(`/users/singlerecipe/${this.props.user.recipeID}`)
       .then( (res) => {
@@ -54,6 +58,7 @@ class SingleRecipe extends React.Component {
       .catch( (err) => {
         console.log(err);
       })
+
     axios
       .get(`/users/getingredients/${this.props.user.recipeID}`)
       .then( (res) => {
@@ -64,6 +69,7 @@ class SingleRecipe extends React.Component {
       .catch( (error) => {
         console.log(error);
       })
+
     axios
       .get(`/users/comment/${this.props.user.recipeID}`)
       .then( (res) => {
@@ -78,6 +84,7 @@ class SingleRecipe extends React.Component {
 
   handleClickLike = (e) => {
     e.preventDefault();
+
     axios
       .post("/users/favorite", {
         recipe_id: this.props.user.recipeID,
@@ -90,10 +97,22 @@ class SingleRecipe extends React.Component {
       .catch( (err) => {
         console.log(err);
       })
+
+    axios
+      .get(`/users/singlerecipe/${this.props.user.recipeID}`)
+      .then( (res) => {
+        this.setState({
+          favorites_count: res.data[0].favorites_count,
+        })
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
   }
 
   handleClickDisLike = (e) => {
     e.preventDefault();
+
     axios
       .post(`/users/unfavorite`, {
         recipe_id: this.props.user.recipeID,
@@ -106,19 +125,62 @@ class SingleRecipe extends React.Component {
       .catch( (err) => {
         console.log(err);
       })
+
+    axios
+      .get(`/users/singlerecipe/${this.props.user.recipeID}`)
+      .then( (res) => {
+        this.setState({
+          favorites_count: res.data[0].favorites_count,
+        })
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+  }
+
+  handleInputComment = (e) => {
+    this.setState({
+      comment: e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("/users/addComment", {
+        recipe_id: this.props.user.recipeID,
+        comment: this.state.comment
+      })
+      .then( (res) => {
+        axios
+          .get(`/users/comment/${this.props.user.recipeID}`)
+          .then( (res) => {
+            this.setState({
+              comments: res.data,
+              comment: ""
+            })
+          })
+          .catch( (error) => {
+            console.log(error);
+          })
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
   }
 
   render() {
-    console.log("test: ", this.state.canFavorite)
     const { favorites_count, username,
             recipe_name, recipe, img,
             isvegeterian, isvegan,
-            ingredients, comments, canFavorite } = this.state;
+            ingredients, comments, canFavorite,
+            comment } = this.state;
     if(this.props.user){
       return (
         <div>
           <h1>Name {recipe_name}</h1>
-          <img src={img} alt="recipe_image" />
+          <img src={img} alt="recipe_image" style={styles} />
           { !canFavorite?<button onClick={this.handleClickLike}>like</button> : <button onClick={this.handleClickDisLike}>dislike</button>}
           <p>Direction {recipe}</p>
           <ul type="none">Ingredient
@@ -134,14 +196,22 @@ class SingleRecipe extends React.Component {
             Vegan {isvegan}{" "}
             Favorites {favorites_count}{" "}
           </p>
+          <form onSubmit={this.handleSubmit}>
+            <textarea
+              placeholder="leave your comment"
+              onInput={this.handleInputComment}
+              value={comment}
+            />
+            <button>Submit</button>
+          </form>
           <ul type="none">Comments
             {
               comments? comments.map(comment => (
-                 <li key={Math.random()}>{comment.comment}</li>
+                <li key={Math.random()}>{comment.fullname}{": "}{comment.comment}</li>
               )) : "There are no any comments"
             }
           </ul>
-          <Link to={`/cb/profile/${this.props.user.username}`}>Back</Link>
+          <Link to={`/`}>Back</Link>
         </div>
       )
     }
