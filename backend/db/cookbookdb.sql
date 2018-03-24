@@ -37,7 +37,9 @@ CREATE TABLE comments (
   comments_id SERIAL PRIMARY KEY,
   recipe_id INTEGER REFERENCES recipes,
   user_id INTEGER REFERENCES users,
-  comment VARCHAR);
+  comment VARCHAR,
+  comments_timestamp timestamp not null default CURRENT_TIMESTAMP);
+
 
 
 CREATE TABLE foods (
