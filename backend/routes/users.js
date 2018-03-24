@@ -23,6 +23,7 @@ router.get('/getingredients/:recipeID', db.getIngredientsByRecipeId);
 router.get('/getallrecentusersrecipes/:userID', loginRequired, db.getAllRecentUsersRecipes);
 router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes);
 router.get('/isfavorite/:recipeID', loginRequired, db.isFavorite)
+router.get('/getsinglecomment/:commentID', loginRequired, db.getSingleComment)
 
 /*POST Request*/
 router.post('/register', db.registerUser);
