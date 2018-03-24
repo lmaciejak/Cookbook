@@ -1,25 +1,61 @@
 /* landing page */
 h1{
-  color:#D82929;
-}
-a{
-  background-color: wheat;
-  color:#D82929;
-  border-radius: 5px;
-  padding: 3px;
-  border: solid 1px;
-  border-color: #D82929;
+  color:#F1C97D;
 }
 
+
 .landingPhoto{
-  height: 300px;
-  border-radius: 5px;
-  background-image: url('https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&dl=maarten-van-den-heuvel-400626-unsplash.jpg&s=9509ba35b5e71ce1c654cc3e3e04cd7b,');
+  height: 350px;
+  border-radius: 8px;
+  /* background-image: url('https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&dl=maarten-van-den-heuvel-400626-unsplash.jpg&s=9509ba35b5e71ce1c654cc3e3e04cd7b,');
   background-size:     cover;                     
   background-repeat:   no-repeat;
   background-position: center center; 
   background-color: rgba(255, 255, 255, 0.2);
-  background-blend-mode: lighten;
+  background-blend-mode: lighten; */
+}
+#sl1 img {
+  position:absolute;
+  height:350px;
+  width: 100%;
+  border-radius: 15px;
+  object-fit: cover;
+  animation-name: sl1FadeInOut;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 12s;
+  animation-direction: alternate;
+  
+ }
+
+
+ @keyframes sl1FadeInOut {
+  0% {
+    opacity:.3;
+  }
+  33% {
+    opacity:.75;
+  }
+  66% {
+    opacity:0;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+
+#sl1 img:nth-of-type(1) {
+  animation-delay: 12s;
+}
+#sl1 img:nth-of-type(2) {
+  animation-delay: 8s;
+}
+#sl1 img:nth-of-type(3) {
+  animation-delay: 4s; 
+}
+#sl1 img:nth-of-type(4) {
+  animation-delay: 0; 
 }
 
 .landingPageFeatured{
@@ -35,18 +71,42 @@ a{
   margin: 10px auto;
 }
 
+.header img{
+  width: 10%;
+  margin-left: 32%;
+  margin-right:auto;
+}
 
 .header{
-  display: flex;
-  justify-content: space-around;
+  position: absolute;
+  margin-left:20%;
+  margin-right:auto;
+  z-index:0;
 }
 
-.landButton{
-  float: right;
-  margin-top: 25px;
+.Modal{
+  z-index:4;
 }
+
+.header h1{
+  font-size: 90px;
+  margin: 0;
+  text-shadow: -2px 2px #0C0202;
+}
+
+
+.landButton{
+  display:flex;
+  flex-wrap: wrap;
+  margin-top: 25px;
+  width:70%;
+  margin-left: 28%;
+  margin-right: auto;
+
+}
+
 .button{
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 /* feed */
@@ -113,7 +173,7 @@ a{
   border-color: gainsboro;
   border-radius: 10px;
   width: 300px;
-  margin: 10px 50px;
+  margin: 10px 30px;
 }
 
 .favorites{
@@ -252,4 +312,6 @@ i{
   width: 200px;
   display: inline;
 }
+
+
 
