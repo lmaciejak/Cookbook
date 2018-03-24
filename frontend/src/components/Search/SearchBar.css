@@ -48,7 +48,8 @@
 }
 
 .react-autosuggest__input {
-  width: 240px;
+  margin-top: 6px; 
+  width: 280px;
   height: 10px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
@@ -75,7 +76,7 @@
   display: block;
   position: absolute;
   top: 31px;
-  width: 280px;
+  width: 320px;
   border: 1px solid #aaa;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
@@ -117,7 +118,7 @@
   width: 2.5%; 
   position: fixed; 
   margin-left: 81%; 
-  margin-top: -3%; 
+  margin-top: -2%; 
 }
 
 .writingIcon:hover { 
@@ -129,14 +130,14 @@
   position: fixed; 
   font-size: 0.8em; 
   margin-left: 84%;
-  margin-top: -3.6%; 
+  margin-top: -2.5%; 
 }
 
 .heartIcon { 
   width: 2.5%; 
   position: fixed; 
   margin-left: 70.5%; 
-  margin-top: -3%; 
+  margin-top: -2%; 
 }
 
 .heartIcon:hover { 
@@ -148,7 +149,7 @@
   position: fixed; 
   font-size: 0.8em; 
   margin-left: 74%;
-  margin-top: -3.6%;  
+  margin-top: -2.5%;  
 }
 
 .feedLink { 
