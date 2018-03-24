@@ -12,7 +12,7 @@ CREATE TABLE users (
   first_name VARCHAR,
   last_name VARCHAR);
 
-  CREATE TABLE recipes (
+CREATE TABLE recipes (
   recipe_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users,
   recipe_name VARCHAR,
@@ -39,8 +39,6 @@ CREATE TABLE comments (
   user_id INTEGER REFERENCES users,
   comment VARCHAR,
   comments_timestamp timestamp not null default CURRENT_TIMESTAMP);
-
-
 
 CREATE TABLE foods (
   food_id SERIAL PRIMARY KEY,

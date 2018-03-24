@@ -3,8 +3,7 @@ var router = express.Router();
 var db = require('../db/queries');
 const { loginRequired } = require("../auth/helpers");
 
-
-/*GET Request*/
+/*------------------------------GET Request------------------------------------*/
 router.get('/logout', loginRequired, db.logoutUser);
 router.get('/profile/:userID', db.getSingleUser);
 router.get('/profile/:userID/favorites', db.getSingleUserFavorites);
@@ -25,7 +24,7 @@ router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes);
 router.get('/isfavorite/:recipeID', loginRequired, db.isFavorite)
 router.get('/getsinglecomment/:commentID', loginRequired, db.getSingleComment)
 
-/*POST Request*/
+/*------------------------------POST Request------------------------------------*/
 router.post('/register', db.registerUser);
 router.post('/addComment', loginRequired, db.addRecipeComment);
 router.post('/removeComment/:recipeID', loginRequired, db.removeRecipeComment);
@@ -38,7 +37,7 @@ router.post('/followUser', loginRequired, db.followUser);
 router.post('/unfollowUser', loginRequired, db.unfollowUser);
 router.post('/login', db.loginUser);
 
-/*PATCH Request*/
+/*-----------------------------PATCH Request------------------------------------*/
 router.patch('/edit/:userID', loginRequired, db.editUser);
 router.patch('/editRecipe/:recipeID', loginRequired, db.editRecipe);
 router.patch('/editComment/:commentID', loginRequired, db.editRecipeComment);

@@ -2,9 +2,7 @@ const db = require("./index");
 const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
 
-
 /* -------------------------------GET Requests----------------------------------- */
-
 function logoutUser(req, res, next) {
   req.logout();
   res.status(200).send("log out success");
@@ -180,22 +178,21 @@ function getSortedRecipes(req, res, next) {
     });
 }
 
-
 function searchByRecipe(req, res, next) {
   db.task('get-everything', t => {
     return t.batch([
-        t.any(`SELECT recipe_name AS identifier, recipe_id FROM recipes WHERE LOWER (recipe_name) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT username AS identifier, user_id FROM users WHERE LOWER (username) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT first_name AS identifier, user_id FROM users WHERE LOWER (first_name) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT last_name AS identifier, user_id FROM users WHERE LOWER (last_name) LIKE LOWER('%${req.params.search}%')`)
+      t.any(`SELECT recipe_name AS identifier, recipe_id FROM recipes WHERE LOWER (recipe_name) LIKE LOWER('%${req.params.search}%')`),
+      t.any(`SELECT username AS identifier, user_id FROM users WHERE LOWER (username) LIKE LOWER('%${req.params.search}%')`),
+      t.any(`SELECT first_name AS identifier, user_id FROM users WHERE LOWER (first_name) LIKE LOWER('%${req.params.search}%')`),
+      t.any(`SELECT last_name AS identifier, user_id FROM users WHERE LOWER (last_name) LIKE LOWER('%${req.params.search}%')`)
     ]);
-})
-          .then(data => {
-            res.json(data);
-          })
-          .catch(error => {
-            res.json(error);
-          });
+  })
+  .then(data => {
+    res.json(data);
+  })
+  .catch(error => {
+    res.json(error);
+  });
 }
 
 function getSingleRecipeById(req, res, next) {
@@ -272,7 +269,6 @@ function isFavorite(req, res, next) {
 }
 
 function getSingleComment(req, res, next) {
-  console.log(req.params.commentID);
   db.any(`SELECT * FROM comments WHERE comments_id=${req.params.commentID};`)
     .then( (data) => {
       res.json(data);
@@ -283,7 +279,6 @@ function getSingleComment(req, res, next) {
 }
 
 /*-------------------------------POST Request----------------------------------*/
-
 function registerUser(req, res, next) {
   return authHelpers
     .createUser(req)
@@ -473,7 +468,6 @@ function loginUser(req, res, next) {
 }
 
 /*------------------------------PATCH Request-----------------------------------*/
-
 function editUser(req, res, next) {
   return db.none(
     `UPDATE users
@@ -546,6 +540,7 @@ function editRecipeComment(req, res, next) {
 
 
 module.exports = {
+/*-------GET Request-------*/
   logoutUser,
   getSingleUser,
   getSingleUserFavorites,
@@ -553,12 +548,20 @@ module.exports = {
   getFollowers,
   getFollowing,
   getRecipeComments,
+  getAllUsers,
+  getAllResipes,
+  getAllResipesByUserID,
+  getAllFollowersRecipes,
   getSingleRecipeById,
   getIngredientsByRecipeId,
   getAllRecentUsersRecipes,
+  getUser,
+  getSortedRecipes,
+  searchByRecipe,
   getMostTopRecipes,
   isFavorite,
   getSingleComment,
+/*--------POST Request-------*/
   registerUser,
   addRecipeComment,
   removeRecipeComment,
@@ -570,14 +573,8 @@ module.exports = {
   followUser,
   unfollowUser,
   loginUser,
+/*----------PATCH Request-------*/
   editUser,
   editRecipe,
   editRecipeComment,
-  getAllUsers,
-  getAllResipes,
-  getAllResipesByUserID,
-  getAllFollowersRecipes,
-  getUser,
-  getSortedRecipes,
-  searchByRecipe,
 };
