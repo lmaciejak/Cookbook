@@ -88,28 +88,28 @@ class RegisterUser extends Component {
     return (
       <div className="Modal">
       <div>
-      <button onClick={this.openModal}>Register</button>
+      <button className="button formButton" onClick={this.openModal}>Register</button>
       <Modal
         isOpen={this.state.modalIsOpen}
         onRequestClose={this.closeModal}
         style={customStyles}
       >
-
+      <button className="xButton" onClick={this.closeModal}>x</button>
         <h2 ref={subtitle => this.subtitle = subtitle}>Register</h2>
         <form onSubmit={this.handleLoginFormSubmit}>
-          <input className="input" type="text" placeholder="Username" onChange={this.handleFormInput} name='username' required></input> <br />
-          <input className="input" type="text" placeholder="Firstname" onChange={this.handleFormInput} name='firstname' required></input> <br /> 
-          <input className="input" type="text" placeholder="Lastname" onChange={this.handleFormInput} name='lastname' required></input> <br /> 
-          <input className="input" type="email" placeholder="Email" onChange={this.handleFormInput} name='email' required></input> <br /> 
-          <input className="input" type="password" placeholder="Password" onChange={this.handleFormInput} name='password' required></input> <br /> 
-          <input className="input" type="password" placeholder="Confirm Password" onChange={this.handleFormInput} name='confirmpassword' required></input> <br /> 
-          <button>Register</button>
+          <input className="input formInput" type="text" placeholder="Username" onChange={this.handleFormInput} name='username' required></input> <br />
+          <input className="input formInput" type="text" placeholder="Firstname" onChange={this.handleFormInput} name='firstname' required></input> <br /> 
+          <input className="input formInput" type="text" placeholder="Lastname" onChange={this.handleFormInput} name='lastname' required></input> <br /> 
+          <input className="input formInput" type="email" placeholder="Email" onChange={this.handleFormInput} name='email' required></input> <br /> 
+          <input className="input formInput" type="password" placeholder="Password" onChange={this.handleFormInput} name='password' required></input> <br /> 
+          <input className="input formInput" type="password" placeholder="Confirm Password" onChange={this.handleFormInput} name='confirmpassword' required></input> <br /> 
+          <button className="formButton">Register</button>
         </form>
         <p> {this.state.message} </p>
         <p> {this.state.password !== this.state.confirmpassword && this.state.confirmpassword 
               ? 'passwords do not match' : '' } </p>
         <p> {password && password.length < 6 ? 'password must be 6 characters' : ''} </p>
-        <button onClick={this.closeModal}>close</button>
+
       </Modal>
       </div>
       </div>
