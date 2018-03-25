@@ -526,7 +526,7 @@ function editRecipeComment(req, res, next) {
         req.body.recipe_id,
         req.user.user_id,
         req.body.comment,
-        req.body.comments_timestamp
+        new Date()
       ]
     )
     .then(data => {
