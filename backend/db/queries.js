@@ -173,7 +173,6 @@ function searchByRecipe(req, res, next) {
         t.any(`SELECT recipe_name AS identifier, recipe_id, username FROM recipes JOIN USERS ON (recipes.user_id = users.user_id) WHERE LOWER (recipe_name) LIKE LOWER('%${req.params.search}%')`),
         t.any(`SELECT username AS identifier, user_id FROM users WHERE LOWER (username) LIKE LOWER('%${req.params.search}%')`),
         t.any(`SELECT concat(first_name, ' ', last_name) AS identifier, user_id FROM users WHERE LOWER (first_name) LIKE LOWER('%${req.params.search}%') OR LOWER (last_name) LIKE LOWER('%${req.params.search}%')`),
-        // t.any(`SELECT concat(first_name, ' ', last_name) AS identifier, user_id FROM users WHERE LOWER (last_name) LIKE LOWER('%${req.params.search}%') AND first_name NOT LIKE LOWER('%${req.params.search}%')`)
     ]);
 })
           .then(data => {
