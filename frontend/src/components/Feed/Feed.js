@@ -35,7 +35,7 @@ class Feed extends React.Component{
 
   render(){
     console.log(this.state.followeedata)
-    console.log('User:', this.props.user)
+
     return(
       <div>
         <Searchbar />
