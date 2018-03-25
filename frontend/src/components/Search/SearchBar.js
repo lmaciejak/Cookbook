@@ -23,7 +23,10 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
+    transform: "translate(-50%, -50%)",
+    width: "15%",
+    height: "28%",
+    textAlign: "center"
   }
 };
 
@@ -71,11 +74,23 @@ class Searchbar extends Component {
       .then(response => response.json())
       .then(data => {
         console.log("data", data);
-        const newData = data.reduce(function(prev, curr) {
-          return prev.concat(curr);
+
+        const dataFormatted = data.map((elem, index) => {
+          if (index === 0) {
+            return { title: "recipe name", info: elem };
+          }
+          if (index === 1) {
+            return { title: "username", info: elem };
+          }
+          if (index === 2) {
+            return { title: "full name", info: elem };
+          }
         });
-        // const newData = data.map((elem) => elem.map((name) => name.identifier)).reduce(function(prev, curr) {
-        //   return prev.concat(curr)})
+
+        const newData = dataFormatted
+          .map(elem => elem.info)
+          .reduce((prev, curr) => prev.concat(curr));
+
         this.setState({
           suggestions: newData,
           searchInput: data
@@ -106,11 +121,6 @@ class Searchbar extends Component {
   }
 
   render() {
-    // console.log('redirect', this.state.redirect)
-    // console.log('modal is open', this.state.modalIsOpen)
-    console.log("final suggestion", this.state.finalSuggestion);
-    // console.log('searchinput', this.state.searchInput)
-    // console.log('suggestions',this.state.suggestions)
     const { value, suggestions } = this.state;
     const inputProps = {
       placeholder: "Search by recipe, username, full name",
@@ -126,7 +136,6 @@ class Searchbar extends Component {
           className="searchbarLogo"
           src="http://irfanyurdu.org/wp-content/uploads/2017/04/eat-flat-1.png"
         />
-
         <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -174,7 +183,9 @@ class Searchbar extends Component {
           <form onSubmit={this.handleLoginFormSubmit} />
           {this.state.finalSuggestion
             ? this.state.finalSuggestion.map(elem => {
-                const link = elem.recipe_id ? `/cb/${elem.username}/${elem.recipe_id}` : `/cb/profile/${elem.user_id}`
+                const link = elem.recipe_id
+                  ? `/cb/${elem.username}/${elem.recipe_id}`
+                  : `/cb/profile/${elem.user_id}`;
                 return (
                   <Link to={link} className="searchLink">
                     <p> {elem.identifier} </p>
@@ -182,7 +193,7 @@ class Searchbar extends Component {
                 );
               })
             : "no results"}
-
+          <br />
           <button onClick={this.closeModal}>close</button>
         </Modal>
       </div>
@@ -191,5 +202,3 @@ class Searchbar extends Component {
 }
 
 export default Searchbar;
-
-// <input className="searchInput" type="search" name="searchInput" placeholder="Search for recipes or users" onChange={this.handleInput}/>

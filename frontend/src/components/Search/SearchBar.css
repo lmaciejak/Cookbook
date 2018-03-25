@@ -111,6 +111,8 @@
 .searchLink { 
   background-color: transparent; 
   border: none; 
+  text-decoration: none; 
+  margin-top: -15%; 
 
 }
 
