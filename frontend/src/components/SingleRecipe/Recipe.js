@@ -152,7 +152,6 @@ class SingleRecipe extends React.Component {
         .patch(`/users/editComment/${this.state.comments_id}`, {
           recipe_id: this.props.user.recipeID,
           comment: this.state.comment,
-          comments_timestamp: new Date()
         })
         .then( (res) => {
           axios
