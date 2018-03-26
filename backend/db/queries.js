@@ -218,23 +218,23 @@ function getSortedRecipes(req, res, next) {
 function searchByRecipe(req, res, next) {
   db.task('get-everything', t => {
     return t.batch([
-        t.any(`SELECT recipe_name 
-               AS identifier, recipe_id, username 
-               FROM recipes 
-               JOIN USERS ON (recipes.user_id = users.user_id) 
-               WHERE LOWER (recipe_name) 
+        t.any(`SELECT recipe_name
+               AS identifier, recipe_id, username
+               FROM recipes
+               JOIN USERS ON (recipes.user_id = users.user_id)
+               WHERE LOWER (recipe_name)
                LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT username 
-               AS identifier, user_id 
-               FROM users 
-               WHERE LOWER (username) 
+        t.any(`SELECT username
+               AS identifier, user_id
+               FROM users
+               WHERE LOWER (username)
                LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT concat(first_name, ' ', last_name) 
-               AS identifier, user_id 
-               FROM users 
-               WHERE LOWER (first_name) 
-               LIKE LOWER('%${req.params.search}%') 
-               OR LOWER (last_name) 
+        t.any(`SELECT concat(first_name, ' ', last_name)
+               AS identifier, user_id
+               FROM users
+               WHERE LOWER (first_name)
+               LIKE LOWER('%${req.params.search}%')
+               OR LOWER (last_name)
                LIKE LOWER('%${req.params.search}%')`)
     ]);
   })
@@ -307,10 +307,10 @@ function getMostTopRecipes(req, res, next) {
 }
 
 function getAllGroupFollowers(req, res, next) {
-  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, groups.group_id
+  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, groupowners.group_id
           FROM users
           JOIN groupfollows ON (USERs.user_id=groupfollows.user_id)
-          JOIN GROUPS ON (GROUPS.group_id=groupfollows.group_id)
+          JOIN groupowners ON (groupowners.group_id=groupfollows.group_id)
           WHERE groupfollows.group_id=${req.params.groupID}`)
           .then(data => {
             res.json(data)

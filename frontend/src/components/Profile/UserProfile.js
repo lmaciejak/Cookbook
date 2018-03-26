@@ -5,7 +5,20 @@ import RecipeBox from "../SingleRecipe/RecipeBox";
 import Recipe from "../SingleRecipe/Recipe";
 import UserEdit from ".//UserEdit";
 import UserFaves from './UserFaves'
+import CreateGroup from '../Modals/CreateGroup'
 // import AddRecipe from './SingleRecipe/AddRecipe'
+
+const FollowButtons = ({ userID, profileID, canFollow, follow, unfollow }) =>{
+  if(userID === parseInt(profileID)){
+    return(<div></div>)
+  }
+  else if(canFollow){
+    return(<button onClick={follow}>Follow</button>)
+  }
+  else {
+    return(<button onClick={unfollow}>Unfollow</button>)
+  }
+}
 
 class UserProfile extends React.Component {
 
@@ -57,36 +70,36 @@ class UserProfile extends React.Component {
           allusersRecipes: res.data
         })
       })
-      // .then(
-      //   axios
-      //     .get(`/users/profile/${this.props.id}`)
-      //     .then(res => {
-      //       this.setState({
-      //         user: res.data
-      //       })
-      //     })
-      // )
-      // .then(
-      //   axios
-      //     .get(`/users/getfolloweebyid/${this.props.user.user_id}/${this.props.id}`)
-      //     .then(res =>{
-      //       if(this.props.user.user_id === this.props.id){
-      //         this.setState({
-      //           canFollow: false
-      //         })
-      //       }
-      //       else if(res.data === []){
-      //         this.setState({
-      //           canFollow: true
-      //         })
-      //       }
-      //       else {
-      //         this.setState({
-      //           canFollow: false
-      //         })
-      //       }
-      //     })
-      // )
+      .then(
+        axios
+          .get(`/users/profile/${this.props.id}`)
+          .then(res => {
+            this.setState({
+              user: res.data
+            })
+          })
+      )
+      .then(
+        axios
+          .get(`/users/getfolloweebyid/${this.props.user.user_id}/${this.props.id}`)
+          .then(res =>{
+            if(this.props.user.user_id === this.props.id){
+              this.setState({
+                canFollow: false
+              })
+            }
+            else if(res.data === []){
+              this.setState({
+                canFollow: true
+              })
+            }
+            else {
+              this.setState({
+                canFollow: false
+              })
+            }
+          })
+      )
 			.catch(err => {
 				console.log(err);
 			})
@@ -162,6 +175,7 @@ class UserProfile extends React.Component {
     }
   }
 
+
   renderUserEdit = () =>{
     const { user } = this.state
     return(
@@ -190,32 +204,47 @@ class UserProfile extends React.Component {
 
   render() {
     const { allusersRecipes, canFollow } = this.state;
+    console.log(this.props)
     // let isOwnProfile = this.props.user.user_id === this.props.id
-
-    return(
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <select onChange={this.handleSelectValue}>
-            <option>Select</option>
-            <option value="mostTop">Most Top</option>
-            <option value="mostRecent">Most Recent</option>
-          </select>
-          <button>Submit</button>
-        </form>
+    if(this.props.user){
+      return(
         <div>
-          {canFollow ?
-              <button onClick={this.handleUserFollow}>FOLLOW</button>
-                :
-              <button onClick={this.handleUserUnfollow}>UNFOLLOW</button>
-          }
+          <form onSubmit={this.handleSubmit}>
+            <select onChange={this.handleSelectValue}>
+              <option>Select</option>
+              <option value="mostTop">Most Top</option>
+              <option value="mostRecent">Most Recent</option>
+            </select>
+            <button>Submit</button>
+          </form>
+          <div>
+            <FollowButtons
+              userID={this.props.user.user_id}
+              profileID={this.props.id}
+              canFollow={canFollow}
+              follow={this.handleUserFollow}
+              unfollow={this.handleUserUnfollow}
+              />
+            {
+              this.props.user.user_id === parseInt(this.props.id)
+              ?
+              <CreateGroup id={this.props.id} />
+              :
+              <div></div>
+            }
+          </div>
+          <Switch>
+            <Route exact path='/cb/profile/:id' render={this.renderAllUserRecipes} />
+            <Route path='/cb/profile/:id/favorites' render={this.renderUserFavorites} />
+            <Route path='/cb/profile/:id/edit' render={this.renderUserEdit} />
+          </Switch>
         </div>
-        <Switch>
-          <Route exact path='/cb/profile/:id' render={this.renderAllUserRecipes} />
-          <Route path='/cb/profile/:id/favorites' render={this.renderUserFavorites} />
-          <Route path='/cb/profile/:id/edit' render={this.renderUserEdit} />
-        </Switch>
-      </div>
-    )
+      )
+    } else {
+      return(
+        <div>loading profile</div>
+      )
+    }
   }
 }
 export default UserProfile;
