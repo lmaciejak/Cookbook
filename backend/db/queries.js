@@ -37,10 +37,10 @@ function getSingleUserFavorites(req, res, next) {
 }
 
 function getSingleGroup(req, res, next) {
-  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, group_description, groups.group_id
+  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, group_description, groupowners.group_id
         FROM USERS
-        INNER JOIN GROUPS ON (users.user_id=groups.user_id)
-        WHERE group_id=$1`, [req.params.groupID])
+        INNER JOIN groupowners ON (users.user_id=groupowners.user_id)
+        WHERE groupowners.group_id=$1`, [req.params.groupID])
     .then(data => {
       res.json(data);
     })
@@ -114,7 +114,7 @@ function getAllUsers(req, res, next) {
 
 function getAllGroups(req, res, next) {
   db.any(`SELECT user_id, group_name, group_description, group_id
-          FROM groups`)
+          FROM groupowners`)
           .then(data => {
             res.json(data);
           })
@@ -482,7 +482,7 @@ function unfollowUser(req, res, next) {
 
 function createGroup(req, res, next) {
   return db.none(
-    "INSERT INTO groups (user_id, group_name, group_description) VALUES (${user_id}, ${group_name}, ${group_description})",
+    "INSERT INTO groupowners (user_id, group_name, group_description) VALUES (${user_id}, ${group_name}, ${group_description})",
     {
       user_id: req.body.user_id,
       group_name: req.body.group_name,
