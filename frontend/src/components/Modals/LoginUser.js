@@ -78,21 +78,21 @@ class LoginUser extends Component {
     return (
       <div className="Modal">
       <div>
-      <button onClick={this.openModal}>Log in</button>
+      <button className="button formButton" onClick={this.openModal}>Log in</button>
       <Modal
         isOpen={this.state.modalIsOpen}
         onRequestClose={this.closeModal}
         style={customStyles}
       >
-
+      <button className="xButton" onClick={this.closeModal}>x</button>
         <h2 ref={subtitle => this.subtitle = subtitle}>Log In</h2>
         <form onSubmit={this.handleLoginFormSubmit}>
-          <input className="input" type="text" placeholder="Username" onChange={this.handleFormInput} name='username'></input>
-          <input className="input" type="password" placeholder="Password" onChange={this.handleFormInput} name='password'></input>
-          <button>Log in</button>
+          <input className="input formInput" type="text" placeholder="Username" onChange={this.handleFormInput} name='username'></input>
+          <input className="input formInput" type="password" placeholder="Password" onChange={this.handleFormInput} name='password'></input>
+          <button className="formButton">Log in</button>
         </form>
         <p> {this.state.message} </p>
-        <button onClick={this.closeModal}>close</button>
+      
       </Modal>
       </div>
       </div>

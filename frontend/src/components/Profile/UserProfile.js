@@ -57,36 +57,36 @@ class UserProfile extends React.Component {
           allusersRecipes: res.data
         })
       })
-      .then(
-        axios
-          .get(`/users/profile/${this.props.id}`)
-          .then(res =>{
-            this.setState({
-              user: res.data
-            })
-          })
-      )
-      .then(
-        axios
-          .get(`/users/getfolloweebyid/${this.props.user.user_id}/${this.props.id}`)
-          .then(res =>{
-            if(this.props.user.user_id === this.props.id){
-              this.setState({
-                canFollow: false
-              })
-            }
-            else if(res.data === []){
-              this.setState({
-                canFollow: true
-              })
-            }
-            else {
-              this.setState({
-                canFollow: false
-              })
-            }
-          })
-      )
+      // .then(
+      //   axios
+      //     .get(`/users/profile/${this.props.id}`)
+      //     .then(res => {
+      //       this.setState({
+      //         user: res.data
+      //       })
+      //     })
+      // )
+      // .then(
+      //   axios
+      //     .get(`/users/getfolloweebyid/${this.props.user.user_id}/${this.props.id}`)
+      //     .then(res =>{
+      //       if(this.props.user.user_id === this.props.id){
+      //         this.setState({
+      //           canFollow: false
+      //         })
+      //       }
+      //       else if(res.data === []){
+      //         this.setState({
+      //           canFollow: true
+      //         })
+      //       }
+      //       else {
+      //         this.setState({
+      //           canFollow: false
+      //         })
+      //       }
+      //     })
+      // )
 			.catch(err => {
 				console.log(err);
 			})
@@ -174,9 +174,9 @@ class UserProfile extends React.Component {
     return(
       <div>
         <h1>All</h1>
-        {allusersRecipes.map(recipe =>(
+        {allusersRecipes? allusersRecipes.map(recipe =>(
           <RecipeBox recipe={recipe} />
-        ))}
+        )): ""}
       </div>
     )
   }
@@ -190,7 +190,7 @@ class UserProfile extends React.Component {
 
   render() {
     const { allusersRecipes, canFollow } = this.state;
-    let isOwnProfile = this.props.user.user_id === this.props.id
+    // let isOwnProfile = this.props.user.user_id === this.props.id
 
     return(
       <div>

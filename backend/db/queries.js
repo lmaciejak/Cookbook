@@ -2,9 +2,7 @@ const db = require("./index");
 const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
 
-
 /* -------------------------------GET Requests----------------------------------- */
-
 function logoutUser(req, res, next) {
   req.logout();
   res.status(200).send("log out success");
@@ -89,10 +87,13 @@ function getFolloweeById(req, res, next) {
 }
 
 function getRecipeComments(req, res, next) {
-  db.any(`SELECT comment
-          FROM comments
+  db.any(`SELECT comment, users.user_id, comments_id,
+          CONCAT(first_name, ' ', last_name) AS FULLname
+          FROM users
+          INNER JOIN comments ON(users.user_id=comments.user_id)
           INNER JOIN recipes ON(recipes.recipe_id=comments.recipe_id)
-          WHERE recipes.recipe_id=$1;`, [req.params.recipeID])
+          WHERE recipes.recipe_id=$1
+          ORDER BY comments_timestamp DESC;`, [req.params.recipeID])
     .then(data => {
       res.json(data);
     })
@@ -184,7 +185,6 @@ function getAllFollowersRecipes(req, res, next) {
 }
 
 function getUser(req, res, next) {
-  console.log(req.user)
   db.any(`SELECT user_id, username, email, first_name, last_name
           FROM users
           WHERE user_id=$1`, [req.user.user_id])
@@ -215,22 +215,35 @@ function getSortedRecipes(req, res, next) {
     });
 }
 
-
 function searchByRecipe(req, res, next) {
   db.task('get-everything', t => {
     return t.batch([
-        t.any(`SELECT recipe_name AS identifier, recipe_id FROM recipes WHERE LOWER (recipe_name) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT username AS identifier, user_id FROM users WHERE LOWER (username) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT first_name AS identifier, user_id FROM users WHERE LOWER (first_name) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT last_name AS identifier, user_id FROM users WHERE LOWER (last_name) LIKE LOWER('%${req.params.search}%')`)
+        t.any(`SELECT recipe_name 
+               AS identifier, recipe_id, username 
+               FROM recipes 
+               JOIN USERS ON (recipes.user_id = users.user_id) 
+               WHERE LOWER (recipe_name) 
+               LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT username 
+               AS identifier, user_id 
+               FROM users 
+               WHERE LOWER (username) 
+               LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT concat(first_name, ' ', last_name) 
+               AS identifier, user_id 
+               FROM users 
+               WHERE LOWER (first_name) 
+               LIKE LOWER('%${req.params.search}%') 
+               OR LOWER (last_name) 
+               LIKE LOWER('%${req.params.search}%')`)
     ]);
-})
-          .then(data => {
-            res.json(data);
-          })
-          .catch(error => {
-            res.json(error);
-          });
+  })
+  .then(data => {
+    res.json(data);
+  })
+  .catch(error => {
+    res.json(error);
+  });
 }
 
 function getSingleRecipeById(req, res, next) {
@@ -309,6 +322,30 @@ function getAllGroupFollowers(req, res, next) {
 
 /*-------------------------------POST Request----------------------------------*/
 
+function isFavorite(req, res, next) {
+  db.any(`SELECT *
+          FROM favorites
+          WHERE user_id=${req.user.user_id}
+          AND recipe_id=${req.params.recipeID};`)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
+function getSingleComment(req, res, next) {
+  db.any(`SELECT * FROM comments WHERE comments_id=${req.params.commentID};`)
+    .then( (data) => {
+      res.json(data);
+    })
+    .catch( (err) => {
+      res.json(err);
+    })
+}
+
+/*-------------------------------POST Request----------------------------------*/
 function registerUser(req, res, next) {
   return authHelpers
     .createUser(req)
@@ -335,7 +372,7 @@ function addRecipeComment(req, res, next) {
   return db.none(
     "INSERT INTO comments (recipe_id, user_id, comment) VALUES (${recipe_id}, ${user_id}, ${comment})",
     {
-      recipe_id: req.params.recipeID,
+      recipe_id: req.body.recipe_id,
       user_id: req.user.user_id,
       comment: req.body.comment
     }
@@ -440,11 +477,9 @@ function favoriteRecipe(req, res, next) {
 
 function unfavoriteRecipe(req, res, next) {
   return db.none(
-    "DELETE FROM favorites WHERE favorites_id=$1;",
-    [req.body.favorites_id]
-  )
+    `DELETE FROM favorites WHERE user_id=${req.user.user_id} AND recipe_id=${req.body.recipe_id}`)
   .then(data => {
-    res.json("deleted");
+    res.json("success");
   })
   .catch(error => {
     res.json(error);
@@ -546,9 +581,7 @@ function loginUser(req, res, next) {
 }
 
 /*------------------------------PATCH Request-----------------------------------*/
-
 function editUser(req, res, next) {
-  console.log('EDIT USER',req.body)
   return db.none(
     `UPDATE users
      SET username=$1, email=$2, first_name=$3, last_name=$4
@@ -588,26 +621,39 @@ function editRecipe(req, res, next) {
 }
 
 function editRecipeComment(req, res, next) {
-  return db.none(
-    `UPDATE comments
-     SET recipe_id=$1, user_id=$2, comment=$3
-     WHERE comments_id=${req.params.commentID};`,
-    [
-      req.body.recipe_id,
-      req.body.user_id,
-      req.body.comment
-    ]
-  )
-  .then(data => {
-    res.json("success");
-  })
-  .catch(error => {
-    res.json(error);
-  });
+  if (req.body.comment.length === 0) {
+    return db.none(
+        `DELETE FROM comments WHERE comments_id=${req.params.commentID}`)
+      .then(data => {
+        res.json("deleted");
+      })
+      .catch(error => {
+        res.json(error);
+      });
+  } else {
+    return db.none(
+      `UPDATE comments
+       SET recipe_id=$1, user_id=$2, comment=$3, comments_timestamp=$4
+       WHERE comments_id=${req.params.commentID};`,
+      [
+        req.body.recipe_id,
+        req.user.user_id,
+        req.body.comment,
+        new Date()
+      ]
+    )
+    .then(data => {
+      res.json("success");
+    })
+    .catch(error => {
+      res.json(error);
+    });
+  }
 }
 
 
 module.exports = {
+/*-------GET Request-------*/
   logoutUser,
   getSingleUser,
   getSingleUserFavorites,
@@ -619,10 +665,20 @@ module.exports = {
   getAllGroupFollowers,
   userFollowsGroup,
   getRecipeComments,
+  getAllUsers,
+  getAllResipes,
+  getAllResipesByUserID,
+  getAllFollowersRecipes,
   getSingleRecipeById,
   getIngredientsByRecipeId,
   getAllRecentUsersRecipes,
+  getUser,
+  getSortedRecipes,
+  searchByRecipe,
   getMostTopRecipes,
+  isFavorite,
+  getSingleComment,
+/*--------POST Request-------*/
   registerUser,
   addRecipeComment,
   removeRecipeComment,
@@ -637,14 +693,8 @@ module.exports = {
   joinGroup,
   leaveGroup,
   loginUser,
+/*----------PATCH Request-------*/
   editUser,
   editRecipe,
   editRecipeComment,
-  getAllUsers,
-  getAllResipes,
-  getAllResipesByUserID,
-  getAllFollowersRecipes,
-  getUser,
-  getSortedRecipes,
-  searchByRecipe,
 };

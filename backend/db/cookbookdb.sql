@@ -12,7 +12,7 @@ CREATE TABLE users (
   first_name VARCHAR,
   last_name VARCHAR);
 
-  CREATE TABLE recipes (
+CREATE TABLE recipes (
   recipe_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users,
   recipe_name VARCHAR,
@@ -37,8 +37,8 @@ CREATE TABLE comments (
   comments_id SERIAL PRIMARY KEY,
   recipe_id INTEGER REFERENCES recipes,
   user_id INTEGER REFERENCES users,
-  comment VARCHAR);
-
+  comment VARCHAR,
+  comments_timestamp timestamp not null default CURRENT_TIMESTAMP);
 
 CREATE TABLE foods (
   food_id SERIAL PRIMARY KEY,
@@ -75,7 +75,23 @@ INSERT INTO users (username, password, email, first_name, last_name)
    ('eion', '$2a$10$3xwk/yyvVXb/zf2n7uR93u1CtmMNhJmrPaIFUu0OjqEPN0Kq3/N7m', 'mary@gmail.com', 'Eion',
   'Snow'),
    ('Larry', '$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'larry@gmail.com', 'Larry',
-  'Snow');
+  'Snow'),
+   ('David','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'david@gmail.com', 'david',
+   'justice'),
+   ('Gerado','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'gerado@gmail.com', 'gerado',
+   'justice'),
+   ('Alton','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Alton@gmail.com', 'Alton',
+   'justice'),
+   ('Imani','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Imani@gmail.com', 'imani',
+   'justice'),
+   ('Tammy','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Tammy@gmail.com', 'tammy',
+   'justice'),
+   ('Lexus','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'lexus@gmail.com', 'lexus',
+   'justice'),
+   ('Leon','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'leon@gmail.com', 'leon',
+   'justice'),
+   ('Tate','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Tate@gmail.com', 'Tate',
+   'justice');
 
 INSERT INTO recipes (user_id, recipe_name, recipe, img, isVegeterian, isVegan)
   VALUES (2, 'Shrimp Risotto', 'Melt 2 tablespoons butter in medium skillet.',
