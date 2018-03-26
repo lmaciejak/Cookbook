@@ -49,6 +49,7 @@ router.post('/login', db.loginUser);
 /*-----------------------------PATCH Request------------------------------------*/
 router.patch('/edit/:userID', loginRequired, db.editUser);
 router.patch('/editRecipe/:recipeID', loginRequired, db.editRecipe);
+router.patch('/editIngredients/:recipeID', loginRequired, db.editIngredients);
 router.patch('/editComment/:commentID', loginRequired, db.editRecipeComment);
 
 module.exports = router;
