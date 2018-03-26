@@ -116,6 +116,9 @@ h1{
 }
 
 
+
+
+
 /* userProfile */
 
 .userProfile{
@@ -200,6 +203,11 @@ i{
 }
 
 /* form style */
+
+.formContainer{
+  padding-top: 4%; 
+  width: 100%; 
+}
 
 .formStyle{
   width:450px;
