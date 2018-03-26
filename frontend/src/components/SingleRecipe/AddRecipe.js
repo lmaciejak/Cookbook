@@ -106,6 +106,7 @@ class AddRecipe extends React.Component {
         return(
             <div>
               <SearchBar />
+              <div className="formContainer">
               <div className="formStyle">
                 <h1 className="formHeader">Add a New Recipe! <span>Let Your Everyone Know Whats Cooking</span></h1>
                 <form onSubmit={this.handleSubmit}>
@@ -234,7 +235,8 @@ class AddRecipe extends React.Component {
 
                 <button className="formButton">Submit</button>
                 </form>
-              </div>  
+              </div> 
+              </div> 
             </div>
         )
     }
