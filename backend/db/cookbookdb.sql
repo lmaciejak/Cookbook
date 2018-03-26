@@ -54,7 +54,7 @@ CREATE TABLE ingredients (
   name VARCHAR,
   notes VARCHAR);
 
-CREATE TABLE groups (
+CREATE TABLE groupowners (
   group_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users,
   group_name VARCHAR NOT NULL UNIQUE,
