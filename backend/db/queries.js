@@ -36,6 +36,20 @@ function getSingleUserFavorites(req, res, next) {
     });
 }
 
+function getSingleGroup(req, res, next) {
+  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, group_description, groups.group_id
+        FROM USERS
+        INNER JOIN GROUPS ON (users.user_id=groups.user_id)
+        WHERE group_id=$1`, [req.params.groupID])
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json(error)
+    })
+}
+
+
 function getFollowers(req, res, next) {
   db.any(`SELECT user_id, username, email, first_name, last_name
           FROM users
@@ -96,6 +110,29 @@ function getAllUsers(req, res, next) {
           .catch(error => {
             res.json(error);
           });
+}
+
+function getAllGroups(req, res, next) {
+  db.any(`SELECT user_id, group_name, group_description, group_id
+          FROM groups`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          })
+}
+
+function userFollowsGroup(res, req, next) {
+  db.any(`SELECT *
+    FROM groupfollows
+    WHERE user_id=${req.params.userID} AND group_id=${req.params.groupID}`)
+    .then(data => {
+      res.json(data)
+    })
+    .catch(error => {
+      res.json(error)
+    })
 }
 
 function getAllResipes(req, res, next) {
@@ -256,6 +293,20 @@ function getMostTopRecipes(req, res, next) {
     });
 }
 
+function getAllGroupFollowers(req, res, next) {
+  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, groups.group_id
+          FROM users
+          JOIN groupfollows ON (USERs.user_id=groupfollows.user_id)
+          JOIN GROUPS ON (GROUPS.group_id=groupfollows.group_id)
+          WHERE groupfollows.group_id=${req.params.groupID}`)
+          .then(data => {
+            res.json(data)
+          })
+          .catch(error => {
+            res.json(error)
+          })
+}
+
 /*-------------------------------POST Request----------------------------------*/
 
 function registerUser(req, res, next) {
@@ -401,8 +452,6 @@ function unfavoriteRecipe(req, res, next) {
 }
 
 function followUser(req, res, next) {
-  console.log(req.body.follower_id)
-  console.log(req.body.followee_id)
   return db.none(
     "INSERT INTO followings (follower_id, followee_id) VALUES (${follower_id}, ${followee_id})",
     {
@@ -422,6 +471,52 @@ function unfollowUser(req, res, next) {
   return db.none(
     "DELETE FROM followings WHERE follower_id=$1 AND followee_id=$2",
     [req.body.follower_id, req.body.followee_id]
+  )
+  .then(data => {
+    res.json("deleted");
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
+function createGroup(req, res, next) {
+  return db.none(
+    "INSERT INTO groups (user_id, group_name, group_description) VALUES (${user_id}, ${group_name}, ${group_description})",
+    {
+      user_id: req.body.user_id,
+      group_name: req.body.group_name,
+      group_description: req.body.group_description
+    }
+  )
+  .then(data => {
+    res.json("success");
+  })
+  .catch(error => {
+    res.json(error);
+  })
+}
+
+function joinGroup(req, res, next) {
+  return db.none(
+    "INSERT INTO groupfollows (user_id, group_id) VALUES (${user_id}, ${group_id})",
+    {
+      user_id: req.body.user_id,
+      group_id: req.body.group_id
+    }
+  )
+  .then(data => {
+    res.json("success")
+  })
+  .catch(error => {
+    res.json(error)
+  })
+}
+
+function leaveGroup(req, res, next) {
+  return db.none(
+    "DELETE FROM groupfollows WHERE user_id=$1 AND group_id=$2",
+    [req.body.user_id, req.body.group_id]
   )
   .then(data => {
     res.json("deleted");
@@ -516,9 +611,13 @@ module.exports = {
   logoutUser,
   getSingleUser,
   getSingleUserFavorites,
+  getSingleGroup,
   getFolloweeById,
   getFollowers,
   getFollowing,
+  getAllGroups,
+  getAllGroupFollowers,
+  userFollowsGroup,
   getRecipeComments,
   getSingleRecipeById,
   getIngredientsByRecipeId,
@@ -534,6 +633,9 @@ module.exports = {
   unfavoriteRecipe,
   followUser,
   unfollowUser,
+  createGroup,
+  joinGroup,
+  leaveGroup,
   loginUser,
   editUser,
   editRecipe,

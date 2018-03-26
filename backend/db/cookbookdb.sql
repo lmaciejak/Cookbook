@@ -54,6 +54,17 @@ CREATE TABLE ingredients (
   name VARCHAR,
   notes VARCHAR);
 
+CREATE TABLE groups (
+  group_id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+  group_name VARCHAR NOT NULL UNIQUE,
+  group_description VARCHAR);
+
+CREATE TABLE groupfollows (
+  groupfollow_id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+  group_id INTEGER REFERENCES groups);
+
 /* username: test password: testtest
    username: Mary password: marymary
    username: Larry password: larrylarry  */
@@ -70,8 +81,8 @@ INSERT INTO recipes (user_id, recipe_name, recipe, img, isVegeterian, isVegan)
   VALUES (2, 'Shrimp Risotto', 'Melt 2 tablespoons butter in medium skillet.',
   'https://pioneerwoman.files.wordpress.com/2014/07/dsc_35621.jpg', false, false),
    (1, 'Fried Calamari', 'Fry the calamari', 'https://d1alt1wkdk73qo.cloudfront.net/images/guide/01751a3e8de64ce289286aa8b75e4bfe/640x478_ac.jpg',
-   false, false), 
-    (1, 'Grilled Salmon', 'Grill Salmon', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb',false, false), 
+   false, false),
+    (1, 'Grilled Salmon', 'Grill Salmon', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb',false, false),
     (1, 'Chia Blueberry Parfait', 'Stir salad', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', false, false),
     (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',false, false),
     (2, 'Chicken and Kebabs', 'Stir salad', 'https://images.pexels.com/photos/111131/meat-vegetables-gemuesepiess-mushrooms-111131.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb',false, false);;
@@ -90,3 +101,6 @@ INSERT INTO foods (food_name, isVegeterian, isVegan)
 
 INSERT INTO ingredients (recipe_id, food_id, amount, notes)
   VALUES (1, 1, '1 pound', 'medium'), (2, 2, '1 ounce', null);
+
+INSERT INTO groups (user_id, group_name, group_description)
+  VALUES (3, 'C4Quisine', 'A group for virtual chefs');

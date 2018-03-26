@@ -23,7 +23,10 @@ router.get('/getingredients/:recipeID', db.getIngredientsByRecipeId);
 router.get('/getallrecentusersrecipes/:userID', loginRequired, db.getAllRecentUsersRecipes);
 router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes)
 router.get('/getfolloweebyid/:userID/:followeeID', loginRequired, db.getFolloweeById);
-
+router.get('/allgroups', db.getAllGroups);
+router.get('/getSingleGroup/:groupID', db.getSingleGroup);
+router.get('/userFollowsGroup/:userID/:groupID', db.userFollowsGroup);
+router.get('/getAllGroupFollowers/:groupID', db.getAllGroupFollowers);
 
 /*POST Request*/
 router.post('/register', db.registerUser);
@@ -36,6 +39,9 @@ router.post('/favorite', loginRequired, db.favoriteRecipe);
 router.post('/unfavorite', loginRequired, db.unfavoriteRecipe);
 router.post('/followUser', loginRequired, db.followUser);
 router.post('/unfollowUser', loginRequired, db.unfollowUser);
+router.post('/createGroup', loginRequired, db.createGroup);
+router.post('/joinGroup', loginRequired, db.joinGroup);
+router.post('/leaveGroup', loginRequired, db.leaveGroup);
 router.post('/login', db.loginUser);
 
 /*PATCH Request*/
