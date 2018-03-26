@@ -73,7 +73,7 @@ function getFolloweeById(req, res, next) {
 }
 
 function getRecipeComments(req, res, next) {
-  db.any(`SELECT comment, users.user_id, comments_id,
+  db.any(`SELECT comment, username, users.user_id, comments_id,
           CONCAT(first_name, ' ', last_name) AS FULLname
           FROM users
           INNER JOIN comments ON(users.user_id=comments.user_id)
@@ -181,9 +181,24 @@ function getSortedRecipes(req, res, next) {
 function searchByRecipe(req, res, next) {
   db.task('get-everything', t => {
     return t.batch([
-        t.any(`SELECT recipe_name AS identifier, recipe_id, username FROM recipes JOIN USERS ON (recipes.user_id = users.user_id) WHERE LOWER (recipe_name) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT username AS identifier, user_id FROM users WHERE LOWER (username) LIKE LOWER('%${req.params.search}%')`),
-        t.any(`SELECT concat(first_name, ' ', last_name) AS identifier, user_id FROM users WHERE LOWER (first_name) LIKE LOWER('%${req.params.search}%') OR LOWER (last_name) LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT recipe_name 
+               AS identifier, recipe_id, username 
+               FROM recipes 
+               JOIN USERS ON (recipes.user_id = users.user_id) 
+               WHERE LOWER (recipe_name) 
+               LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT username 
+               AS identifier, user_id 
+               FROM users 
+               WHERE LOWER (username) 
+               LIKE LOWER('%${req.params.search}%')`),
+        t.any(`SELECT concat(first_name, ' ', last_name) 
+               AS identifier, user_id 
+               FROM users 
+               WHERE LOWER (first_name) 
+               LIKE LOWER('%${req.params.search}%') 
+               OR LOWER (last_name) 
+               LIKE LOWER('%${req.params.search}%')`)
     ]);
   })
   .then(data => {
@@ -197,13 +212,13 @@ function searchByRecipe(req, res, next) {
 function getSingleRecipeById(req, res, next) {
   db.any(`SELECT
           COUNT(favorites.recipe_id)
-          AS favorites_count,USERname,recipe_name,
+          AS favorites_count,USERname,users.user_id,recipe_name,
             recipe, img, isvegeterian,isvegan,recipe_timestamp
           FROM recipes
           INNER JOIN USERs ON(recipes.user_id=users.user_id)
           INNER JOIN favorites ON(favorites.recipe_id=recipes.recipe_id)
           WHERE recipes.recipe_id=${req.params.recipeID}
-          GROUP BY recipes.recipe_id, users.username;`)
+          GROUP BY recipes.recipe_id, users.username, users.user_id;`)
     .then(data => {
       res.json(data);
     })
