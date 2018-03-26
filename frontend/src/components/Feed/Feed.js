@@ -38,7 +38,7 @@ class Feed extends React.Component{
 
     return(
       <div>
-        <Searchbar />
+        <Searchbar user={this.props.user}/>
         <div className="feedContainer">
         <h2> Explore meals your friends and family are cooking</h2>
 
@@ -67,35 +67,3 @@ class Feed extends React.Component{
 
 export default Feed
 
-
-
-// favorites_count
-// :
-// "2"
-// img
-// :
-// "https://d1alt1wkdk73qo.cloudfront.net/images/guide/01751a3e8de64ce289286aa8b75e4bfe/640x478_ac.jpg"
-// isvegan
-// :
-// false
-// isvegeterian
-// :
-// false
-// recipe
-// :
-// "Fry the calamari"
-// recipe_id
-// :
-// 2
-// recipe_name
-// :
-// "Fried Calamari"
-// recipe_timestamp
-// :
-// "2018-03-21T17:10:42.230Z"
-// user_id
-// :
-// 1
-// username
-// :
-// "test"

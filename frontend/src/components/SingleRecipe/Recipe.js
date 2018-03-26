@@ -29,10 +29,21 @@ class SingleRecipe extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount() { 
+    this.loadsRecipe();
+  }
+
+  componentWillReceiveProps(props) { 
+    console.log("--=-=-=-=-=-")
+    console.log("new props: ", props)
+    this.loadsRecipe(); 
+  }
+  loadsRecipe = () => {
+    console.log("loading recipe")
     axios
       .get(`/users/isfavorite/${this.props.user.recipeID}`)
       .then(res => {
+        console.log("got recipe")
         if (res.data.length === 0) {
           this.setState({
             canFavorite: false
@@ -43,50 +54,45 @@ class SingleRecipe extends React.Component {
           });
         }
       })
-      .catch(error => {
-        console.log(error);
-      });
-
-    axios
-      .get(`/users/singlerecipe/${this.props.user.recipeID}`)
-      .then(res => {
-        this.setState({
-          favorites_count: res.data[0].favorites_count,
-          username: res.data[0].username,
-          user_id: res.data[0].user_id,
-          recipe_name: res.data[0].recipe_name,
-          recipe: res.data[0].recipe,
-          img: res.data[0].img,
-          isvegeterian: res.data[0].isvegeterian,
-          isvegan: res.data[0].isvegan
-        });
+      .then(() => { 
+        axios
+        .get(`/users/singlerecipe/${this.props.user.recipeID}`)
+        .then(res => {
+          this.setState({
+            favorites_count: res.data[0].favorites_count,
+            username: res.data[0].username,
+            user_id: res.data[0].user_id,
+            recipe_name: res.data[0].recipe_name,
+            recipe: res.data[0].recipe,
+            img: res.data[0].img,
+            isvegeterian: res.data[0].isvegeterian,
+            isvegan: res.data[0].isvegan
+          });
+        })
       })
-      .catch(err => {
-        console.log(err);
-      });
-
-    axios
-      .get(`/users/getingredients/${this.props.user.recipeID}`)
-      .then(res => {
-        this.setState({
-          ingredients: res.data
-        });
+      .then(() => { 
+        axios
+        .get(`/users/getingredients/${this.props.user.recipeID}`)
+        .then(res => {
+          this.setState({
+            ingredients: res.data
+          });
+        })
       })
-      .catch(error => {
-        console.log(error);
-      });
-
-    axios
-      .get(`/users/comment/${this.props.user.recipeID}`)
-      .then(res => {
-        this.setState({
-          comments: res.data
-        });
+      .then(() => { 
+        axios
+        .get(`/users/comment/${this.props.user.recipeID}`)
+        .then(res => {
+          this.setState({
+            comments: res.data
+          });
+        })
       })
       .catch(error => {
         console.log(error);
       });
-  }
+    }
+
 
   handleClickLike = e => {
     e.preventDefault();
@@ -214,10 +220,12 @@ class SingleRecipe extends React.Component {
   };
 
   render() {
-    console.log("canfavorite", this.state.canFavorite);
-    console.log("favorites count", this.state.favorites_count);
-    console.log("isvegan", this.state.isvegan);
-    console.log("comments", this.state.comments);
+    // console.log("canfavorite", this.state.canFavorite);
+    // console.log("favorites count", this.state.favorites_count);
+    // console.log("isvegan", this.state.isvegan);
+    // console.log("comments", this.state.comments);
+    console.log("recipe render")
+    console.log("render props: ", this.props)
     const {
       favorites_count,
       username,
@@ -232,6 +240,7 @@ class SingleRecipe extends React.Component {
       canFavorite,
       comment
     } = this.state;
+
     if (this.props.user) {
       return (
         <div>

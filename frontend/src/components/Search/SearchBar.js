@@ -5,8 +5,8 @@ import Autosuggest from "react-autosuggest";
 import Modal from "react-modal";
 import "./SearchBar.css";
 import cookbooklogo from "../../images/cookbooknamelogo.png";
-import writingicon from "../../images/writingicon.png";
-import hearticon from "../../images/hearticon.png";
+import writingicon from "../../images/writingiconorange.png";
+import hearticon from "../../images/hearticonorange.png";
 
 function getSuggestionValue(suggestion) {
   return suggestion;
@@ -33,8 +33,8 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 class Searchbar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       searchInput: "",
@@ -51,6 +51,14 @@ class Searchbar extends Component {
   handleInput = e => {
     this.setState({
       [e.target.name]: e.target.value
+    });
+  };
+
+  handleModalClick = e => {
+    console.log("close modal: this ", this);
+
+    this.setState({
+      modalIsOpen: false
     });
   };
 
@@ -121,6 +129,7 @@ class Searchbar extends Component {
   }
 
   render() {
+    console.log();
     const { value, suggestions } = this.state;
     const inputProps = {
       placeholder: "Search by recipe, username, full name",
@@ -131,11 +140,13 @@ class Searchbar extends Component {
 
     return (
       <div className="searchbar">
-        <img className="searchbarLogoName" src={cookbooklogo} />
-        <img
-          className="searchbarLogo"
-          src="http://irfanyurdu.org/wp-content/uploads/2017/04/eat-flat-1.png"
-        />
+        <Link to={`/cb/feed`}>
+          <img className="searchbarLogoName" src={cookbooklogo} />
+          <img
+            className="searchbarLogo"
+            src="http://irfanyurdu.org/wp-content/uploads/2017/04/eat-flat-1.png"
+          />
+        </Link>
         <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -146,27 +157,31 @@ class Searchbar extends Component {
           onSuggestionSelected={this.onSuggestionSelected}
         />
 
-        <Link to={`/addrecipe`} className="searchLink">
-          <img src={writingicon} className="writingIcon" />
-          <p className="addTagline"> Add recipe </p>
-        </Link>
-        <Link to={`/favorites`} className="searchLink">
-          <img src={hearticon} className="heartIcon" />
-          <p className="heartTagline"> Favorite recipes </p>
-        </Link>
+        <div className="tooltip1">
+          <Link to={`/cb/addrecipe`} className="searchLink">
+            <img src={writingicon} className="writingIcon" />
+            <span className="tooltiptext1"> Add recipe </span>
+          </Link>
+        </div>
+        <div className="tooltip2">
+          <Link
+            to={`/cb/profile/${this.props.user.user_id}/favorites`}
+            className="searchLink"
+          >
+            <img src={hearticon} className="heartIcon" />
+            <span className="tooltiptext2">Favorite recipes </span>
+          </Link>
+        </div>
         <div>
           <Menu right className="burgerMenu">
-            <a id="home" className="menu-item" href="/">
-              Home
-            </a>
-            <a id="about" className="menu-item" href="/feed">
+            <a id="contact" className="menu-item" href="/cb/feed">
               Feed
             </a>
             <a id="contact" className="menu-item" href="/favorite">
-              Favorite Recipes
+              Profile
             </a>
-            <a id="contact" className="menu-item" href="/contact">
-              Recipes
+            <a id="contact" className="menu-item" href={`/cb/profile/${this.props.user.user_id}/favorites`}>
+              Favorite Recipes
             </a>
             <a id="contact" className="menu-item" href="/logout">
               Logout
@@ -187,7 +202,11 @@ class Searchbar extends Component {
                   ? `/cb/${elem.username}/${elem.recipe_id}`
                   : `/cb/profile/${elem.user_id}`;
                 return (
-                  <Link to={link} className="searchLink">
+                  <Link
+                    to={link}
+                    className="searchLink"
+                    onClick={this.handleModalClick}
+                  >
                     <p> {elem.identifier} </p>
                   </Link>
                 );

@@ -36,6 +36,13 @@ class Cookbook extends React.Component {
     this.loggedInUser()
   }
 
+  renderAddRecipe = props => { 
+    const { user } = this.state
+    return(
+      <AddRecipe user={user} />
+    )
+  }
+
   renderUserProfile = props =>{
     const { id } = props.match.params
     const { user } = this.state
@@ -45,6 +52,7 @@ class Cookbook extends React.Component {
   }
 
   renderSingleRecipe = props =>{
+    console.log('rendering single recipe')
     const { username, recipeID } = props.match.params
     const { user } = this.state
     return(
@@ -78,7 +86,7 @@ class Cookbook extends React.Component {
         <Route exact path='/cb/profile/:id' render={this.renderUserProfile} />
         <Route path='/cb/profile/:id/favorites' component={UserProfile} />
         <Route path='/cb/profile/:id/edit' component={UserProfile} />
-        <Route path='/cb/profile/:id/addrecipe' component={AddRecipe} />
+        <Route path='/cb/addrecipe' render={this.renderAddRecipe} />
         <Route path='/cb/editRecipe' component={EditRecipe} />
         <Route exact path='/cb/:username/:recipeID' render={this.renderSingleRecipe} />
         <Route path='/cb/:username/:recipeID/edit' component={Recipe} />

@@ -1,10 +1,11 @@
 import React from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 import SearchBar from "../Search/SearchBar.js"
 
 class AddRecipe extends React.Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       recipe_name : "",
       recipe : "",
@@ -13,7 +14,8 @@ class AddRecipe extends React.Component {
       img: "",
       isvegeterian: false ,
       isvegan:false ,
-      ingredientsList: ["","eggs","chicken","potatoes"]
+      ingredientsList: ["","eggs","chicken","potatoes"], 
+      redirect: false
     }
   }
 
@@ -87,7 +89,8 @@ class AddRecipe extends React.Component {
           img: "",
           isvegeterian: false,
           isvegan: false,
-          ingredientsList: ["","eggs","chicken","potatoes"]
+          ingredientsList: ["","eggs","chicken","potatoes"], 
+          redirect: true,
         })
       })
 			.catch(err => {
@@ -100,12 +103,15 @@ class AddRecipe extends React.Component {
     render() {
       const {recipe_name, recipe, description,
              ingredients, ingredientsList,
-             isvegeterian, isvegan, img } = this.state
+             isvegeterian, isvegan, img, redirect } = this.state
 
              console.log(description)
+             if(redirect) { 
+              return <Redirect to="/cb/feed"/>
+             }
         return(
             <div>
-              <SearchBar />
+              <SearchBar user={this.props.user} />
               <div className="formContainer">
               <div className="formStyle">
                 <h1 className="formHeader">Add a New Recipe! <span>Let Your Everyone Know Whats Cooking</span></h1>

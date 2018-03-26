@@ -29,6 +29,7 @@
   width: 100%; 
   /* background-color: #ff5f00; */
   padding-top: 10px; 
+  padding-bottom: 10px; 
   border-bottom-width: 3px;  
   border-bottom-style: solid; 
   border-bottom-color: rgb(235, 232, 232); 
@@ -120,12 +121,13 @@
   width: 2.5%; 
   position: fixed; 
   margin-left: 81%; 
-  margin-top: -2%; 
+  margin-top: -3%; 
+  display: inline; 
 }
 
 .writingIcon:hover { 
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
+  filter: grayscale(100%);  
 }
 
 .addTagline { 
@@ -137,9 +139,10 @@
 
 .heartIcon { 
   width: 2.5%; 
+  margin-top: -3%; 
   position: fixed; 
-  margin-left: 70.5%; 
-  margin-top: -2%; 
+  margin-left: 73.5%;  
+  display: inline; 
 }
 
 .heartIcon:hover { 
@@ -152,6 +155,59 @@
   font-size: 0.8em; 
   margin-left: 74%;
   margin-top: -2.5%;  
+}
+
+
+.tooltip1:hover .tooltiptext1 {
+  visibility: visible;
+  margin-left: 85%; 
+}
+
+.tooltip1 {
+  position: relative;
+  width: 90%; 
+  /* margin-top: 2%; */
+  display: block; 
+}
+
+.tooltip1 .tooltiptext1 {
+  visibility: hidden;
+  width: 120px;
+  /* background-color: white; */
+  color: black;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip2:hover .tooltiptext2 {
+  visibility: visible;
+  margin-left: 100%; 
+}
+
+.tooltip2 {
+  position: relative;
+  /* border-bottom: 1px dotted black; If you want dots under the hoverable text */
+  width: 80%; 
+  display: block; 
+}
+
+.tooltip2 .tooltiptext2 {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
 }
 
 .feedLink { 
