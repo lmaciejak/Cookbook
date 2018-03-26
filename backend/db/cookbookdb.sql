@@ -54,6 +54,17 @@ CREATE TABLE ingredients (
   name VARCHAR,
   notes VARCHAR);
 
+CREATE TABLE groupowners (
+  group_id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+  group_name VARCHAR NOT NULL UNIQUE,
+  group_description VARCHAR);
+
+CREATE TABLE groupfollows (
+  groupfollow_id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+  group_id INTEGER REFERENCES groupowners);
+
 /* username: test password: testtest
    username: Mary password: marymary
    username: Larry password: larrylarry  */
@@ -106,3 +117,6 @@ INSERT INTO foods (food_name, isVegeterian, isVegan)
 
 INSERT INTO ingredients (recipe_id, food_id, amount, notes)
   VALUES (1, 1, '1 pound', 'medium'), (2, 2, '1 ounce', null);
+
+INSERT INTO groupowners (user_id, group_name, group_description)
+  VALUES (3, 'Bronx Cooks', 'we from the bronx bro')

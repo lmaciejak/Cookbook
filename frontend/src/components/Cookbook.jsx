@@ -6,6 +6,7 @@ import UserProfile from './Profile/UserProfile'
 import Recipe from './SingleRecipe/Recipe'
 import LoginUser from './Modals/LoginUser'
 import RegisterUser from './Modals/RegisterUser'
+import Groups from './Groups/Groups'
 
 class Cookbook extends React.Component {
   constructor() {
@@ -36,7 +37,6 @@ class Cookbook extends React.Component {
   renderUserProfile = props =>{
     const { id } = props.match.params
     const { user } = this.state
-    console.log(user);
     return(
       <UserProfile user={user} id={id}/>
     )
@@ -58,11 +58,21 @@ class Cookbook extends React.Component {
     )
   }
 
+  renderGroups = () =>{
+    const { user } = this.state
+    return(
+      <Groups user={user} />
+    )
+  }
+
+
   render() {
     const { user } = this.state
     return (
      <div>
       <Switch>
+        <Route exact path='/cb/groups' render={this.renderGroups} />
+        <Route path='/cb/groups/:groupID' component={Groups} />
         <Route exact path='/cb/profile/:id' render={this.renderUserProfile} />
         <Route path='/cb/profile/:id/favorites' component={UserProfile} />
         <Route path='/cb/profile/:id/edit' component={UserProfile} />
