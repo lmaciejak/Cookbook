@@ -93,15 +93,16 @@ INSERT INTO users (username, password, email, first_name, last_name)
    ('Tate','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Tate@gmail.com', 'Tate',
    'justice');
 
-INSERT INTO recipes (user_id, recipe_name, recipe, img, isVegeterian, isVegan)
+INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeterian, isVegan)
   VALUES (2, 'Shrimp Risotto', 'Melt 2 tablespoons butter in medium skillet.',
-  'https://pioneerwoman.files.wordpress.com/2014/07/dsc_35621.jpg', false, false),
-   (1, 'Fried Calamari', 'Fry the calamari', 'https://d1alt1wkdk73qo.cloudfront.net/images/guide/01751a3e8de64ce289286aa8b75e4bfe/640x478_ac.jpg',
+  'https://pioneerwoman.files.wordpress.com/2014/07/dsc_35621.jpg', 'some description', false, false),
+   (1, 'Fried Calamari', 'Fry the calamari', 'https://d1alt1wkdk73qo.cloudfront.net/images/guide/01751a3e8de64ce289286aa8b75e4bfe/640x478_ac.jpg', 'some description',
    false, false),
-    (1, 'Grilled Salmon', 'Grill Salmon', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb',false, false),
-    (1, 'Chia Blueberry Parfait', 'Stir salad', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', false, false),
-    (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',false, false),
-    (2, 'Chicken and Kebabs', 'Stir salad', 'https://images.pexels.com/photos/111131/meat-vegetables-gemuesepiess-mushrooms-111131.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb',false, false);;
+    (1, 'Grilled Salmon', 'Grill Salmon', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false),
+    (1, 'Chia Blueberry Parfait', 'Stir salad', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, false),
+    (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description',false, false),
+    (2, 'Chicken and Kebabs', 'Stir salad', 'https://images.pexels.com/photos/111131/meat-vegetables-gemuesepiess-mushrooms-111131.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false),
+    (3, 'fried chicken', '1.test1, 2.test2, 3.test3, 4.test4', 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Fried-Chicken-Leg.jpg', 'some description', false, true);
 
 INSERT INTO favorites (recipe_id, user_id)
   VALUES (1, 2), (1, 3), (2, 2), (2,3), (3,2), (4, 2), (5, 1), (6,1);
@@ -115,8 +116,9 @@ INSERT INTO comments (recipe_id, user_id, comment)
 INSERT INTO foods (food_name, isVegeterian, isVegan)
   VALUES ('shrimp', false, false), ('arborio rice', true, true);
 
-INSERT INTO ingredients (recipe_id, food_id, amount, notes)
-  VALUES (1, 1, '1 pound', 'medium'), (2, 2, '1 ounce', null);
+INSERT INTO ingredients (recipe_id, food_id, amount, name, notes)
+  VALUES (1, 1, '1 pound', 'oil', 'medium'), (2, 2, '1 ounce', 'onion', 'null'),
+  (7, 3, '1pound', 'salt', 'medium'), (7, 3, '2pound', 'chicken', 'large');
 
 INSERT INTO groupowners (user_id, group_name, group_description)
   VALUES (3, 'Bronx Cooks', 'we from the bronx bro')

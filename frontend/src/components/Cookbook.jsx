@@ -79,7 +79,7 @@ class Cookbook extends React.Component {
         <Route path='/cb/profile/:id/favorites' component={UserProfile} />
         <Route path='/cb/profile/:id/edit' component={UserProfile} />
         <Route path='/cb/profile/:id/addrecipe' component={AddRecipe} />
-        <Route path='/cb/editRecipe' component={EditRecipe} />
+        <Route path='/cb/editRecipe/:recipeID' component={EditRecipe} />
         <Route exact path='/cb/:username/:recipeID' render={this.renderSingleRecipe} />
         <Route path='/cb/:username/:recipeID/edit' component={Recipe} />
         <Route exact path='/cb/feed' render={this.renderUserFeed} />
