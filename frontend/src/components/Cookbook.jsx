@@ -7,6 +7,8 @@ import Recipe from './SingleRecipe/Recipe'
 import LoginUser from './Modals/LoginUser'
 import RegisterUser from './Modals/RegisterUser'
 import Groups from './Groups/Groups'
+import AddRecipe from './SingleRecipe/AddRecipe'
+import EditRecipe from './SingleRecipe/EditRecipe'
 
 class Cookbook extends React.Component {
   constructor() {
@@ -76,7 +78,8 @@ class Cookbook extends React.Component {
         <Route exact path='/cb/profile/:id' render={this.renderUserProfile} />
         <Route path='/cb/profile/:id/favorites' component={UserProfile} />
         <Route path='/cb/profile/:id/edit' component={UserProfile} />
-        <Route path='/cb/profile/:id/addrecipe' component={UserProfile} />
+        <Route path='/cb/profile/:id/addrecipe' component={AddRecipe} />
+        <Route path='/cb/editRecipe' component={EditRecipe} />
         <Route exact path='/cb/:username/:recipeID' render={this.renderSingleRecipe} />
         <Route path='/cb/:username/:recipeID/edit' component={Recipe} />
         <Route exact path='/cb/feed' render={this.renderUserFeed} />
