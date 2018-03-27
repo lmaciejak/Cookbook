@@ -10,7 +10,8 @@ class Groups extends React.Component{
     super(props)
 
     this.state = {
-      groups: []
+      groups: [],
+      user: ''
     }
   }
 
@@ -22,6 +23,15 @@ class Groups extends React.Component{
           groups: res.data
         })
       })
+      .then(
+        axios
+          .get('/users')
+          .then(res => {
+            this.setState({
+              user: res.data[0]
+            })
+          })
+      )
       .catch(error => {
         console.log('failed to get all groups')
       })
@@ -36,13 +46,14 @@ class Groups extends React.Component{
 
   renderSingleGroup = props =>{
     const { groupID } = props.match.params
+    const { user } = this.state
     return(
-      <SingleGroup user={this.props.user} groupID={groupID} />
+      <SingleGroup user={user} groupID={groupID} />
     )
   }
 
   render(){
-    console.log(this.state.groups)
+    console.log('Black',this.state)
     return(
       <div>
         <Switch>

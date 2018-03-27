@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router"
 import axios from "axios";
 import Searchbar from "../Search/SearchBar";
 import hearticon from "../../images/orange-hearts.png";
@@ -25,7 +26,7 @@ class SingleRecipe extends React.Component {
       ingredients: [],
       canFavorite: true,
       comment: "",
-      comments_id: false
+      comments_id: false,
     };
   }
 
@@ -96,7 +97,6 @@ class SingleRecipe extends React.Component {
 
   handleClickLike = e => {
     e.preventDefault();
-
     axios
       .post("/users/favorite", {
         recipe_id: this.props.user.recipeID
@@ -219,9 +219,12 @@ class SingleRecipe extends React.Component {
       });
   };
 
+  handleClickEditRecipe = (e) => {
+    <Redirect push to="/cb/editRecipe/:recipeID" />
+  }
+
   render() {
-    console.log("recipe render")
-    console.log("render props: ", this.props)
+
     const {
       favorites_count,
       username,
@@ -268,6 +271,9 @@ class SingleRecipe extends React.Component {
                   className="heartIconUnfavorite"
                 />
               )}
+              { this.props.id === user_id?
+                <Link to={`/cb/editRecipe/${this.props.user.recipeID}`}><button>Edit Recipe</button></Link>: ""
+              }
               <p className="recipeFavoritesCount">
                 {" "}
                 {this.state.favorites_count}
