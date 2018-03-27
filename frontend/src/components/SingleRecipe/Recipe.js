@@ -219,6 +219,46 @@ class SingleRecipe extends React.Component {
     <Redirect push to="/cb/editRecipe/:recipeID" />
   }
 
+  handleClickDelete = (e) => {
+    axios
+      .patch(`/users/deleteIngredients`, {
+        recipe_id: this.props.user.recipeID
+      })
+      .then( (res) => {
+        axios
+          .patch(`/users/deleteComments`, {
+            recipe_id: this.props.user.recipeID
+          })
+          .then( (res) => {
+            axios
+              .patch(`/users/deleteFavorites`, {
+                recipe_id: this.props.user.recipeID
+              })
+              .then( (res) => {
+                axios
+                  .patch(`/users/deleteRecipe`, {
+                    recipe_id: this.props.user.recipeID
+                  })
+                  .then( (res) => {
+                    console.log(res);
+                  })
+                  .catch( (err) => {
+                    console.log(err);
+                  })
+              })
+              .catch( (err) => {
+                console.log(err);
+              })
+          })
+          .catch( (err) => {
+            console.log(err);
+          })
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+  }
+
   render() {
 
     const {
@@ -267,9 +307,6 @@ class SingleRecipe extends React.Component {
                   className="heartIconUnfavorite"
                 />
               )}
-              { this.props.id === user_id?
-                <Link to={`/cb/editRecipe/${this.props.user.recipeID}`}><button>Edit Recipe</button></Link>: ""
-              }
               <p className="recipeFavoritesCount">
                 {" "}
                 {this.state.favorites_count}
@@ -284,6 +321,13 @@ class SingleRecipe extends React.Component {
             <div className="singleRecipeRight">
               <img src={img} alt="recipe_image" className="singleRecipeImage" />
             </div>
+            <br/>
+            { this.props.id === user_id?
+              <Link to={`/cb/editRecipe/${this.props.user.recipeID}`}><button id="edit_recipe" className="singleRecipeSubmit">Edit Recipe</button></Link>: ""
+            }{" "}
+            { this.props.id === user_id?
+              <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
+            }
             <div className="singleRecipeLeft">
               <h3 className="singleRecipeIngredientsTitle"> Ingredients </h3>
               <ul type="none">

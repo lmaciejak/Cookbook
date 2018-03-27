@@ -101,7 +101,7 @@ textarea {
   color: white;
   border: none;
   border-radius: 3px;
-  width: 14%;
+  width: 20%;
   outline: none;
 }
 
@@ -113,4 +113,16 @@ textarea {
 .commentList {
   list-style: none;
   padding-left: 3%;
+}
+
+#delete_recipe {
+  position: absolute;
+  left: 520px;
+  top: 380px;
+}
+
+#edit_recipe {
+  position: absolute;
+  left: 240px;
+  top: 380px;
 }
