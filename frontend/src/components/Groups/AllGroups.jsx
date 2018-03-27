@@ -11,7 +11,11 @@ const AllGroups = ({ user, groups }) => {
       {groups.map(group => {
         let path = `/cb/groups/${group.group_id}`
         return(
-          <Link to={path}>{group.group_name}</Link>
+          <div>
+            {" "}
+            <Link to={path}>{group.group_name}</Link>
+            {" "}
+          </div>
         )
       })}
     </div>

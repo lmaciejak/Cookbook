@@ -308,10 +308,10 @@ function getMostTopRecipes(req, res, next) {
 }
 
 function getAllGroupFollowers(req, res, next) {
-  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, groups.group_id
+  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, groupowners.group_id
           FROM users
           JOIN groupfollows ON (USERs.user_id=groupfollows.user_id)
-          JOIN GROUPS ON (GROUPS.group_id=groupfollows.group_id)
+          JOIN groupowners ON (groupowners.group_id=groupfollows.group_id)
           WHERE groupfollows.group_id=${req.params.groupID}`)
           .then(data => {
             res.json(data)
