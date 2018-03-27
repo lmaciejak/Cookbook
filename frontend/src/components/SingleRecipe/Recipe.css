@@ -1,67 +1,63 @@
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .singleRecipeImage {
   width: 45%;
-  margin-left: 28%; 
-  height: 30%; 
-
+  margin-left: 28%;
+  height: 30%;
 }
 
 .singleRecipeHeader {
   color: rgb(51, 51, 51);
-  display: inline; 
+  display: inline;
 }
 
-.singleRecipeLeft { 
-  width: 45%; 
-  margin-left: 28%; 
-  margin-top: 0%; 
-  border-radius: 1%; 
-}
-
-.singleRecipeVeganIcon{ 
-  width: 2.5%; 
-}
-
-.singleRecipeChefIcon { 
-  width: 5.5%; 
-  display: inline; 
-}
-
-.singleRecipeIntroLine { 
-  background-color:  rgb(255, 234, 163); 
-  width: 44.9%; 
+.singleRecipeLeft {
+  width: 45%;
   margin-left: 28%;
-  border-radius: 3px; 
-  color: rgb(51, 51, 51); 
-  text-align: center; 
+  margin-top: 0%;
+  border-radius: 1%;
 }
 
-.singleRecipeIngredientsTitle { 
-  border-bottom: 2px solid rgb(255, 201, 130); 
+.singleRecipeVeganIcon {
+  width: 2.5%;
 }
 
-.singleRecipeUsername { 
-  margin-bottom: -0.1%; 
-  display: inline; 
+.singleRecipeChefIcon {
+  width: 5.5%;
 }
 
-.singleRecipeUsernameLink { 
+.singleRecipeIntroLine {
+  background-color: rgb(255, 234, 163);
+  width: 44.9%;
+  margin-left: 28%;
+  border-radius: 3px;
+  color: rgb(51, 51, 51);
+  text-align: center;
+}
+
+.singleRecipeIngredientsTitle {
+  border-bottom: 2px solid rgb(255, 201, 130);
+}
+
+.singleRecipeUsername {
+  display: inline;
+}
+
+.singleRecipeUsernameLink {
   text-decoration: none;
-  color: rgb(51, 51, 51); 
+  color: rgb(51, 51, 51);
 }
 
 .heartIconFavorite {
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
-  width: 5%; 
+  width: 5%;
 }
 
-.heartIconUnfavorite { 
-  width: 5%; 
-
+.heartIconUnfavorite {
+  width: 5%;
 }
 
 .heartIconFavorite:hover {
@@ -74,12 +70,12 @@ body {
   cursor: pointer;
 }
 
-.recipeFavoritesCount { 
-  display: inline; 
+.recipeFavoritesCount {
+  display: inline;
 }
 
-.ingredientList { 
-  display: list-item; 
+.ingredientList {
+  display: list-item;
   list-style-type: circle;
 }
 
@@ -87,34 +83,34 @@ textarea {
   outline: none;
   resize: none;
   width: 99%;
-  border-radius: 3px; 
-  border: 0.7px solid rgb(187, 187, 187); 
+  border-radius: 3px;
+  border: 0.7px solid rgb(187, 187, 187);
 }
 
-.singleRecipeSubmit { 
-  background-color: rgb(255, 125, 65); 
-  color: white; 
-  border: none; 
-  border-radius: 3px; 
-  width: 12%; 
+.singleRecipeSubmit {
+  background-color: rgb(255, 125, 65);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  width: 12%;
   outline: none;
 }
 
-.singleRecipeCommentEdit { 
-  background-color: rgb(255, 125, 65); 
-  color: white; 
-  border: none; 
-  border-radius: 3px; 
-  width: 14%; 
+.singleRecipeCommentEdit {
+  background-color: rgb(255, 125, 65);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  width: 14%;
   outline: none;
 }
 
-.singleRecipeSubmit:hover { 
-  background-color: gray; 
-  cursor: pointer; 
+.singleRecipeSubmit:hover {
+  background-color: gray;
+  cursor: pointer;
 }
 
-.commentList { 
-  list-style:none;
-  padding-left:3%;
+.commentList {
+  list-style: none;
+  padding-left: 3%;
 }

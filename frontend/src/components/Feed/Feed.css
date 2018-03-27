@@ -1,58 +1,53 @@
-.feedImage { 
-  width: 460px; 
-  height: 300px; 
- 
-}
-
-.feedBox { 
-  float: left;
-  width: 460px; 
-  background-color: rgb(255, 254, 253); 
-  padding-right: 0.45%; 
-}
-
-.feedBoxContainer { 
-  margin-left: 1.4%; 
-  background-color: rgb(199, 199, 199); 
-}
-
-.feedContainer { 
-  text-align: center; 
-}
-
-.feedRecipeName { 
-  display: inline-flex; 
-  justify-content: center; 
-  font-size: 1.1em; 
-  margin-top: 2.5%; 
-}
-
-.feedRecipeUsername { 
-  display: inline; 
-}
-
-.feedRecipeFavorites{ 
-  display: inline; 
-}
-
-.feedBoxDescription { 
-  margin-left: 0.6%; 
-  color: rgb(65, 65, 65); 
+.feedImage {
   width: 100%;
-  background-color: rgb(252, 239, 181); 
-  border: 0.5px solid rgb(253, 231, 231); 
-  border-radius: 2px; 
-  height: 40px; 
+  height: 300px;
 }
 
-.feedRecipeChefIcon { 
-  width: 3%; 
+.feedBox {
+  width: 460px;
+  background-color: rgb(255, 254, 253);
 }
 
-.feedRecipeIcons { 
-  display: inline; 
-  padding-left: 3%; 
+.feedBoxContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
+.feedContainer {
+  text-align: center;
+}
 
-/* background-color: rgb(242, 255, 227);  */
+.feedRecipeName {
+  display: inline-flex;
+  justify-content: center;
+  font-size: 1.1em;
+  margin-top: 2.5%;
+}
+
+.feedRecipeUsername {
+  display: inline;
+}
+
+.feedRecipeFavorites {
+  display: inline;
+}
+
+.feedBoxDescription {
+  margin-left: 0%;
+  color: rgb(65, 65, 65);
+  width: 100%;
+  background-color: rgb(252, 239, 181);
+  border: 0.5px solid rgb(253, 231, 231);
+  border-radius: 2px;
+  height: 40px;
+}
+
+.feedRecipeChefIcon {
+  width: 3%;
+}
+
+.feedRecipeIcons {
+  display: inline;
+  padding-left: 3%;
+}
