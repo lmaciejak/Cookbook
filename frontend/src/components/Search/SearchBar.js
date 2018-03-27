@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { slide as Menu } from "react-burger-menu";
 import { Link, Redirect } from "react-router-dom";
+import axios from "axios";
 import Autosuggest from "react-autosuggest";
 import Modal from "react-modal";
 import "./SearchBar.css";
@@ -41,11 +42,28 @@ class Searchbar extends Component {
       value: "",
       suggestions: [],
       redirect: false,
+      redirectLanding: false, 
       modalIsOpen: false,
-      finalSuggestion: ""
+      finalSuggestion: "", 
+      message: ""
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+
+  handleClickLogout = e => { 
+    axios
+    .get(`/users/logout`)
+        .then(res => {
+          console.log('res', res)
+          this.setState({
+            message: res.data, 
+            redirectLanding: true, 
+          });
+        })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   handleInput = e => {
@@ -130,7 +148,7 @@ class Searchbar extends Component {
 
   render() {
     console.log();
-    const { value, suggestions } = this.state;
+    const { value, suggestions, redirectLanding } = this.state;
     const inputProps = {
       placeholder: "Search by recipe, username, full name",
       value,
@@ -183,7 +201,7 @@ class Searchbar extends Component {
             <a id="contact" className="menu-item" href={`/cb/profile/${this.props.user.user_id}/favorites`}>
               Favorite Recipes
             </a>
-            <a id="contact" className="menu-item" href="/logout">
+            <a id="contact" className="menu-item" href="/" onClick={this.handleClickLogout}>
               Logout
             </a>
           </Menu>
