@@ -688,6 +688,58 @@ function editRecipeComment(req, res, next) {
   }
 }
 
+function deleteIngredients(req, res, next) {
+  return db.none(
+    "DELETE FROM ingredients WHERE recipe_id=$1",
+      [req.body.recipe_id]
+    )
+    .then( data => {
+      res.json("deleted");
+    })
+    .catch( err => {
+      res.json(err);
+    })
+}
+
+function deleteRecipe(req, res, next) {
+  return db.none(
+    "DELETE FROM recipes WHERE recipe_id=$1",
+    [req.body.recipe_id]
+  )
+    .then( data => {
+      res.json("deleted");
+    })
+    .catch( err => {
+      res.json(err);
+    })
+}
+
+function deleteComments(req, res, next) {
+  return db.none(
+    "DELETE FROM comments WHERE recipe_id=$1",
+    [req.body.recipe_id]
+  )
+    .then( data => {
+      res.json("deleted");
+    })
+    .catch( err => {
+      res.json(err);
+    })
+}
+
+function deleteFavorites(req, res, next) {
+  return db.none(
+    "DELETE FROM favorites WHERE recipe_id=$1",
+    [req.body.recipe_id]
+  )
+    .then( data => {
+      res.json("deleted");
+    })
+    .catch( err => {
+      res.json(err);
+    })
+}
+
 
 module.exports = {
 /*-------GET Request-------*/
@@ -735,4 +787,8 @@ module.exports = {
   editRecipe,
   editIngredients,
   editRecipeComment,
+  deleteIngredients,
+  deleteRecipe,
+  deleteComments,
+  deleteFavorites,
 };
