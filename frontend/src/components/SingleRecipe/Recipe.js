@@ -30,21 +30,17 @@ class SingleRecipe extends React.Component {
     };
   }
 
-  componentDidMount() { 
+  componentDidMount() {
     this.loadsRecipe();
   }
 
-  componentWillReceiveProps(props) { 
-    console.log("--=-=-=-=-=-")
-    console.log("new props: ", props)
-    this.loadsRecipe(); 
+  componentWillReceiveProps(props) {
+    this.loadsRecipe();
   }
   loadsRecipe = () => {
-    console.log("loading recipe")
     axios
       .get(`/users/isfavorite/${this.props.user.recipeID}`)
       .then(res => {
-        console.log("got recipe")
         if (res.data.length === 0) {
           this.setState({
             canFavorite: false
@@ -55,7 +51,7 @@ class SingleRecipe extends React.Component {
           });
         }
       })
-      .then(() => { 
+      .then(() => {
         axios
         .get(`/users/singlerecipe/${this.props.user.recipeID}`)
         .then(res => {
@@ -71,7 +67,7 @@ class SingleRecipe extends React.Component {
           });
         })
       })
-      .then(() => { 
+      .then(() => {
         axios
         .get(`/users/getingredients/${this.props.user.recipeID}`)
         .then(res => {
@@ -80,7 +76,7 @@ class SingleRecipe extends React.Component {
           });
         })
       })
-      .then(() => { 
+      .then(() => {
         axios
         .get(`/users/comment/${this.props.user.recipeID}`)
         .then(res => {
@@ -353,4 +349,3 @@ class SingleRecipe extends React.Component {
   }
 }
 export default SingleRecipe;
-
