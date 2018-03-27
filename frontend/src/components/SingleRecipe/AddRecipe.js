@@ -5,7 +5,7 @@ import SearchBar from "../Search/SearchBar.js"
 
 class AddRecipe extends React.Component {
   constructor(props){
-    super(props)
+    super(props);
     this.state = {
       recipe_name : "",
       recipe : "",
@@ -14,8 +14,9 @@ class AddRecipe extends React.Component {
       img: "",
       isvegeterian: false ,
       isvegan:false ,
-      ingredientsList: ["","eggs","chicken","potatoes"], 
-      redirect: false
+      ingredientsList: ["","eggs","chicken","potatoes"],
+      redirect: false,
+      recipe_id: ""
     }
   }
 
@@ -64,7 +65,7 @@ class AddRecipe extends React.Component {
     e.preventDefault();
     const {recipe_name, recipe, description,
            ingredients, ingredientsList,
-           isvegeterian, isvegan, img } = this.state
+           isvegeterian, isvegan, img, recipe_id } = this.state
     axios
 			.post('/users/addRecipe', {
         recipe_name: recipe_name,
@@ -75,12 +76,15 @@ class AddRecipe extends React.Component {
         isvegan: isvegan
 			})
 			.then(res => {
+        this.setState({
+          recipe_id: res.data.recipe_id
+        })
         axios
           .post(`/users/addIngredients/${res.data.recipe_id}`, {
             ingredients: ingredients
 			    })
       })
-      .then( () => {
+      .then( (res) => {
         this.setState({
           recipe_name : "",
           recipe : "",
@@ -89,7 +93,7 @@ class AddRecipe extends React.Component {
           img: "",
           isvegeterian: false,
           isvegan: false,
-          ingredientsList: ["","eggs","chicken","potatoes"], 
+          ingredientsList: ["","eggs","chicken","potatoes"],
           redirect: true,
         })
       })
@@ -103,11 +107,9 @@ class AddRecipe extends React.Component {
     render() {
       const {recipe_name, recipe, description,
              ingredients, ingredientsList,
-             isvegeterian, isvegan, img, redirect } = this.state
-
-             console.log(description)
-             if(redirect) { 
-              return <Redirect to="/cb/feed"/>
+             isvegeterian, isvegan, img, redirect, recipe_id } = this.state
+             if(redirect) {
+              return <Redirect to={`/cb/${this.props.user.username}/${recipe_id}`}/>
              }
         return(
             <div>
@@ -117,7 +119,7 @@ class AddRecipe extends React.Component {
                 <h1 className="formHeader">Add a New Recipe! <span>Let Your Everyone Know Whats Cooking</span></h1>
                 <form onSubmit={this.handleSubmit}>
                 <div className="formSection"><span>1</span>Recipe Name & ImageUrl</div>
-                
+
                 <div className="formInnerWrap">
                 <label className="formLabels">Recipe Name
                     <input
@@ -163,14 +165,14 @@ class AddRecipe extends React.Component {
                             value ={ingredient.name}
                             onChange={this.handleIngredientChange(idx)}
                             className="formInput"
-                         /> 
+                         />
                          <datalist id="ingredients">
                             {ingredientsList.map(ingredient =>
                             <option value={ingredient}> {ingredient}</option>)}
                          </datalist>
                             {/* {ingredientsList.map(ingredient =>
                             <option value={ingredient}> {ingredient}</option>)} */}
-                      
+
                 Amount:
                   <input
                     type="text"
@@ -179,7 +181,7 @@ class AddRecipe extends React.Component {
                     value={ingredient.amount}
                     className= "ingAmount formInput"
                   />
-                
+
                 Notes
                   <input
                     type="text"
@@ -188,7 +190,7 @@ class AddRecipe extends React.Component {
                     value={ingredient.notes}
                     className= "notes formInput"
                   />
-                
+
                   <button
                     type="button"
                     className="xButton"
@@ -197,7 +199,7 @@ class AddRecipe extends React.Component {
                   </label>
                   </div>
                     ))}
-                  
+
                     <button
                       type="button"
                       className="formButton"
@@ -205,7 +207,7 @@ class AddRecipe extends React.Component {
                       MORE INGREDIENTS
                     </button>
                 </div>
-                
+
                 <div className="formSection"><span>4</span>Directions</div>
                 <div className="formInnerWrap">
                 <label className="formLabels">Directions
@@ -219,10 +221,9 @@ class AddRecipe extends React.Component {
                   />
                 </label>
                 </div>
-                
+
                 <div className="formSection"><span>5</span>Vege Friendly?</div>
                 <div className="formInnerWrap">
-                
                 <label className="formLabels">Vegeterian
                   <input type="checkbox"
                     name="isvegeterian"
@@ -238,11 +239,10 @@ class AddRecipe extends React.Component {
                     />
                 </label>
                 </div>
-
                 <button className="formButton">Submit</button>
                 </form>
-              </div> 
-              </div> 
+              </div>
+              </div>
             </div>
         )
     }

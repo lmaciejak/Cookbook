@@ -321,8 +321,6 @@ function getAllGroupFollowers(req, res, next) {
           })
 }
 
-/*-------------------------------POST Request----------------------------------*/
-
 function isFavorite(req, res, next) {
   db.any(`SELECT *
           FROM favorites
@@ -402,7 +400,7 @@ function addRecipe(req, res, next) {
   return db.one(
     "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan)"
     + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan})"
-    + " RETURNING recipe_id",
+    + " RETURNING recipe_id, user_id",
     {
       user_id: req.user.user_id,
       recipe_name: req.body.recipe_name,
@@ -414,7 +412,7 @@ function addRecipe(req, res, next) {
     }
   )
   .then(data => {
-     res.json({recipe_id: data.recipe_id});
+    res.json({recipe_id: data.recipe_id});
   })
   .catch(error => {
     res.json(error);
@@ -424,13 +422,8 @@ function addRecipe(req, res, next) {
 
 
 function addIngredients(req, res, next) {
-  console.log("add ingredients: ", req.body.ingredients)
-
   return db.task(t => {
-    // const ingredients  = JSON.parse(req.body.ingredients);
       const ingredients = req.body.ingredients;
-      // console.log("add ingredients: ", req.body.ingredients)
-
       const queries = ingredients.map(ingredient => {
             return t.none("INSERT INTO ingredients (recipe_id, amount, name, notes) "
             + " VALUES (${recipe_id}, ${amount}, ${name}, ${notes})",
