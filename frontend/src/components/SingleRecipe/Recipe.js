@@ -220,10 +220,6 @@ class SingleRecipe extends React.Component {
   };
 
   render() {
-    // console.log("canfavorite", this.state.canFavorite);
-    // console.log("favorites count", this.state.favorites_count);
-    // console.log("isvegan", this.state.isvegan);
-    // console.log("comments", this.state.comments);
     console.log("recipe render")
     console.log("render props: ", this.props)
     const {
@@ -244,7 +240,7 @@ class SingleRecipe extends React.Component {
     if (this.props.user) {
       return (
         <div>
-          <Searchbar />
+          <Searchbar user={this.props.userinfo}/>
           <div className="singleRecipeContainer">
             <div className="singleRecipeIntroLine">
               <h1 className="singleRecipeHeader"> {recipe_name} </h1>
@@ -352,5 +348,3 @@ class SingleRecipe extends React.Component {
 }
 export default SingleRecipe;
 
-
-// <img src={cheficon} className="singleRecipeChefIcon"/>

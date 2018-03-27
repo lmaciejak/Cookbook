@@ -42,29 +42,29 @@ class Searchbar extends Component {
       value: "",
       suggestions: [],
       redirect: false,
-      redirectLanding: false, 
+      redirectLanding: false,
       modalIsOpen: false,
-      finalSuggestion: "", 
+      finalSuggestion: "",
       message: ""
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
-  handleClickLogout = e => { 
+  handleClickLogout = e => {
     axios
-    .get(`/users/logout`)
-        .then(res => {
-          console.log('res', res)
-          this.setState({
-            message: res.data, 
-            redirectLanding: true, 
-          });
-        })
+      .get(`/users/logout`)
+      .then(res => {
+        console.log("res", res);
+        this.setState({
+          message: res.data,
+          redirectLanding: true
+        });
+      })
       .catch(error => {
         console.log(error);
       });
-  }
+  };
 
   handleInput = e => {
     this.setState({
@@ -174,34 +174,48 @@ class Searchbar extends Component {
           inputProps={inputProps}
           onSuggestionSelected={this.onSuggestionSelected}
         />
-
-        <div className="tooltip1">
-          <Link to={`/cb/addrecipe`} className="searchLink">
-            <img src={writingicon} className="writingIcon" />
-            <span className="tooltiptext1"> Add recipe </span>
-          </Link>
-        </div>
-        <div className="tooltip2">
-          <Link
-            to={`/cb/profile/${this.props.user.user_id}/favorites`}
-            className="searchLink"
-          >
-            <img src={hearticon} className="heartIcon" />
-            <span className="tooltiptext2">Favorite recipes </span>
-          </Link>
+        <div className="menuicons">
+          <div className="tooltip1">
+            <Link to={`/cb/addrecipe`} className="searchLink">
+              <img src={writingicon} className="writingIcon" />
+              <span className="tooltiptext1"> Add recipe </span>
+            </Link>
+          </div>
+          <div className="tooltip2">
+            <Link
+              to={`/cb/profile/${this.props.user.user_id}/favorites`}
+              className="searchLink"
+            >
+              <img src={hearticon} className="heartIcon" />
+              <span className="tooltiptext2">Favorite recipes </span>
+            </Link>
+          </div>
         </div>
         <div>
           <Menu right className="burgerMenu">
             <a id="contact" className="menu-item" href="/cb/feed">
               Feed
             </a>
-            <a id="contact" className="menu-item" href="/favorite">
+            <a
+              id="contact"
+              className="menu-item"
+              href={`/cb/profile/${this.props.user.user_id}`}
+            >
               Profile
             </a>
-            <a id="contact" className="menu-item" href={`/cb/profile/${this.props.user.user_id}/favorites`}>
+            <a
+              id="contact"
+              className="menu-item"
+              href={`/cb/profile/${this.props.user.user_id}/favorites`}
+            >
               Favorite Recipes
             </a>
-            <a id="contact" className="menu-item" href="/" onClick={this.handleClickLogout}>
+            <a
+              id="contact"
+              className="menu-item"
+              href="/"
+              onClick={this.handleClickLogout}
+            >
               Logout
             </a>
           </Menu>

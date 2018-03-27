@@ -1,55 +1,53 @@
-.searchbarLogo { 
-  margin-left: 16%; 
-  width: 2.5%; 
-  position: fixed; 
-  margin-top: 0.3%; 
-
+.searchbarLogo {
+  margin-left: 16%;
+  width: 2.5%;
+  position: fixed;
+  margin-top: 0.3%;
 }
 
-.searchbarLogoName { 
-  margin-left: 1%; 
-  width: 14%; 
-  position: fixed; 
-  margin-top: 0.3%; 
+.searchbarLogoName {
+  margin-left: 1%;
+  width: 14%;
+  position: fixed;
+  margin-top: 0.3%;
 }
 
-.addRecipeButton { 
-  background-color: white; 
-  border-radius: 6px; 
-  height: 20px; 
-  margin-left: 10%; 
-  padding-bottom: 5px; 
-  position: fixed; 
-  margin-left: 60%;
-  margin-top: 0.5%;  
+.addRecipeButton {
+  background-color: white;
+  border-radius: 6px;
+  height: 20px;
+  padding-bottom: 5px;
+  position: fixed;
 }
 
-.searchbar { 
-  position: fixed; 
-  width: 100%; 
+.searchbar {
+  position: fixed;
+  width: 100%;
   /* background-color: #ff5f00; */
-  padding-top: 10px; 
-  padding-bottom: 10px; 
-  border-bottom-width: 3px;  
-  border-bottom-style: solid; 
-  border-bottom-color: rgb(235, 232, 232); 
-  background-color: white; 
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(235, 232, 232);
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
 }
 
-.searchInput { 
-  width: 25%; 
-  margin-left: 37%; 
-  position: fixed; 
-  margin-top: 0.7%; 
+.searchInput {
+  width: 25%;
+  margin-left: 37%;
+  position: fixed;
+  margin-top: 0.7%;
 }
 
 .react-autosuggest__container {
   position: relative;
-  margin-left: 40%; 
+  margin-left: 27%;
 }
 
 .react-autosuggest__input {
-  margin-top: 6px; 
+  margin-top: 6px;
   width: 280px;
   height: 10px;
   padding: 10px 20px;
@@ -57,7 +55,7 @@
   font-weight: 300;
   font-size: 16px;
   border: 1px solid rgb(209, 209, 209);
-  border-radius: 4px; 
+  border-radius: 4px;
 }
 
 .react-autosuggest__input--focused {
@@ -109,71 +107,48 @@
   color: #777;
 }
 
-.searchLink { 
-  background-color: transparent; 
-  border: none; 
-  text-decoration: none; 
-  margin-top: -15%; 
-
+.searchLink {
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  margin-top: -15%;
 }
 
-.writingIcon { 
-  width: 2.5%; 
-  position: fixed; 
-  margin-left: 81%; 
-  margin-top: -3%; 
-  display: inline; 
+.writingIcon {
+  width: 2.5%;
+  position: fixed;
 }
 
-.writingIcon:hover { 
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);  
-}
-
-.addTagline { 
-  position: fixed; 
-  font-size: 0.8em; 
-  margin-left: 84%;
-  margin-top: -2.5%; 
-}
-
-.heartIcon { 
-  width: 2.5%; 
-  margin-top: -3%; 
-  position: fixed; 
-  margin-left: 73.5%;  
-  display: inline; 
-}
-
-.heartIcon:hover { 
+.writingIcon:hover {
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
 
-.heartTagline { 
-  position: fixed; 
-  font-size: 0.8em; 
-  margin-left: 74%;
-  margin-top: -2.5%;  
+.heartIcon {
+  width: 2.5%;
+  position: fixed;
 }
 
+.heartIcon:hover {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
 
 .tooltip1:hover .tooltiptext1 {
   visibility: visible;
-  margin-left: 85%; 
 }
 
 .tooltip1 {
   position: relative;
-  width: 90%; 
+  width: 90%;
   /* margin-top: 2%; */
-  display: block; 
+  display: block;
 }
 
 .tooltip1 .tooltiptext1 {
   visibility: hidden;
   width: 120px;
-  /* background-color: white; */
+  background-color: rgb(255, 231, 215);
   color: black;
   text-align: center;
   padding: 5px 0;
@@ -186,21 +161,20 @@
 
 .tooltip2:hover .tooltiptext2 {
   visibility: visible;
-  margin-left: 100%; 
 }
 
 .tooltip2 {
   position: relative;
   /* border-bottom: 1px dotted black; If you want dots under the hoverable text */
-  width: 80%; 
-  display: block; 
+  width: 80%;
+  display: block;
 }
 
 .tooltip2 .tooltiptext2 {
   visibility: hidden;
   width: 120px;
-  background-color: black;
-  color: #fff;
+  background-color: rgb(255, 231, 215);
+  color: black;
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
@@ -210,11 +184,16 @@
   z-index: 1;
 }
 
-.feedLink { 
-  background-color: transparent; 
-  border: transparent; 
+.menuicons {
+  width: 15%;
+  display: flex;
+  justify-content: space-between;
 }
 
+.feedLink {
+  background-color: transparent;
+  border: transparent;
+}
 
 .bm-burger-button {
   position: fixed;
@@ -226,7 +205,7 @@
 
 .bm-burger-bars {
   background: #696969;
-  height: 1%; 
+  height: 1%;
 }
 
 .bm-cross {
@@ -236,28 +215,27 @@
 .bm-cross-button {
   height: 24px;
   width: 24px;
-  margin-right: 82%; 
-  margin-top: 4%; 
+  margin-right: 82%;
+  margin-top: 4%;
 }
 
 .bm-menu {
   background: #333333;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
-  color: white; 
+  color: white;
 }
 
 .bm-item-list {
   color: #265b75;
   padding: 0.8em;
-  margin-left: 2%; 
-  margin-top: 4%; 
+  margin-left: 2%;
+  margin-top: 4%;
 }
 
-.menu-item { 
+.menu-item {
   background-color: #333333;
-  border: none; 
-  text-decoration: none; 
-  color:  #bdc3c7; 
+  border: none;
+  text-decoration: none;
+  color: #bdc3c7;
 }
-
