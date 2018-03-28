@@ -90,13 +90,18 @@ class UserProfile extends React.Component {
         axios
           .get(`/users/getfolloweebyid/${this.props.user.user_id}/${this.props.id}`)
           .then(res =>{
-            console.log(res.data)
+            console.log('followee',res.data)
             if(this.props.user.user_id === this.props.id){
               this.setState({
                 canFollow: false
               })
             }
             else if(res.data === []){
+              this.setState({
+                canFollow: true
+              })
+            }
+            else if(res.data.find(profile => profile.follower_id === this.props.user.user_id) === undefined){
               this.setState({
                 canFollow: true
               })
@@ -252,7 +257,7 @@ class UserProfile extends React.Component {
         <div className="userProfileHeading">
         <img src={this.state.user[0].user_img} className="userProfileImage"/>
         </div>
-        <h1> {this.state.user[0].username} </h1> 
+        <h1> {this.state.user[0].username} </h1>
         <div class="select-style">
             <select onChange={this.handleSelectValue}>
               <option>Select</option>
@@ -292,6 +297,3 @@ class UserProfile extends React.Component {
   }
 }
 export default UserProfile;
-
-
-
