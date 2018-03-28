@@ -52,5 +52,9 @@ router.patch('/edit/:userID', loginRequired, db.editUser);
 router.patch('/editRecipe/:recipeID', loginRequired, db.editRecipe);
 router.patch('/editIngredients/:recipeID', loginRequired, db.editIngredients);
 router.patch('/editComment/:commentID', loginRequired, db.editRecipeComment);
+router.patch('/deleteIngredients', loginRequired, db.deleteIngredients);
+router.patch('/deleteRecipe', loginRequired, db.deleteRecipe);
+router.patch('/deleteComments', loginRequired, db.deleteComments);
+router.patch('/deleteFavorites', loginRequired, db.deleteFavorites);
 
 module.exports = router;

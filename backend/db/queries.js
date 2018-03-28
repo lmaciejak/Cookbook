@@ -251,7 +251,7 @@ function getSingleRecipeById(req, res, next) {
   db.any(`SELECT
           COUNT(favorites.recipe_id)
           AS favorites_count,USERname,users.user_id,recipe_name,
-            recipe, img, description, isvegeterian,isvegan,recipe_timestamp
+            recipe, img, description, isvegeterian,isvegan,recipe_timestamp, fork, forkedFrom
           FROM recipes
           LEFT JOIN USERs ON(recipes.user_id=users.user_id)
           LEFT JOIN favorites ON(favorites.recipe_id=recipes.recipe_id)
@@ -398,8 +398,8 @@ function removeRecipeComment(req, res, next) {
 
 function addRecipe(req, res, next) {
   return db.one(
-    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, group_id)"
-    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}), ${group_id}"
+    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, group_id)"
+    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${group_id})"
     + " RETURNING recipe_id, user_id",
     {
       user_id: req.user.user_id,
@@ -409,7 +409,9 @@ function addRecipe(req, res, next) {
       img: req.body.img,
       isvegeterian: req.body.isvegeterian,
       isvegan: req.body.isvegan,
-      group_id: req.body.group_id ? req.body.group_id : null
+      group_id: req.body.group_id ? req.body.group_id : null,
+      fork: req.body.fork,
+      forkedFrom: req.body.forkedFrom
     }
   )
   .then(data => {
@@ -645,9 +647,7 @@ function editRecipe(req, res, next) {
 function editIngredients(req, res, next) {
   const ingredients = req.body.ingredients;
   return db.task(t => {
-    console.log("ingredients: ", ingredients);
     const ingredientsWithId = ingredients.filter(ingredient => ingredient.ingredient_id);
-    console.log("ingredients with id: ", ingredientsWithId)
     const update = ingredients.map(ingredient => {
        return t.any(`UPDATE ingredients
                      SET amount=$1, name=$2, notes=$3
@@ -657,7 +657,6 @@ function editIngredients(req, res, next) {
     });
 
     const ingredientsWithoutId = ingredients.filter(ingredient => !ingredient.ingredient_id);
-    console.log("ingredients ingredientsWithoutId id: ", ingredientsWithoutId)
     const insert = ingredientsWithoutId.map(ingredient => {
           return t.none("INSERT INTO ingredients (recipe_id, amount, name, notes) "
           + " VALUES (${recipe_id}, ${amount}, ${name}, ${notes})",
@@ -710,6 +709,58 @@ function editRecipeComment(req, res, next) {
   }
 }
 
+function deleteIngredients(req, res, next) {
+  return db.none(
+    "DELETE FROM ingredients WHERE recipe_id=$1",
+      [req.body.recipe_id]
+    )
+    .then( data => {
+      res.json("deleted");
+    })
+    .catch( err => {
+      res.json(err);
+    })
+}
+
+function deleteRecipe(req, res, next) {
+  return db.none(
+    "DELETE FROM recipes WHERE recipe_id=$1",
+    [req.body.recipe_id]
+  )
+    .then( data => {
+      res.json("deleted");
+    })
+    .catch( err => {
+      res.json(err);
+    })
+}
+
+function deleteComments(req, res, next) {
+  return db.none(
+    "DELETE FROM comments WHERE recipe_id=$1",
+    [req.body.recipe_id]
+  )
+    .then( data => {
+      res.json("deleted");
+    })
+    .catch( err => {
+      res.json(err);
+    })
+}
+
+function deleteFavorites(req, res, next) {
+  return db.none(
+    "DELETE FROM favorites WHERE recipe_id=$1",
+    [req.body.recipe_id]
+  )
+    .then( data => {
+      res.json("deleted");
+    })
+    .catch( err => {
+      res.json(err);
+    })
+}
+
 
 module.exports = {
 /*-------GET Request-------*/
@@ -758,4 +809,8 @@ module.exports = {
   editRecipe,
   editIngredients,
   editRecipeComment,
+  deleteIngredients,
+  deleteRecipe,
+  deleteComments,
+  deleteFavorites,
 };

@@ -65,13 +65,12 @@ class LoginUser extends Component {
         this.setState({
           username: "",
           password: "",
-          message: `Error logging in. ${err}`
+          message: `${err.response.data}`
         });
       });
   }
 
   render() {
-    console.log('LOGIN PROPS',this.props)
     if(this.state.isLoggedIn === true) {
       return <Redirect to='/cb/feed' />
     }
@@ -92,7 +91,6 @@ class LoginUser extends Component {
           <button className="formButton">Log in</button>
         </form>
         <p> {this.state.message} </p>
-      
       </Modal>
       </div>
       </div>
