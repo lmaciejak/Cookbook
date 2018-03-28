@@ -26,7 +26,6 @@ router.get('/allgroups', db.getAllGroups);
 router.get('/getSingleGroup/:groupID', db.getSingleGroup);
 router.get('/userFollowsGroup/:userID/:groupID', db.userFollowsGroup);
 router.get('/getAllGroupFollowers/:groupID', db.getAllGroupFollowers);
-router.get('/getmosttoprecipes/:userID', loginRequired, db.getMostTopRecipes);
 router.get('/isfavorite/:recipeID', loginRequired, db.isFavorite)
 router.get('/getsinglecomment/:commentID', loginRequired, db.getSingleComment)
 

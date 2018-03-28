@@ -9,7 +9,7 @@ function logoutUser(req, res, next) {
 }
 
 function getSingleUser(req, res, next) {
-  db.any(`SELECT user_id, username, email, first_name, last_name
+  db.any(`SELECT user_id, username, email, first_name, last_name, user_img
           FROM users
           WHERE user_id=$1`, [req.params.userID])
     .then(data => {
@@ -280,7 +280,7 @@ function getIngredientsByRecipeId(req, res, next) {
 function getAllRecentUsersRecipes(req, res, next) {
   db.any(`SELECT *
           FROM recipes
-          WHERE user_id=${req.user.user_id}
+          WHERE user_id=${req.params.userID}
           ORDER BY recipe_timestamp DESC;`)
     .then(data => {
       res.json(data);
@@ -296,7 +296,7 @@ function getMostTopRecipes(req, res, next) {
           AS favorites_count, recipe_name, recipe, img
           FROM recipes
           INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
-          WHERE recipes.USER_id=${req.user.user_id}
+          WHERE recipes.USER_id=${req.params.userID}
           GROUP BY recipes.recipe, recipes.recipe_name, recipes.img
           ORDER BY favorites_count DESC`)
     .then(data => {

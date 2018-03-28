@@ -10,7 +10,8 @@ CREATE TABLE users (
   password VARCHAR NOT NULL,
   email VARCHAR,
   first_name VARCHAR,
-  last_name VARCHAR);
+  last_name VARCHAR, 
+  user_img VARCHAR);
 
 CREATE TABLE groupowners (
   group_id SERIAL PRIMARY KEY,
@@ -72,29 +73,29 @@ CREATE TABLE ingredients (
    username: Mary password: marymary
    username: Larry password: larrylarry  */
 
-INSERT INTO users (username, password, email, first_name, last_name)
+INSERT INTO users (username, password, email, first_name, last_name, user_img)
   VALUES ('luiza', '$2a$10$tHvwaxuv8qwR18wMXmQesuUWOxFT3xjQTTnvauZwYrZ6bM/r53kVW',
-  'test@gmail.com', 'Luiza','Maciejak'),
+  'test@gmail.com', 'Luiza','Maciejak', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('eion', '$2a$10$3xwk/yyvVXb/zf2n7uR93u1CtmMNhJmrPaIFUu0OjqEPN0Kq3/N7m', 'mary@gmail.com', 'Eion',
-  'Snow'),
+  'Snow', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Larry', '$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'larry@gmail.com', 'Larry',
-  'Snow'),
+  'Snow', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('David','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'david@gmail.com', 'david',
-   'justice'),
+   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Gerado','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'gerado@gmail.com', 'gerado',
-   'justice'),
+   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Alton','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Alton@gmail.com', 'Alton',
-   'justice'),
+   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Imani','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Imani@gmail.com', 'imani',
-   'justice'),
+   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Tammy','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Tammy@gmail.com', 'tammy',
-   'justice'),
+   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Lexus','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'lexus@gmail.com', 'lexus',
-   'justice'),
+   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Leon','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'leon@gmail.com', 'leon',
-   'justice'),
+   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Tate','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Tate@gmail.com', 'Tate',
-   'justice');
+   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg');
 
 INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeterian, isVegan, fork)
   VALUES (2, 'Shrimp Risotto', 'Melt 2 tablespoons butter in medium skillet.',
