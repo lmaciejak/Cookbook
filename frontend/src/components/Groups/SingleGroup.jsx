@@ -1,23 +1,9 @@
 import React from 'react'
 import axios from 'axios'
-
-const GroupButtons = ({ userID, ownerID, isMember, members, join, leave }) =>{
-
-  members = members ? members : []
-
-  if(userID === parseInt(ownerID)){
-    return(<div></div>)
-  }
-  else if(members.find(member => member.user_id === userID) !== undefined){
-    return(<button onClick={leave}>Leave Group</button>)
-  }
-  else if(isMember){
-    return(<button onClick={leave}>Leave Group</button>)
-  }
-  else{
-    return(<button onClick={join}>Join Group</button>)
-  }
-}
+import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router'
+import GroupButtons from './GroupButtons'
+import Links from './GroupLinks'
 
 class SingleGroup extends React.Component{
   constructor(props){
@@ -30,6 +16,7 @@ class SingleGroup extends React.Component{
       group_description: '',
       isMember: false,
       allMembers: '',
+      deleted: false,
       message: ''
     }
   }
@@ -104,15 +91,60 @@ class SingleGroup extends React.Component{
       })
   }
 
-
+  deleteGroup = () =>{
+    axios
+      .post('/users/deleteGroup',{
+        group_id: parseInt(this.props.groupID)
+      })
+      .then(res => {
+        this.setState({
+          group_name: '',
+          group_owner_id: '',
+          group_owner_name: '',
+          group_description: '',
+          isMember: false,
+          allMembers: '',
+          deleted: true,
+          message: ''
+        })
+      })
+      .catch(error => {
+        console.log('error deleting group')
+      })
+  }
 
 
   render(){
-    const { group_name, group_owner_id, group_owner_name, isMember, allMembers, group_description } = this.state
-    console.log('reed',this.state.allMembers)
+    const { group_name, group_owner_id, group_owner_name, isMember, deleted, allMembers, group_description } = this.state
+    let groupIDNum = parseInt(this.props.groupID)
+    const memberspath = `/cb/groups/${groupIDNum}/members`
+    const membersrecipespath = `/cb/groups/${groupIDNum}/recipes`
+    if(deleted){
+      return(
+        <Redirect to='/cb/groups' />
+      )
+    }
     if(this.props.user){
       return(
         <div>
+          <nav>
+            {" "}
+            <Links
+              members={allMembers}
+              userID={this.props.user.user_id}
+              link={memberspath}
+              ownerID={group_owner_id}
+              name='Members'
+              />
+            {" "}
+            <Links
+              members={allMembers}
+              userID={this.props.user.user_id}
+              link={membersrecipespath}
+              ownerID={group_owner_id}
+              name='Group Recipes'
+              />
+          </nav>
           <h1>{group_name}</h1>
           <h3>This group was created by {group_owner_name}</h3>
           <p>{group_description}</p>
@@ -123,11 +155,8 @@ class SingleGroup extends React.Component{
               members={allMembers}
               join={this.joinGroup}
               leave={this.leaveGroup}
+              remove={this.deleteGroup}
               />
-            <h4>Members</h4>
-            {allMembers ? allMembers.map(member =>(
-              <p>{member.username}</p>
-            )) : <div></div>}
         </div>
       )
     }

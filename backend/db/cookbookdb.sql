@@ -12,6 +12,17 @@ CREATE TABLE users (
   first_name VARCHAR,
   last_name VARCHAR);
 
+CREATE TABLE groupowners (
+  group_id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+  group_name VARCHAR NOT NULL UNIQUE,
+  group_description VARCHAR);
+
+CREATE TABLE groupfollows (
+  groupfollow_id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+  group_id INTEGER REFERENCES groupowners);
+
 CREATE TABLE recipes (
   recipe_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users,
@@ -21,7 +32,8 @@ CREATE TABLE recipes (
   img VARCHAR,
   isVegeterian BOOLEAN,
   isVegan BOOLEAN,
-  recipe_timestamp timestamp not null default CURRENT_TIMESTAMP);
+  recipe_timestamp timestamp not null default CURRENT_TIMESTAMP,
+  group_id INTEGER REFERENCES groupowners);
 
 CREATE TABLE favorites (
   favorites_id SERIAL PRIMARY KEY,
@@ -53,17 +65,6 @@ CREATE TABLE ingredients (
   amount VARCHAR,
   name VARCHAR,
   notes VARCHAR);
-
-CREATE TABLE groupowners (
-  group_id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users,
-  group_name VARCHAR NOT NULL UNIQUE,
-  group_description VARCHAR);
-
-CREATE TABLE groupfollows (
-  groupfollow_id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users,
-  group_id INTEGER REFERENCES groupowners);
 
 /* username: test password: testtest
    username: Mary password: marymary
@@ -118,7 +119,7 @@ INSERT INTO foods (food_name, isVegeterian, isVegan)
 
 INSERT INTO ingredients (recipe_id, food_id, amount, name, notes)
   VALUES (1, 1, '1 pound', 'oil', 'medium'), (2, 2, '1 ounce', 'onion', 'null'),
-  (7, 3, '1pound', 'salt', 'medium'), (7, 3, '2pound', 'chicken', 'large');
+  (7, 2, '1pound', 'salt', 'medium'), (7, 2, '2pound', 'chicken', 'large');
 
 INSERT INTO groupowners (user_id, group_name, group_description)
   VALUES (3, 'Bronx Cooks', 'we from the bronx bro')

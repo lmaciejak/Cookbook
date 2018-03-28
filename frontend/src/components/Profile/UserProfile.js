@@ -66,6 +66,7 @@ class UserProfile extends React.Component {
     axios
 			.get(`/users/allrecipes/${this.props.id}`)
       .then( (res) => {
+        console.log('all recipes',res.data)
         this.setState({
           allusersRecipes: res.data
         })
@@ -74,15 +75,20 @@ class UserProfile extends React.Component {
         axios
           .get(`/users/profile/${this.props.id}`)
           .then(res => {
+            console.log('profilesz',res.data)
             this.setState({
               user: res.data
             })
+          })
+          .catch(error => {
+            console.log(error)
           })
       )
       .then(
         axios
           .get(`/users/getfolloweebyid/${this.props.user.user_id}/${this.props.id}`)
           .then(res =>{
+            console.log(res.data)
             if(this.props.user.user_id === this.props.id){
               this.setState({
                 canFollow: false
@@ -98,6 +104,9 @@ class UserProfile extends React.Component {
                 canFollow: false
               })
             }
+          })
+          .catch(error => {
+            console.log(error)
           })
       )
 			.catch(err => {
@@ -228,7 +237,7 @@ class UserProfile extends React.Component {
             {
               this.props.user.user_id === parseInt(this.props.id)
               ?
-              <CreateGroup id={this.props.id} />
+              <CreateGroup owner={this.props.user.user_id} id={this.props.id} />
               :
               <div></div>
             }
