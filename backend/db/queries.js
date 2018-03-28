@@ -251,7 +251,7 @@ function getSingleRecipeById(req, res, next) {
   db.any(`SELECT
           COUNT(favorites.recipe_id)
           AS favorites_count,USERname,users.user_id,recipe_name,
-            recipe, img, description, isvegeterian,isvegan,recipe_timestamp
+            recipe, img, description, isvegeterian,isvegan,recipe_timestamp, fork, forkedFrom
           FROM recipes
           LEFT JOIN USERs ON(recipes.user_id=users.user_id)
           LEFT JOIN favorites ON(favorites.recipe_id=recipes.recipe_id)
@@ -398,8 +398,8 @@ function removeRecipeComment(req, res, next) {
 
 function addRecipe(req, res, next) {
   return db.one(
-    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan)"
-    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan})"
+    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom)"
+    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom})"
     + " RETURNING recipe_id, user_id",
     {
       user_id: req.user.user_id,
@@ -408,7 +408,9 @@ function addRecipe(req, res, next) {
       description: req.body.description,
       img: req.body.img,
       isvegeterian: req.body.isvegeterian,
-      isvegan: req.body.isvegan
+      isvegan: req.body.isvegan,
+      fork: req.body.fork,
+      forkedFrom: req.body.forkedFrom
     }
   )
   .then(data => {
@@ -623,9 +625,7 @@ function editRecipe(req, res, next) {
 function editIngredients(req, res, next) {
   const ingredients = req.body.ingredients;
   return db.task(t => {
-    console.log("ingredients: ", ingredients);
     const ingredientsWithId = ingredients.filter(ingredient => ingredient.ingredient_id);
-    console.log("ingredients with id: ", ingredientsWithId)
     const update = ingredients.map(ingredient => {
        return t.any(`UPDATE ingredients
                      SET amount=$1, name=$2, notes=$3
@@ -635,7 +635,6 @@ function editIngredients(req, res, next) {
     });
 
     const ingredientsWithoutId = ingredients.filter(ingredient => !ingredient.ingredient_id);
-    console.log("ingredients ingredientsWithoutId id: ", ingredientsWithoutId)
     const insert = ingredientsWithoutId.map(ingredient => {
           return t.none("INSERT INTO ingredients (recipe_id, amount, name, notes) "
           + " VALUES (${recipe_id}, ${amount}, ${name}, ${notes})",
