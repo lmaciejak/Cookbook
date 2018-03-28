@@ -4,6 +4,8 @@ import axios from 'axios'
 
 import AllGroups from './AllGroups'
 import SingleGroup from './SingleGroup'
+import GroupMembers from './GroupMembers'
+import GroupRecipes from './GroupRecipes'
 
 class Groups extends React.Component{
   constructor(props){
@@ -15,7 +17,7 @@ class Groups extends React.Component{
     }
   }
 
-  componentDidMount(){
+  fetchAllGroups = () =>{
     axios
       .get('/users/allgroups')
       .then(res => {
@@ -37,6 +39,14 @@ class Groups extends React.Component{
       })
   }
 
+  componentDidMount(){
+    this.fetchAllGroups()
+  }
+
+  componentWillReceiveProps(props) {
+    this.fetchAllGroups();
+  }
+
   renderAllGroups = () =>{
     const { groups } = this.state
     return(
@@ -52,12 +62,29 @@ class Groups extends React.Component{
     )
   }
 
+  renderGroupMembers = props =>{
+    const { groupID } = props.match.params
+    return(
+      <GroupMembers groupID={groupID} />
+    )
+  }
+
+  renderGroupRecipes = props =>{
+    const { groupID } = props.match.params
+    return(
+      <GroupRecipes groupID={groupID} />
+    )
+  }
+
+
   render(){
     console.log('Black',this.state)
     return(
       <div>
         <Switch>
           <Route exact path='/cb/groups' render={this.renderAllGroups} />
+          <Route exact path='/cb/groups/:groupID/members' render={this.renderGroupMembers} />
+          <Route exact path='/cb/groups/:groupID/recipes' render={this.renderGroupRecipes} />
           <Route path='/cb/groups/:groupID' render={this.renderSingleGroup} />
         </Switch>
       </div>

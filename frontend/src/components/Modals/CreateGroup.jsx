@@ -64,11 +64,23 @@ class CreateGroup extends React.Component{
           group_description: group_description
         })
         .then(res => {
+          console.log(res)
           this.setState({
             group_name: '',
             group_description: '',
             message: 'Group created',
           })
+          axios
+            .post('/users/joinGroup',{
+              user_id: this.props.owner,
+              group_id: res.data.group_id
+            })
+            .then(res => {
+              this.closeModal()
+            })
+        })
+        .catch(error => {
+          console.log('failure to insert owner as follower')
         })
     }
   }

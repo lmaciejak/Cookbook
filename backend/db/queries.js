@@ -398,8 +398,8 @@ function removeRecipeComment(req, res, next) {
 
 function addRecipe(req, res, next) {
   return db.one(
-    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom)"
-    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom})"
+    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, group_id)"
+    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${group_id})"
     + " RETURNING recipe_id, user_id",
     {
       user_id: req.user.user_id,
@@ -409,6 +409,7 @@ function addRecipe(req, res, next) {
       img: req.body.img,
       isvegeterian: req.body.isvegeterian,
       isvegan: req.body.isvegan,
+      group_id: req.body.group_id ? req.body.group_id : null,
       fork: req.body.fork,
       forkedFrom: req.body.forkedFrom
     }
@@ -518,8 +519,10 @@ function unfollowUser(req, res, next) {
 }
 
 function createGroup(req, res, next) {
-  return db.none(
-    "INSERT INTO groupowners (user_id, group_name, group_description) VALUES (${user_id}, ${group_name}, ${group_description})",
+  return db.one(
+    "INSERT INTO groupowners (user_id, group_name, group_description)"
+    + "VALUES (${user_id}, ${group_name}, ${group_description})"
+    + "RETURNING group_id",
     {
       user_id: req.body.user_id,
       group_name: req.body.group_name,
@@ -527,10 +530,29 @@ function createGroup(req, res, next) {
     }
   )
   .then(data => {
-    res.json("success");
+    res.json({group_id: data.group_id});
   })
   .catch(error => {
     res.json(error);
+  })
+}
+
+function deleteGroup(req, res, next) {
+  db.task('delete everything', t => {
+    return t.batch([
+      t.none(`DELETE FROM recipes
+              WHERE recipes.group_id=$1`,[req.body.group_id]),
+      t.none(`DELETE FROM groupfollows
+              WHERE groupfollows.group_id=$1`,[req.body.group_id]),
+      t.none(`DELETE FROM groupowners
+              WHERE groupowners.group_id=$1`,[req.body.group_id])
+    ])
+    .then(data => {
+      res.json('success')
+    })
+    .catch(error => {
+      res.json(error)
+    })
   })
 }
 
@@ -778,6 +800,7 @@ module.exports = {
   followUser,
   unfollowUser,
   createGroup,
+  deleteGroup,
   joinGroup,
   leaveGroup,
   loginUser,

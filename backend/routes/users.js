@@ -42,6 +42,7 @@ router.post('/unfavorite', loginRequired, db.unfavoriteRecipe);
 router.post('/followUser', loginRequired, db.followUser);
 router.post('/unfollowUser', loginRequired, db.unfollowUser);
 router.post('/createGroup', loginRequired, db.createGroup);
+router.post('/deleteGroup', loginRequired, db.deleteGroup);
 router.post('/joinGroup', loginRequired, db.joinGroup);
 router.post('/leaveGroup', loginRequired, db.leaveGroup);
 router.post('/login', db.loginUser);
