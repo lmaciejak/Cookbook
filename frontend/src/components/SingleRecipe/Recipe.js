@@ -27,6 +27,8 @@ class SingleRecipe extends React.Component {
       canFavorite: true,
       comment: "",
       comments_id: false,
+      fork: "",
+      forkedFrom: ""
     };
   }
 
@@ -63,7 +65,9 @@ class SingleRecipe extends React.Component {
             recipe: res.data[0].recipe,
             img: res.data[0].img,
             isvegeterian: res.data[0].isvegeterian,
-            isvegan: res.data[0].isvegan
+            isvegan: res.data[0].isvegan,
+            fork: res.data[0].fork,
+            forkedFrom: res.data[0].forkedfrom
           });
         })
       })
@@ -86,7 +90,7 @@ class SingleRecipe extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error);
+        console.log("error in Recipe componentDidMount: ", error);
       });
     }
 
@@ -259,6 +263,48 @@ class SingleRecipe extends React.Component {
       })
   }
 
+  handleSubmitFork = (e) => {
+    e.preventDefault();
+    const { recipe_name,
+            recipe,
+            description,
+            ingredients,
+            ingredientsList,
+            isvegeterian,
+            isvegan,
+            img,
+            recipe_id,
+            fork,
+            username,
+            forkedFrom } = this.state
+    axios
+      .post('/users/addRecipe', {
+        recipe_name: recipe_name,
+        description: description,
+        recipe: recipe,
+        img: img,
+        isvegeterian: isvegeterian,
+        isvegan: isvegan,
+        fork: fork,
+        forkedFrom: username
+      })
+      .then(res => {
+        this.setState({
+          recipe_id: res.data.recipe_id
+        })
+        axios
+          .post(`/users/addIngredients/${res.data.recipe_id}`, {
+            ingredients: ingredients
+          })
+      })
+      .catch(err => {
+        this.setState({
+          message: "Error posting new image"
+        })
+      })
+  }
+
+
   render() {
 
     const {
@@ -273,9 +319,13 @@ class SingleRecipe extends React.Component {
       ingredients,
       comments,
       canFavorite,
-      comment
+      comment,
+      fork,
+      forkedFrom
     } = this.state;
 
+console.log("propsID: ", this.props.id);
+console.log("user_id: ", user_id);
     if (this.props.user) {
       return (
         <div>
@@ -328,16 +378,17 @@ class SingleRecipe extends React.Component {
             { this.props.id === user_id?
               <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
             }
+            { this.props.id !== user_id? (fork? <button onClick={this.handleSubmitFork}>fork</button>: ""): ""}
+            { forkedFrom? <p>forked from {forkedFrom}</p>: ""}
             <div className="singleRecipeLeft">
               <h3 className="singleRecipeIngredientsTitle"> Ingredients </h3>
               <ul type="none">
-                {ingredients
-                  ? ingredients.map(ingredient => (
+                {ingredients? ingredients.map(ingredient => (
                       <li className="ingredientList" key={Math.random()}>
                         {ingredient.amount} {ingredient.name}
                       </li>
                     ))
-                  : "There are no any ingredients"}
+                  :"There are no any ingredients"}
               </ul>
               <h3 className="singleRecipeIngredientsTitle">Directions</h3>
               <p> {recipe}</p>

@@ -14,6 +14,7 @@ class AddRecipe extends React.Component {
       img: "",
       isvegeterian: false ,
       isvegan:false ,
+      fork: false,
       ingredientsList: ["","eggs","chicken","potatoes"],
       redirect: false,
       recipe_id: ""
@@ -65,7 +66,7 @@ class AddRecipe extends React.Component {
     e.preventDefault();
     const {recipe_name, recipe, description,
            ingredients, ingredientsList,
-           isvegeterian, isvegan, img, recipe_id } = this.state
+           isvegeterian, isvegan, img, recipe_id, fork } = this.state
     axios
 			.post('/users/addRecipe', {
         recipe_name: recipe_name,
@@ -73,7 +74,8 @@ class AddRecipe extends React.Component {
         recipe: recipe,
         img: img,
         isvegeterian: isvegeterian,
-        isvegan: isvegan
+        isvegan: isvegan,
+        fork: fork,
 			})
 			.then(res => {
         this.setState({
@@ -95,6 +97,7 @@ class AddRecipe extends React.Component {
           isvegan: false,
           ingredientsList: ["","eggs","chicken","potatoes"],
           redirect: true,
+          fork: false
         })
       })
 			.catch(err => {
@@ -107,10 +110,11 @@ class AddRecipe extends React.Component {
     render() {
       const {recipe_name, recipe, description,
              ingredients, ingredientsList,
-             isvegeterian, isvegan, img, redirect, recipe_id } = this.state
+             isvegeterian, isvegan, img, redirect, recipe_id, fork } = this.state
              if(redirect) {
               return <Redirect to={`/cb/${this.props.user.username}/${recipe_id}`}/>
              }
+             console.log(fork);
         return(
             <div>
               <SearchBar user={this.props.user} />
@@ -235,6 +239,13 @@ class AddRecipe extends React.Component {
                     <input type="checkbox"
                       name="isvegan"
                       checked={isvegan}
+                      onChange={this.handleChecked}
+                    />
+                </label>
+                Do you want to share your recipe with your friend?<label className="formLabels">Fork
+                    <input type="checkbox"
+                      name="fork"
+                      checked={fork}
                       onChange={this.handleChecked}
                     />
                 </label>
