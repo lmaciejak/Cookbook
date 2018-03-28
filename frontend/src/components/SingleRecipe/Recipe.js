@@ -297,6 +297,10 @@ class SingleRecipe extends React.Component {
             ingredients: ingredients
           })
       })
+      .then( (res) => {
+        <Redirect push to="/cb/profile/:userID" />
+
+      })
       .catch(err => {
         this.setState({
           message: "Error posting new image"
@@ -324,8 +328,6 @@ class SingleRecipe extends React.Component {
       forkedFrom
     } = this.state;
 
-console.log("propsID: ", this.props.id);
-console.log("user_id: ", user_id);
     if (this.props.user) {
       return (
         <div>
@@ -378,7 +380,7 @@ console.log("user_id: ", user_id);
             { this.props.id === user_id?
               <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
             }
-            { this.props.id !== user_id? (fork? <button onClick={this.handleSubmitFork}>fork</button>: ""): ""}
+            { this.props.id !== user_id? (fork? <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}><Link  to={`/cb/profile/${this.props.id}`}>Fork</Link></button> : ""): ""}
             { forkedFrom? <p>forked from {forkedFrom}</p>: ""}
             <div className="singleRecipeLeft">
               <h3 className="singleRecipeIngredientsTitle"> Ingredients </h3>
