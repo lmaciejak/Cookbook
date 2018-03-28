@@ -15,6 +15,7 @@
 }
 
 .feedContainer {
+  padding-top: 40px;
   text-align: center;
 }
 
@@ -31,6 +32,7 @@
 
 .feedRecipeFavorites {
   display: inline;
+  z-index: 1; 
 }
 
 .feedBoxDescription {

@@ -6,6 +6,8 @@ import Recipe from "../SingleRecipe/Recipe";
 import UserEdit from ".//UserEdit";
 import UserFaves from './UserFaves'
 import CreateGroup from '../Modals/CreateGroup'
+import './UserProfile.css'
+import Searchbar from '../Search/SearchBar';
 // import AddRecipe from './SingleRecipe/AddRecipe'
 
 const FollowButtons = ({ userID, profileID, canFollow, follow, unfollow }) =>{
@@ -110,6 +112,33 @@ class UserProfile extends React.Component {
     this.setState({
       selectedValue: e.target.value
     })
+    console.log('selectedValue', e.target.value)
+    console.log('this.props.user', this.props.user)
+    if (e.target.value === "mostRecent") {
+      axios
+        .get(`/users/getallrecentusersrecipes/${this.props.id}`)
+        .then( (res) => {
+          console.log('res getallrecentusersrecipes', res)
+          this.setState({
+            allusersRecipes: res.data
+          })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    } else if (e.target.value === "mostTop") {
+      axios
+        .get(`/users/getmosttoprecipes/${this.props.id}`)
+        .then( (res) => {
+          console.log('res getmosttoprecipes', res)
+          this.setState({
+            allusersRecipes: res.data
+          })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
   }
 
   handleUserFollow = () => {
@@ -148,7 +177,6 @@ class UserProfile extends React.Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault();
     const { selectedValue, allusersRecipes } = this.state;
     if (selectedValue === "mostRecent") {
       axios
@@ -204,19 +232,25 @@ class UserProfile extends React.Component {
 
   render() {
     const { allusersRecipes, canFollow } = this.state;
-    console.log(this.props)
+    console.log('props', this.props)
+    console.log('this.state.user', this.state.user)
     // let isOwnProfile = this.props.user.user_id === this.props.id
-    if(this.props.user){
+    if(this.props.user && this.state.user){
       return(
         <div>
-          <form onSubmit={this.handleSubmit}>
+        <Searchbar user={this.props.user}/>
+        <div className="userProfileContainer">
+        <div className="userProfileHeading">
+        <img src={this.state.user[0].user_img} className="userProfileImage"/>
+        </div>
+        <h1> {this.state.user[0].username} </h1> 
+        <div class="select-style">
             <select onChange={this.handleSelectValue}>
               <option>Select</option>
-              <option value="mostTop">Most Top</option>
+              <option value="mostTop" >Most Top</option>
               <option value="mostRecent">Most Recent</option>
             </select>
-            <button>Submit</button>
-          </form>
+            </div>
           <div>
             <FollowButtons
               userID={this.props.user.user_id}
@@ -239,6 +273,7 @@ class UserProfile extends React.Component {
             <Route path='/cb/profile/:id/edit' render={this.renderUserEdit} />
           </Switch>
         </div>
+        </div>
       )
     } else {
       return(
@@ -248,3 +283,6 @@ class UserProfile extends React.Component {
   }
 }
 export default UserProfile;
+
+
+

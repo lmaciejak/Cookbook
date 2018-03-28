@@ -32,6 +32,7 @@
   background-color: white;
   display: flex;
   justify-content: space-between;
+  z-index: 40; 
 }
 
 .searchInput {

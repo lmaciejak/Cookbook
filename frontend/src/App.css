@@ -1,10 +1,9 @@
 /* landing page */
-h1{
-  color:#F1C97D;
+h1 {
+  color: #f1c97d;
 }
 
-
-.landingPhoto{
+.landingPhoto {
   height: 350px;
   border-radius: 8px;
   /* background-image: url('https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&dl=maarten-van-den-heuvel-400626-unsplash.jpg&s=9509ba35b5e71ce1c654cc3e3e04cd7b,');
@@ -15,8 +14,8 @@ h1{
   background-blend-mode: lighten; */
 }
 #sl1 img {
-  position:absolute;
-  height:350px;
+  position: absolute;
+  height: 350px;
   width: 100%;
   border-radius: 15px;
   object-fit: cover;
@@ -25,25 +24,22 @@ h1{
   animation-iteration-count: infinite;
   animation-duration: 12s;
   animation-direction: alternate;
-  
- }
-
-
- @keyframes sl1FadeInOut {
-  0% {
-    opacity:.3;
-  }
-  33% {
-    opacity:.75;
-  }
-  66% {
-    opacity:0;
-  }
-  100% {
-    opacity:0;
-  }
 }
 
+@keyframes sl1FadeInOut {
+  0% {
+    opacity: 0.3;
+  }
+  33% {
+    opacity: 0.75;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
 #sl1 img:nth-of-type(1) {
   animation-delay: 12s;
@@ -52,102 +48,102 @@ h1{
   animation-delay: 8s;
 }
 #sl1 img:nth-of-type(3) {
-  animation-delay: 4s; 
+  animation-delay: 4s;
 }
 #sl1 img:nth-of-type(4) {
-  animation-delay: 0; 
+  animation-delay: 0;
 }
 
-.landingPageFeatured{
+.landingPageFeatured {
   display: flex;
   flex-wrap: wrap;
   width: 90%;
-  margin-left:auto;
-  margin-right:auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.landingPageHeader{
-  width:50%;
+.landingPageHeader {
+  width: 50%;
   margin: 10px auto;
 }
 
-.header img{
+.header img {
   width: 10%;
   margin-left: 32%;
-  margin-right:auto;
+  margin-right: auto;
 }
 
-.header{
+.header {
   position: absolute;
-  margin-left:20%;
-  margin-right:auto;
-  z-index:0;
+  margin-left: 20%;
+  margin-right: auto;
+  z-index: 0;
 }
 
-.Modal{
-  z-index:4;
+.Modal {
+  z-index: 4;
 }
 
-.header h1{
+.header h1 {
   font-size: 90px;
   margin: 0;
-  text-shadow: -2px 2px #0C0202;
+  text-shadow: -2px 2px #0c0202;
 }
 
-
-.landButton{
-  display:flex;
+.landButton {
+  display: flex;
   flex-wrap: wrap;
   margin-top: 25px;
-  width:70%;
+  width: 70%;
   margin-left: 28%;
   margin-right: auto;
-
 }
 
-.button{
+.button {
   margin-left: 20px;
 }
 
 /* feed */
-.feedContainer { 
-  padding-top: 4%; 
-  width: 100%; 
+.feedContainer {
+  width: 100%;
 }
 
 /* singleRecipe */
-.singleRecipeContainer { 
-  padding-top: 6%; 
-  width: 100%; 
+.singleRecipeContainer {
+  padding-top: 6%;
+  width: 100%;
 }
 
-
-
+/* userProfile */
+.userProfileContainer {
+  padding-top: 8%;
+  width: 100%;
+}
 
 /* userProfile */
 
-.userProfile{
+.userProfile {
   width: 90%;
-  margin-left:auto;
-  margin-right:auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.userProfileBanner{
+.userProfileBanner {
   display: flex;
   justify-content: space-around;
   margin-top: 5px;
-  border-bottom: .09px;
+  border-bottom: 0.09px;
   border-bottom-style: solid;
   padding-bottom: 9px;
-  border-bottom-color: gainsboro
+  border-bottom-color: gainsboro;
 }
 
 .userPhotoSpace {
   width: 200px;
   height: 200px;
-  border-radius:50%;
+  border-radius: 50%;
   border-style: solid;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .profilePhoto {
@@ -157,17 +153,17 @@ h1{
   margin: auto;
 }
 
-.userInfo{
- width: 28%;
- padding-top:10%;
+.userInfo {
+  width: 28%;
+  padding-top: 10%;
 }
 
-.followInfo{
+.followInfo {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
-.userProfileTitle{
+.userProfileTitle {
   width: 190px;
   margin-right: auto;
   margin-left: auto;
@@ -175,7 +171,7 @@ h1{
 
 /* recipeBox */
 
-.recipeBox{
+.recipeBox {
   border: 1px;
   border-style: solid;
   border-color: gainsboro;
@@ -184,54 +180,54 @@ h1{
   margin: 10px 30px;
 }
 
-.favorites{
+.favorites {
   display: flex;
   justify-content: space-between;
-  width:10%;
+  width: 10%;
 }
 .fav {
   margin: 0;
 }
 
-h4{
+h4 {
   margin: 0;
 }
-.recipeInfo{
+.recipeInfo {
   display: flex;
   justify-content: space-between;
   padding: 0 5%;
   margin: 2% 0;
 }
 
-i{
-  color: #FF7B00;
+i {
+  color: #ff7b00;
 }
 
 /* form style */
 
-.formContainer{
-  padding-top: 4%; 
-  width: 100%; 
+.formContainer {
+  padding-top: 4%;
+  width: 100%;
 }
 
-.formStyle{
-  width:450px;
-  padding:30px;
-  margin:40px auto;
-  background: #FFF;
+.formStyle {
+  width: 450px;
+  padding: 30px;
+  margin: 40px auto;
+  background: #fff;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
 }
 
-.formInnerWrap{
+.formInnerWrap {
   padding: 30px;
-  background: #F8F8F8;
+  background: #f8f8f8;
   border-radius: 6px;
   margin-bottom: 15px;
 }
 
-.formHeader{
-  background: #F3550C;
+.formHeader {
+  background: #f3550c;
   padding: 20px 30px 15px 30px;
   margin: -30px -30px 30px -30px;
   border-radius: 10px 10px 0 0;
@@ -239,34 +235,34 @@ i{
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
   font-size: 30px;
   box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-  border: 1px solid #F3550C;
+  border: 1px solid #f3550c;
 }
 
-.formHeader > span{
+.formHeader > span {
   display: block;
   margin-top: 2px;
-  font-size: 13px ;
+  font-size: 13px;
 }
 
-.formLabels{
+.formLabels {
   display: block;
   font-size: 13px;
   color: #888;
   margin-bottom: 15px;
 }
 
-.ingAmount{
+.ingAmount {
   width: 10px;
 }
 
-.formSection{
+.formSection {
   font-size: 20px;
-  color: #F3550C;
+  color: #f3550c;
   margin-bottom: 5px;
 }
 
 .formSection span {
-  background: #F3550C;
+  background: #f3550c;
   padding: 5px 10px 5px 10px;
   position: absolute;
   border-radius: 50%;
@@ -277,7 +273,7 @@ i{
   margin-top: -3px;
 }
 
-.formInput{
+.formInput {
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -287,20 +283,20 @@ i{
   box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
 }
 
-.formButton{
-  background: #F3550C;
+.formButton {
+  background: #f3550c;
   padding: 6px 16px 6px 16px;
   border-radius: 5px;
   color: #fff;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
   font-size: 30px;
   box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-  border: 1px solid #F3550C;
+  border: 1px solid #f3550c;
   font-size: 12px;
 }
 
-.xButton{
-  background: #F3550C;
+.xButton {
+  background: #f3550c;
   border-radius: 12px;
   display: inline;
   margin-bottom: 6px;
@@ -310,21 +306,18 @@ i{
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
   font-size: 30px;
   box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-  border: 1px solid #F3550C;
+  border: 1px solid #f3550c;
   font-size: 12px;
 }
 
-.ingAmount{
+.ingAmount {
   width: 70px;
   display: inline;
   margin-top: 4px;
   margin-bottom: 0;
 }
 
-.notes{
+.notes {
   width: 200px;
   display: inline;
 }
-
-
-
