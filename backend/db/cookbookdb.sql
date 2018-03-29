@@ -1,4 +1,3 @@
-
 DROP DATABASE IF EXISTS cookbookdb;
 CREATE DATABASE cookbookdb;
 
@@ -10,7 +9,7 @@ CREATE TABLE users (
   password VARCHAR NOT NULL,
   email VARCHAR,
   first_name VARCHAR,
-  last_name VARCHAR, 
+  last_name VARCHAR,
   user_img VARCHAR);
 
 CREATE TABLE groupowners (
@@ -41,11 +40,13 @@ CREATE TABLE recipes (
 CREATE TABLE favorites (
   favorites_id SERIAL PRIMARY KEY,
   recipe_id INTEGER REFERENCES recipes,
+  seen BOOLEAN,
   user_id INTEGER REFERENCES users);
 
 CREATE TABLE followings (
   follows_id SERIAL PRIMARY KEY,
   follower_id INTEGER REFERENCES users,
+  seen BOOLEAN,
   followee_id INTEGER REFERENCES users);
 
 CREATE TABLE comments (
@@ -53,6 +54,7 @@ CREATE TABLE comments (
   recipe_id INTEGER REFERENCES recipes,
   user_id INTEGER REFERENCES users,
   comment VARCHAR,
+  seen BOOLEAN,
   comments_timestamp timestamp not null default CURRENT_TIMESTAMP);
 
 CREATE TABLE foods (

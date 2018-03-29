@@ -26,8 +26,12 @@ router.get('/allgroups', db.getAllGroups);
 router.get('/getSingleGroup/:groupID', db.getSingleGroup);
 router.get('/userFollowsGroup/:userID/:groupID', db.userFollowsGroup);
 router.get('/getAllGroupFollowers/:groupID', db.getAllGroupFollowers);
-router.get('/isfavorite/:recipeID', loginRequired, db.isFavorite)
-router.get('/getsinglecomment/:commentID', loginRequired, db.getSingleComment)
+router.get('/isfavorite/:recipeID', loginRequired, db.isFavorite);
+router.get('/getsinglecomment/:commentID', loginRequired, db.getSingleComment);
+router.get('/seenComments/:userID', loginRequired, db.getSeenForCommentsByUserId);
+router.get('/seenFavorites/:userID', loginRequired, db.getSeenForFavoritesByUserId);
+router.get('/seenCommentsByRecipeId/:recipeID', loginRequired, db.getSeenForCommentsRecipeId);
+router.get('/seenFollowers/:userID', loginRequired, db.getSeenFollowersByUserId);
 
 /*------------------------------POST Request------------------------------------*/
 router.post('/register', db.registerUser);
@@ -55,5 +59,9 @@ router.patch('/deleteIngredients', loginRequired, db.deleteIngredients);
 router.patch('/deleteRecipe', loginRequired, db.deleteRecipe);
 router.patch('/deleteComments', loginRequired, db.deleteComments);
 router.patch('/deleteFavorites', loginRequired, db.deleteFavorites);
+router.patch('/seenCommentsChangeByRecipeId/:recipeID', loginRequired, db.seenCommentsChangeByRecipeId);
+router.patch('/seenFavoritesChangeByUserId/:userID', loginRequired, db.seenFavoritesChangeByUserId);
+router.patch('/seenFollowersChangeByUserId/:userID', loginRequired, db.seenFollowersChangeByUserId);
+
 
 module.exports = router;
