@@ -262,16 +262,16 @@ class UserProfile extends React.Component {
     return <UserFaves id={id} />;
   };
 
-  updateProfileImage = (e) => { 
+  updateProfileImage = (e) => {
     console.log("CLIKKKKKKKKKK")
   }
 
   render() {
     const { allusersRecipes, canFollow } = this.state;
-    
     if (this.props.user && this.state.user) {
       return (
         <div>
+        <Notifications id={this.props.id} user={this.props.user.username}/>
           <Searchbar user={this.props.user} />
           <div className="userProfileContainer">
             <div className="userProfileHeading">
