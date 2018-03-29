@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Route, Switch } from 'react-router'
+import { Redirect } from 'react-router'
 import Feed from './Feed/Feed'
 import UserProfile from './Profile/UserProfile'
 import Recipe from './SingleRecipe/Recipe'
@@ -14,7 +15,8 @@ class Cookbook extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: ''
+      user: '',
+      fetchingUser: true
     }
   }
 
@@ -23,7 +25,8 @@ class Cookbook extends React.Component {
     .then(response =>{
       if(response.data){
         this.setState({
-          user: response.data[0]
+          user: response.data[0],
+          fetchingUser: false
         })
       }
     })
@@ -36,7 +39,7 @@ class Cookbook extends React.Component {
     this.loggedInUser()
   }
 
-  renderAddRecipe = props => { 
+  renderAddRecipe = props => {
     const { user } = this.state
     return(
       <AddRecipe user={user} />
@@ -45,10 +48,22 @@ class Cookbook extends React.Component {
 
   renderUserProfile = props =>{
     const { id } = props.match.params
-    const { user } = this.state
-    return(
-      <UserProfile user={user} id={id}/>
-    )
+    const { user, fetchingUser } = this.state
+    if (fetchingUser){
+      return(
+        <div>loading profile</div>
+      )
+    }
+    else if(!user){
+        return(
+          <Redirect to='/' />
+        )
+    }
+    else {
+      return(
+        <UserProfile user={user} id={id}/>
+      )
+    }
   }
 
   renderSingleRecipe = props =>{

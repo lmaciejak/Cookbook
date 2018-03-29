@@ -9,6 +9,10 @@ import CreateGroup from "../Modals/CreateGroup";
 import "./UserProfile.css";
 import Searchbar from "../Search/SearchBar";
 // import AddRecipe from './SingleRecipe/AddRecipe'
+import Notifications from "../Modals/Notifications";
+
+
+
 
 const FollowButtons = ({ userID, profileID, canFollow, follow, unfollow }) => {
   if (userID === parseInt(profileID)) {
@@ -86,7 +90,6 @@ class UserProfile extends React.Component {
     axios
       .get(`/users/getallrecentusersrecipes/${this.props.id}`)
       .then(res => {
-        console.log("all recipes", res.data);
         this.setState({
           allusersRecipes: res.data,
           allUserRecipesUnchanged: res.data
@@ -122,7 +125,6 @@ class UserProfile extends React.Component {
         axios
           .get(`/users/profile/${this.props.id}`)
           .then(res => {
-            console.log("profilesz", res.data);
             this.setState({
               user: res.data
             });
@@ -133,20 +135,23 @@ class UserProfile extends React.Component {
       )
       .then(
         axios
-          .get(
-            `/users/getfolloweebyid/${this.props.user.user_id}/${this.props.id}`
-          )
-          .then(res => {
-            console.log(res.data);
-            if (this.props.user.user_id === this.props.id) {
+          .get(`/users/getfolloweebyid/${this.props.user.user_id}/${this.props.id}`)
+          .then(res =>{
+            if(this.props.user.user_id === this.props.id){
               this.setState({
                 canFollow: false
               });
             } else if (res.data === []) {
               this.setState({
                 canFollow: true
-              });
-            } else {
+              })
+            }
+            else if(res.data.find(profile => profile.follower_id === this.props.user.user_id) === undefined){
+              this.setState({
+                canFollow: true
+              })
+            }
+            else {
               this.setState({
                 canFollow: false
               });
@@ -165,14 +170,11 @@ class UserProfile extends React.Component {
     const { selectedValue, allusersRecipes } = this.state;
     this.setState({
       selectedValue: e.target.value
-    });
-    console.log("selectedValue", e.target.value);
-    console.log("this.props.user", this.props.user);
+    })
     if (e.target.value === "mostRecent") {
       axios
         .get(`/users/getallrecentusersrecipes/${this.props.id}`)
-        .then(res => {
-          console.log("res getallrecentusersrecipes", res);
+        .then( (res) => {
           this.setState({
             allusersRecipes: res.data
           });
@@ -183,8 +185,7 @@ class UserProfile extends React.Component {
     } else if (e.target.value === "mostTop") {
       axios
         .get(`/users/getmosttoprecipes/${this.props.id}`)
-        .then(res => {
-          console.log("res getmosttoprecipes", res);
+        .then( (res) => {
           this.setState({
             allusersRecipes: res.data
           });
@@ -211,13 +212,13 @@ class UserProfile extends React.Component {
     axios
       .post("/users/followUser", {
         follower_id: this.props.user.user_id,
-        followee_id: this.props.id
+        followee_id: this.props.id,
+        seen: false
       })
       .then(res => {
         this.setState({
           canFollow: false
-        });
-        console.log("Followed success");
+        })
       })
       .catch(error => {
         console.log("Failed follow");
@@ -225,7 +226,6 @@ class UserProfile extends React.Component {
   };
 
   handleUserUnfollow = () => {
-    console.log(this.props.user);
     axios
       .post("/users/unfollowUser", {
         follower_id: this.props.user.user_id,
@@ -235,7 +235,6 @@ class UserProfile extends React.Component {
         this.setState({
           canFollow: true
         });
-        console.log("unfollowed user");
       })
       .catch(error => {
         console.log("failed to unfollow");
@@ -269,10 +268,7 @@ class UserProfile extends React.Component {
 
   render() {
     const { allusersRecipes, canFollow } = this.state;
-    console.log("props", this.props);
-    console.log("this.state.user", this.state.user);
-    console.log("recipe count*****", this.state.recipeCount);
-    // let isOwnProfile = this.props.user.user_id === this.props.id
+    
     if (this.props.user && this.state.user) {
       return (
         <div>
