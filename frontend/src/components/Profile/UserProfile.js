@@ -305,7 +305,7 @@ class UserProfile extends React.Component {
               </div>
             </div>
             <div className="userProfileSelectContainer">
-              <p> See {this.state.user[0].username}'s </p>
+              <p> See {this.state.user[0].username}s </p>
               <div class="select-style">
                 <select onChange={this.handleSelectValue}>
                   <option value="mostTop">Top Recipes</option>
