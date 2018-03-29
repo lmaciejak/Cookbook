@@ -28,7 +28,8 @@ class SingleRecipe extends React.Component {
       comment: "",
       comments_id: false,
       fork: "",
-      forkedFrom: ""
+      forkedFrom: "",
+      seenCommentsArray: []
     };
   }
 
@@ -89,6 +90,24 @@ class SingleRecipe extends React.Component {
           });
         })
       })
+      .then( () => {
+        axios
+          .get(`/users/seenCommentsByRecipeId/${this.props.user.recipeID}`)
+          .then( (res) => {
+            this.setState({
+              seenCommentsArray: res.data
+            })
+          })
+      })
+      .then( () => {
+        axios
+          .patch(`/users/seenCommentsChangeByRecipeId/${this.props.user.recipeID}`)
+          .then( () => {
+            this.setState({
+              seenCommentsArray: true
+            })
+          })
+      })
       .catch(error => {
         console.log("error in Recipe componentDidMount: ", error);
       });
@@ -99,7 +118,8 @@ class SingleRecipe extends React.Component {
     e.preventDefault();
     axios
       .post("/users/favorite", {
-        recipe_id: this.props.user.recipeID
+        recipe_id: this.props.user.recipeID,
+        seen: false
       })
       .then(() => {
         this.setState({
@@ -181,27 +201,53 @@ class SingleRecipe extends React.Component {
           console.log(err);
         });
     } else {
-      axios
-        .post("/users/addComment", {
-          recipe_id: this.props.user.recipeID,
-          comment: this.state.comment
-        })
-        .then(res => {
-          axios
-            .get(`/users/comment/${this.props.user.recipeID}`)
-            .then(res => {
-              this.setState({
-                comments: res.data,
-                comment: ""
+      if (this.props.id === this.state.user_id) {
+        axios
+          .post("/users/addComment", {
+            recipe_id: this.props.user.recipeID,
+            comment: this.state.comment,
+            seen: true
+          })
+          .then(res => {
+            axios
+              .get(`/users/comment/${this.props.user.recipeID}`)
+              .then(res => {
+                this.setState({
+                  comments: res.data,
+                  comment: ""
+                });
+              })
+              .catch(error => {
+                console.log(error);
               });
-            })
-            .catch(error => {
-              console.log(error);
-            });
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        axios
+          .post("/users/addComment", {
+            recipe_id: this.props.user.recipeID,
+            comment: this.state.comment,
+            seen: false
+          })
+          .then(res => {
+            axios
+              .get(`/users/comment/${this.props.user.recipeID}`)
+              .then(res => {
+                this.setState({
+                  comments: res.data,
+                  comment: ""
+                });
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
   };
 
@@ -327,7 +373,6 @@ class SingleRecipe extends React.Component {
       fork,
       forkedFrom
     } = this.state;
-
     if (this.props.user) {
       return (
         <div>
@@ -420,20 +465,8 @@ class SingleRecipe extends React.Component {
                             onClick={this.handleClickEdit}
                             id={comment.comments_id}
                             className="singleRecipeCommentEdit"
-                          >
-                            edit/delete
-                          </button>
-                        ) : (
-                          ""
-                        )
-                        /*<button
-                    onClick={this.handleClickReport}
-                    id={comment.comments_id}>
-                    report abuse
-                  </button> */
-                        }
-                      </li>
-                    ))
+                          >edit/delete</button>) : ""}
+                      </li>))
                   : "There are no any comments"}
               </ul>
             </div>
