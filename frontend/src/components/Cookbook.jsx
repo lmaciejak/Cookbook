@@ -40,10 +40,22 @@ class Cookbook extends React.Component {
   }
 
   renderAddRecipe = props => {
-    const { user } = this.state
-    return(
-      <AddRecipe user={user} />
-    )
+    const { user, fetchingUser } = this.state
+    if(fetchingUser){
+      return(
+        <div>loading</div>
+      )
+    }
+    else if(!user){
+      return(
+        <Redirect to='/' />
+      )
+    }
+    else {
+      return(
+        <AddRecipe user={user} />
+      )
+    }
   }
 
   renderUserProfile = props =>{
