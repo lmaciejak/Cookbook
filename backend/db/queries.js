@@ -47,7 +47,6 @@ function getSingleGroup(req, res, next) {
     })
 }
 
-
 function getFollowers(req, res, next) {
   db.any(`SELECT user_id, username, email, first_name, last_name
           FROM users
@@ -136,6 +135,19 @@ function userFollowsGroup(res, req, next) {
     })
 }
 
+function getUserGroupFollows(req, res, next) {
+  db.any(`SELECT groupowners.group_name, groupfollows.group_id, groupfollows.user_id
+          FROM groupfollows
+          JOIN groupowners ON(groupowners.group_id = groupfollows.group_id)
+          WHERE groupfollows.user_id=${req.params.userID}`)
+          .then(data => {
+            res.json(data)
+          })
+          .catch(error => {
+            res.json(error)
+          })
+}
+
 function getAllResipes(req, res, next) {
   db.any(`SELECT *
           FROM recipes;`)
@@ -151,6 +163,37 @@ function getAllResipesByUserID(req, res, next) {
   db.any(`SELECT *
           FROM recipes
           WHERE user_id=${req.params.userID};`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
+function getAllGroupResipesByUserID(req, res, next) {
+  db.any(`SELECT *
+          FROM grouprecipes
+          JOIN recipes ON (recipes.recipe_id = grouprecipes.recipe_id)
+          WHERE user_id=${req.params.userID} AND group_id=${req.params.groupID};`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
+function getAllGroupRecipes(req, res, next) {
+  db.any(`SELECT recipe, recipes.recipe_id, username, users.user_id, grouprecipes.group_id, recipes.img,
+          COUNT(favorites.recipe_id)
+          AS favorites_count
+          FROM recipes
+          LEFT JOIN favorites ON (recipes.recipe_id = favorites.recipe_id)
+          INNER JOIN users ON (recipes.user_id = users.user_id)
+          INNER JOIN grouprecipes ON (recipes.recipe_id = grouprecipes.recipe_id)
+          WHERE grouprecipes.group_id =${req.params.groupID}
+          GROUP BY recipes.recipe_id, users.username, users.user_id, grouprecipes.group_id`)
           .then(data => {
             res.json(data);
           })
@@ -456,8 +499,8 @@ function removeRecipeComment(req, res, next) {
 
 function addRecipe(req, res, next) {
   return db.one(
-    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, group_id)"
-    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${group_id})"
+    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, public)"
+    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${public})"
     + " RETURNING recipe_id, user_id",
     {
       user_id: req.user.user_id,
@@ -467,9 +510,9 @@ function addRecipe(req, res, next) {
       img: req.body.img,
       isvegeterian: req.body.isvegeterian,
       isvegan: req.body.isvegan,
-      group_id: req.body.group_id ? req.body.group_id : null,
       fork: req.body.fork,
-      forkedFrom: req.body.forkedFrom
+      forkedFrom: req.body.forkedFrom,
+      public: req.body.public
     }
   )
   .then(data => {
@@ -480,7 +523,25 @@ function addRecipe(req, res, next) {
   });
 }
 
-
+function addRecipeToGroup(req, res, next) {
+  console.log("recipe to group", req.body)
+  return db.none(
+    "INSERT INTO grouprecipes (recipe_id, user_id, group_id)"
+  + "VALUES (${recipe_id}, ${user_id}, ${group_id})",
+  {
+    recipe_id: req.body.recipe_id,
+    user_id: req.body.user_id,
+    group_id: req.body.group_id
+  }
+  )
+  .then(() => {
+    console.log('success')
+    res.json('success');
+  })
+  .catch(error => {
+    res.json(error)
+  })
+}
 
 function addIngredients(req, res, next) {
   return db.task(t => {
@@ -884,11 +945,14 @@ module.exports = {
   getAllGroups,
   getAllGroupFollowers,
   userFollowsGroup,
+  getUserGroupFollows,
   getRecipeComments,
   getAllUsers,
   getAllResipes,
   getAllResipesByUserID,
   getAllFollowersRecipes,
+  getAllGroupResipesByUserID,
+  getAllGroupRecipes,
   getSingleRecipeById,
   getIngredientsByRecipeId,
   getAllRecentUsersRecipes,
@@ -907,6 +971,7 @@ module.exports = {
   addRecipeComment,
   removeRecipeComment,
   addRecipe,
+  addRecipeToGroup,
   addIngredients,
   removeRecipe,
   favoriteRecipe,

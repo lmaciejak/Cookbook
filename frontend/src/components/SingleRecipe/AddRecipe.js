@@ -3,10 +3,12 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import SearchBar from "../Search/SearchBar.js"
 
+
 class AddRecipe extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      recipe_id: '',
       recipe_name : "",
       recipe : "",
       description: "",
@@ -17,8 +19,30 @@ class AddRecipe extends React.Component {
       fork: false,
       ingredientsList: ["","eggs","chicken","potatoes"],
       redirect: false,
-      recipe_id: ""
+      recipe_id: "",
+      groups: [],
+      shareOptions: []
     }
+  }
+
+  getGroupFollows = () =>{
+    const { groups } = this.state
+    axios
+      .get(`/users/allGroupFollows/${this.props.user.user_id}`)
+      .then(res => {
+        this.setState({
+          groups: res.data
+        })
+      })
+      .catch(error => {
+        console.log('error get user group follows')
+      })
+  }
+
+
+
+  componentDidMount(){
+    this.getGroupFollows()
   }
 
   handleChange = e => {
@@ -62,11 +86,26 @@ class AddRecipe extends React.Component {
     });
   }
 
+  handleSharing = (e) => {
+    const { shareOptions } = this.state
+    let valueArr = shareOptions
+    if(e.target.checked && !valueArr.includes(e.target.value)){
+      valueArr.push(parseInt(e.target.value))
+      this.setState({ shareOptions: valueArr })
+    }
+    else {
+      this.setState({ shareOptions: shareOptions.filter((values) => values != e.target.value)})
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     const {recipe_name, recipe, description,
            ingredients, ingredientsList,
-           isvegeterian, isvegan, img, recipe_id, fork } = this.state
+           isvegeterian, isvegan, img, recipe_id, fork, groups, shareOptions } = this.state
+
+    let isPublic = shareOptions.includes(0) || shareOptions.length === 0
+
     axios
 			.post('/users/addRecipe', {
         recipe_name: recipe_name,
@@ -76,15 +115,31 @@ class AddRecipe extends React.Component {
         isvegeterian: isvegeterian,
         isvegan: isvegan,
         fork: fork,
+        public: isPublic
 			})
 			.then(res => {
-        this.setState({
-          recipe_id: res.data.recipe_id
-        })
+        const recipe_id = res.data.recipe_id
+        this.setState({ recipe_id: recipe_id })
+
         axios
           .post(`/users/addIngredients/${res.data.recipe_id}`, {
             ingredients: ingredients
 			    })
+          .then(res => {
+            let groupID = shareOptions.filter((value) => value !== 0)
+            groupID.map(id => {
+              let findGroup = groups.find(group => group.group_id === id)
+              axios
+                .post('/users/addRecipeToGroup',{
+                  recipe_id: recipe_id,
+                  user_id: this.props.user.user_id,
+                  group_id: findGroup.group_id
+                })
+                .catch(error => {
+                  console.log('error add group recipes')
+                })
+            })
+          })
       })
       .then( (res) => {
         this.setState({
@@ -97,7 +152,9 @@ class AddRecipe extends React.Component {
           isvegan: false,
           ingredientsList: ["","eggs","chicken","potatoes"],
           redirect: true,
-          fork: false
+          fork: false,
+          groups: [],
+          shareOptions: []
         })
       })
 			.catch(err => {
@@ -110,11 +167,15 @@ class AddRecipe extends React.Component {
     render() {
       const {recipe_name, recipe, description,
              ingredients, ingredientsList,
-             isvegeterian, isvegan, img, redirect, recipe_id, fork } = this.state
+             isvegeterian, isvegan, img, redirect, recipe_id, fork, groups, shareOptions } = this.state
+
+      let groupDisplay = [{group_name: 'Public', group_id: 0},...groups]
+      console.log(shareOptions)
+
              if(redirect) {
               return <Redirect to={`/cb/${this.props.user.username}/${recipe_id}`}/>
              }
-             console.log(fork);
+             console.log(this.state);
         return(
             <div>
               <SearchBar user={this.props.user} />
@@ -249,6 +310,22 @@ class AddRecipe extends React.Component {
                       onChange={this.handleChecked}
                     />
                 </label>
+                </div>
+                <div className="formSection"><span>6</span>Share Options
+                  <label className="formLabels">
+                    {groupDisplay.map(group => (
+                      <label>
+                        {group.group_name}
+                        <input
+                          name={group.group_name}
+                          value={group.group_id}
+                          onChange={this.handleSharing}
+                          checked={shareOptions.includes(group.group_id)}
+                          type='checkbox'
+                          />
+                      </label>
+                    ))}
+                  </label>
                 </div>
                 <button className="formButton">Submit</button>
                 </form>
