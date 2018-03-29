@@ -1,5 +1,54 @@
 .userProfileImage { 
-  width: 7%; 
+  width: 8%; 
+  height: 8%;
+  margin-top: 0%; 
+}
+
+.userProfileContainer { 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center;
+}
+
+.userProfileName { 
+  margin-top: -0.1%; 
+  padding-right: 8px; 
+  padding-left: 8px; 
+  margin-left: 5%; 
+  color: black; 
+}
+
+.userProfileFollowButtons { 
+  margin-top: 1%;
+}
+
+.userProfileSelectContainer { 
+  display: flex; 
+  justify-content: center;
+  
+}
+
+.userProfileHeading { 
+  display: flex; 
+  justify-content: center;
+}
+
+.userProfileFollowInfo { 
+  margin-top: 5%; 
+  display: flex; 
+  justify-content: space-around;
+  width: 300px;
+  margin-left: -18.2%; 
+}
+
+.userProfileFollowButton { 
+  background-color: rgb(255, 102, 0); 
+  color: white; 
+  border: none; 
+  border-radius: 1px; 
+  width: 90px; 
+  height: 25px; 
+  font-size: 15px; 
 }
 
 .select-style {
@@ -7,12 +56,15 @@
   margin: 0;
   border: 1px solid #ccc;
   width: 120px;
+  height: 25px; 
   border-radius: 3px;
   overflow: hidden;
   background-color: #fff;
   background: #fff;
   position: relative;
   z-index: 1; 
+  margin-top: 1%; 
+  margin-left: 1%; 
 }
 
 .select-style:after {
@@ -45,4 +97,9 @@
 
 .select-style select:focus {
   outline: none;
+}
+
+.userProfileAllRecipes { 
+  display: flex; 
+  justify-content: center; 
 }

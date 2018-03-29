@@ -3,7 +3,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 
 const styles = {
   img: {
-    width: "300px",
+    width: "400px",
     height: "300px"
   }
 }
