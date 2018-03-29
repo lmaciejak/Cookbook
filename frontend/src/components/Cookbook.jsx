@@ -89,10 +89,18 @@ class Cookbook extends React.Component {
 
   renderUserFeed = props =>{
     const { id } = props.match.params
-    const { user } = this.state
-    return(
-      <Feed user={user} />
-    )
+    const { user, fetchingUser } = this.state
+    if(fetchingUser){
+      return(<div>loading feed my guy</div>)
+    }
+    else if(!user){
+      return(<Redirect to='/' />)
+    }
+    else {
+      return(
+        <Feed user={user} />
+      )
+    }
   }
 
   renderGroups = () =>{

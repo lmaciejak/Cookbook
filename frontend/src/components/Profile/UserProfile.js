@@ -86,7 +86,7 @@ class UserProfile extends React.Component {
     );
   };
 
-  componentDidMount() {
+  userInfo = () => {
     axios
       .get(`/users/getallrecentusersrecipes/${this.props.id}`)
       .then(res => {
@@ -164,6 +164,20 @@ class UserProfile extends React.Component {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  componentDidMount() {
+    this.userInfo()
+  }
+
+  componentWillReceiveProps(props) {
+    this.userInfo();
+  }
+
+  componentDidUpdate(prevProps,prevState){
+    if(prevProps !== this.props){
+      this.userInfo()
+    }
   }
 
   handleSelectValue = e => {
@@ -268,6 +282,7 @@ class UserProfile extends React.Component {
 
   render() {
     const { allusersRecipes, canFollow } = this.state;
+    console.log('rendering luiza')
     if (this.props.user && this.state.user) {
       return (
         <div>
