@@ -344,6 +344,22 @@ function getSingleComment(req, res, next) {
     })
 }
 
+function getSinglePotluck (req, res, next) {
+  db.task('get-everything', t => {
+    return t.batch([
+        t.any(`SELECT * FROM potlucks WHERE potlucks.potluck_id=${req.params.potluckID}`),
+        t.any(`SELECT * FROM potluckinvitations WHERE potluckinvitations.potluck_id=${req.params.potluckID}`),
+        t.any(`SELECT * FROM potluckitems WHERE potluckitems.potluck_id=${req.params.potluckID}`)
+      ]);
+    })
+    .then( (data) => {
+      res.json(data);
+    })
+    .catch( (err) => {
+      res.json(err);
+    })
+}
+
 /*-------------------------------POST Request----------------------------------*/
 function registerUser(req, res, next) {
   return authHelpers
@@ -604,6 +620,26 @@ function loginUser(req, res, next) {
     })(req, res, next);
 }
 
+function createPotluck (req, res, next) {
+  return db.none(
+    "INSERT INTO potlucks (user_id, potluck_name, potluck_description, potluck_date, potluck_time, potluck_location) VALUES (${user_id}, ${potluck_name}, ${potluck_description}, ${potluck_date}, ${potluck_time}, ${potluck_location})",
+    {
+      user_id: req.user.user_id,
+      potluck_name: req.body.potluck_name, 
+      potluck_description: req.body.potluck_description, 
+      potluck_date: req.body.potluck_date, 
+      potluck_time: req.body.potluck_time, 
+      potluck_location: req.body.potluck_location 
+    }
+  )
+    .then(data => {
+      res.json("success");
+    })
+    .catch(error => {
+      res.json(error);
+    });
+}
+
 /*------------------------------PATCH Request-----------------------------------*/
 function editUser(req, res, next) {
   return db.none(
@@ -788,6 +824,7 @@ module.exports = {
   getMostTopRecipes,
   isFavorite,
   getSingleComment,
+  getSinglePotluck,
 /*--------POST Request-------*/
   registerUser,
   addRecipeComment,
@@ -804,6 +841,7 @@ module.exports = {
   joinGroup,
   leaveGroup,
   loginUser,
+  createPotluck,
 /*----------PATCH Request-------*/
   editUser,
   editRecipe,
