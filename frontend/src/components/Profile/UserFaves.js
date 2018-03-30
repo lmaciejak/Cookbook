@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import RecipeBox from '../SingleRecipe/RecipeBox'
 
+
 class UserFaves extends React.Component{
   constructor(props){
     super(props)
@@ -34,6 +35,7 @@ class UserFaves extends React.Component{
 
   render(){
     const { favoriteRecipes } = this.state
+    console.log("favoriteRecipe: ", favoriteRecipes);
     if(this.props){
       return(
         <div>

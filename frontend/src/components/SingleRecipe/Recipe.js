@@ -335,6 +335,7 @@ class SingleRecipe extends React.Component {
         forkedFrom: username
       })
       .then(res => {
+        console.log("forking response: ", res);
         this.setState({
           recipe_id: res.data.recipe_id
         })
@@ -342,10 +343,6 @@ class SingleRecipe extends React.Component {
           .post(`/users/addIngredients/${res.data.recipe_id}`, {
             ingredients: ingredients
           })
-      })
-      .then( (res) => {
-        <Redirect push to="/cb/profile/:userID" />
-
       })
       .catch(err => {
         this.setState({

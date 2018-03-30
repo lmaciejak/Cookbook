@@ -6,6 +6,7 @@ import AllGroups from './AllGroups'
 import SingleGroup from './SingleGroup'
 import GroupMembers from './GroupMembers'
 import GroupRecipes from './GroupRecipes'
+import Searchbar from "../Search/SearchBar";
 
 class Groups extends React.Component{
   constructor(props){
@@ -81,6 +82,7 @@ class Groups extends React.Component{
     console.log('Black',this.state)
     return(
       <div>
+        {this.props.user ?  <Searchbar user={this.props.user} /> : <div></div>}
         <Switch>
           <Route exact path='/cb/groups' render={this.renderAllGroups} />
           <Route exact path='/cb/groups/:groupID/members' render={this.renderGroupMembers} />
