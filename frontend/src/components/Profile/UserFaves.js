@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import RecipeBox from '../SingleRecipe/RecipeBox'
 
+
 class UserFaves extends React.Component{
   constructor(props){
     super(props)

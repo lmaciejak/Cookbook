@@ -19,7 +19,7 @@ class Feed extends React.Component {
   componentDidMount() {
     const { username, password } = this.state;
     axios
-      .get(`/users/allfollowersrecipes/3`)
+      .get(`/users/allfollowersrecipes/${this.props.user.user_id}`)
       .then(res => {
         this.setState({
           message: "success",
@@ -33,9 +33,8 @@ class Feed extends React.Component {
       });
   }
 
-  render() {
-    console.log(this.state.followeedata);
 
+  render() {
     return (
       <div>
         <Searchbar user={this.props.user} />

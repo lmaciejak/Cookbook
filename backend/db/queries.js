@@ -21,11 +21,11 @@ function getSingleUser(req, res, next) {
 }
 
 function getSingleUserFavorites(req, res, next) {
-  db.any(`SELECT recipe_name, recipe, img
+  db.any(`SELECT recipes.USER_id, recipe_name, recipe, img, recipes.recipe_id, username
           FROM recipes
-          INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
-          INNER JOIN users ON(users.user_id=favorites.user_id)
-          WHERE users.user_id=$1`, [req.params.userID])
+          INNER JOIN users ON(recipes.user_id=users.user_id)
+          INNER JOIN favorites ON(favorites.recipe_id=recipes.recipe_id)
+          WHERE favorites.user_id=$1;`, [req.params.userID])
     .then(data => {
       res.json(data);
     })
@@ -46,7 +46,6 @@ function getSingleGroup(req, res, next) {
       res.json(error)
     })
 }
-
 
 function getFollowers(req, res, next) {
   db.any(`SELECT user_id, username, email, first_name, last_name
@@ -136,6 +135,19 @@ function userFollowsGroup(res, req, next) {
     })
 }
 
+function getUserGroupFollows(req, res, next) {
+  db.any(`SELECT groupowners.group_name, groupfollows.group_id, groupfollows.user_id
+          FROM groupfollows
+          JOIN groupowners ON(groupowners.group_id = groupfollows.group_id)
+          WHERE groupfollows.user_id=${req.params.userID}`)
+          .then(data => {
+            res.json(data)
+          })
+          .catch(error => {
+            res.json(error)
+          })
+}
+
 function getAllResipes(req, res, next) {
   db.any(`SELECT *
           FROM recipes;`)
@@ -159,29 +171,60 @@ function getAllResipesByUserID(req, res, next) {
           });
 }
 
+function getAllGroupResipesByUserID(req, res, next) {
+  db.any(`SELECT *
+          FROM grouprecipes
+          JOIN recipes ON (recipes.recipe_id = grouprecipes.recipe_id)
+          WHERE user_id=${req.params.userID} AND group_id=${req.params.groupID};`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
+function getAllGroupRecipes(req, res, next) {
+  db.any(`SELECT recipe, recipes.recipe_id, username, users.user_id, grouprecipes.group_id, recipes.img,
+          COUNT(favorites.recipe_id)
+          AS favorites_count
+          FROM recipes
+          LEFT JOIN favorites ON (recipes.recipe_id = favorites.recipe_id)
+          INNER JOIN users ON (recipes.user_id = users.user_id)
+          INNER JOIN grouprecipes ON (recipes.recipe_id = grouprecipes.recipe_id)
+          WHERE grouprecipes.group_id =${req.params.groupID}
+          GROUP BY recipes.recipe_id, users.username, users.user_id, grouprecipes.group_id`)
+          .then(data => {
+            res.json(data);
+          })
+          .catch(error => {
+            res.json(error);
+          });
+}
+
 function getAllFollowersRecipes(req, res, next) {
  db.any(`SELECT recipe_name, recipes.recipe_id, description,
-           recipe, recipe_name, img, recipe_timestamp,
-           isVegeterian, isVegan,
-        COUNT(favorites.recipe_id)
-        AS favorites_count, users.username, users.user_id
-        FROM recipes
-        INNER JOIN favorites
-        ON recipes.recipe_id = favorites.recipe_id
-        INNER JOIN users
-        ON recipes.user_id = users.user_id
-        WHERE recipes.user_id
-        IN (SELECT followee_id
-        FROM followings
-        WHERE follower_id =${req.params.userID})
-        GROUP BY recipes.recipe_id, users.user_id
-        ORDER BY recipe_timestamp DESC;`)
-         .then(data => {
-           res.json(data);
-         })
-         .catch(error => {
-           res.json(error);
-         });
+         recipe, recipe_name, img, recipe_timestamp,
+         isVegeterian, isVegan,
+         COUNT(favorites.recipe_id)
+         AS favorites_count, users.username, users.user_id
+         FROM recipes
+         INNER JOIN favorites
+         ON recipes.recipe_id = favorites.recipe_id
+         INNER JOIN users
+         ON recipes.user_id = users.user_id
+         WHERE recipes.user_id
+         IN (SELECT followee_id
+         FROM followings
+         WHERE follower_id =${req.params.userID})
+         GROUP BY recipes.recipe_id, users.user_id
+         ORDER BY recipe_timestamp DESC;`)
+      .then(data => {
+        res.json(data);
+      })
+      .catch(error => {
+        res.json(error);
+      });
 }
 
 function getUser(req, res, next) {
@@ -278,9 +321,10 @@ function getIngredientsByRecipeId(req, res, next) {
 }
 
 function getAllRecentUsersRecipes(req, res, next) {
-  db.any(`SELECT *
+  db.any(`SELECT recipes.*, users.username
           FROM recipes
-          WHERE user_id=${req.params.userID}
+          INNER JOIN users ON(users.user_id=recipes.user_id)
+          WHERE recipes.user_id=${req.params.userID}
           ORDER BY recipe_timestamp DESC;`)
     .then(data => {
       res.json(data);
@@ -358,6 +402,63 @@ function getSinglePotluck (req, res, next) {
     .catch( (err) => {
       res.json(err);
     })
+  }
+    
+function getSeenForCommentsByUserId(req, res, next) {
+  db.any(`SELECT seen, users.username, recipes.recipe_id, recipes.recipe_name, comments_id
+          FROM comments
+          INNER JOIN recipes ON(comments.recipe_id=recipes.recipe_id)
+          INNER JOIN users ON(comments.user_id=users.user_id)
+          WHERE seen=FALSE
+          AND recipes.user_id=${req.params.userID};`)
+      .then( (data) => {
+        res.json(data);
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+}
+
+function getSeenForFavoritesByUserId(req, res, next) {
+  db.any(`SELECT seen, users.username, recipes.recipe_id, recipes.recipe_name
+          FROM favorites
+          INNER JOIN recipes ON(favorites.recipe_id=recipes.recipe_id)
+          INNER JOIN users ON(favorites.user_id=users.user_id)
+          WHERE seen=FALSE
+          AND recipes.user_id=${req.params.userID};`)
+      .then( (data) => {
+        res.json(data);
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+}
+
+function getSeenForCommentsRecipeId(req, res, next) {
+  db.any(`SELECT seen FROM comments
+          INNER JOIN recipes ON(comments.recipe_id=recipes.recipe_id)
+          WHERE seen=FALSE
+          AND recipes.recipe_id=${req.params.recipeID};`)
+      .then( (data) => {
+        res.json(data);
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+}
+
+function getSeenFollowersByUserId(req, res, next) {
+  db.any(`SELECT username, follower_id
+          FROM followings
+          INNER JOIN users ON(users.user_id=followings.follower_id)
+          WHERE seen=FALSE
+          AND followee_id=${req.params.userID};`)
+      .then( (data) => {
+        res.json(data);
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
 }
 
 /*-------------------------------POST Request----------------------------------*/
@@ -385,11 +486,12 @@ function registerUser(req, res, next) {
 
 function addRecipeComment(req, res, next) {
   return db.none(
-    "INSERT INTO comments (recipe_id, user_id, comment) VALUES (${recipe_id}, ${user_id}, ${comment})",
+    "INSERT INTO comments (recipe_id, user_id, comment, seen) VALUES (${recipe_id}, ${user_id}, ${comment}, ${seen})",
     {
       recipe_id: req.body.recipe_id,
       user_id: req.user.user_id,
-      comment: req.body.comment
+      comment: req.body.comment,
+      seen: req.body.seen
     }
   )
     .then(data => {
@@ -414,8 +516,8 @@ function removeRecipeComment(req, res, next) {
 
 function addRecipe(req, res, next) {
   return db.one(
-    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, group_id)"
-    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${group_id})"
+    "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, public)"
+    + " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${public})"
     + " RETURNING recipe_id, user_id",
     {
       user_id: req.user.user_id,
@@ -425,9 +527,9 @@ function addRecipe(req, res, next) {
       img: req.body.img,
       isvegeterian: req.body.isvegeterian,
       isvegan: req.body.isvegan,
-      group_id: req.body.group_id ? req.body.group_id : null,
       fork: req.body.fork,
-      forkedFrom: req.body.forkedFrom
+      forkedFrom: req.body.forkedFrom,
+      public: req.body.public
     }
   )
   .then(data => {
@@ -438,7 +540,23 @@ function addRecipe(req, res, next) {
   });
 }
 
-
+function addRecipeToGroup(req, res, next) {
+  return db.none(
+    "INSERT INTO grouprecipes (recipe_id, user_id, group_id)"
+  + "VALUES (${recipe_id}, ${user_id}, ${group_id})",
+  {
+    recipe_id: req.body.recipe_id,
+    user_id: req.body.user_id,
+    group_id: req.body.group_id
+  }
+  )
+  .then(() => {
+    res.json('success');
+  })
+  .catch(error => {
+    res.json(error)
+  })
+}
 
 function addIngredients(req, res, next) {
   return db.task(t => {
@@ -480,10 +598,11 @@ function removeRecipe(req, res, next) {
 
 function favoriteRecipe(req, res, next) {
   return db.none(
-    "INSERT INTO favorites (recipe_id, user_id) VALUES (${recipe_id}, ${user_id});",
+    "INSERT INTO favorites (recipe_id, user_id, seen) VALUES (${recipe_id}, ${user_id}, ${seen});",
     {
       recipe_id: req.body.recipe_id,
-      user_id: req.user.user_id
+      user_id: req.user.user_id,
+      seen: req.body.seen
     }
   )
   .then(data => {
@@ -507,10 +626,11 @@ function unfavoriteRecipe(req, res, next) {
 
 function followUser(req, res, next) {
   return db.none(
-    "INSERT INTO followings (follower_id, followee_id) VALUES (${follower_id}, ${followee_id})",
+    "INSERT INTO followings (follower_id, followee_id, seen) VALUES (${follower_id}, ${followee_id}, ${seen})",
     {
       follower_id: req.body.follower_id,
-      followee_id: req.body.followee_id
+      followee_id: req.body.followee_id,
+      seen: req.body.seen
     }
   )
   .then(data => {
@@ -843,6 +963,55 @@ function deleteFavorites(req, res, next) {
     })
 }
 
+function seenCommentsChangeByRecipeId(req, res, next) {
+  return db.none(
+    `UPDATE comments
+     SET seen=TRUE
+     WHERE recipe_id=${req.params.recipeID};`
+  )
+  .then(data => {
+    res.json("success");
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
+function seenFavoritesChangeByUserId(req, res, next) {
+  return db.none(
+    `UPDATE favorites
+     SET seen=TRUE
+     WHERE favorites.recipe_id
+     IN(SELECT favorites.recipe_id
+     FROM favorites
+     INNER JOIN recipes ON(recipes.recipe_id=favorites.recipe_id)
+     WHERE recipes.user_id=${req.params.userID});`
+  )
+  .then(data => {
+    res.json("success");
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
+function seenFollowersChangeByUserId(req, res, next) {
+  return db.none(
+    `UPDATE followings SET seen=TRUE
+     WHERE followings.seen
+     IN(SELECT seen
+     FROM followings
+     INNER JOIN users ON(users.user_id=followings.follower_id)
+     WHERE followee_id=${req.params.userID});`
+  )
+  .then(data => {
+    res.json("success");
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
 
 module.exports = {
 /*-------GET Request-------*/
@@ -856,11 +1025,14 @@ module.exports = {
   getAllGroups,
   getAllGroupFollowers,
   userFollowsGroup,
+  getUserGroupFollows,
   getRecipeComments,
   getAllUsers,
   getAllResipes,
   getAllResipesByUserID,
   getAllFollowersRecipes,
+  getAllGroupResipesByUserID,
+  getAllGroupRecipes,
   getSingleRecipeById,
   getIngredientsByRecipeId,
   getAllRecentUsersRecipes,
@@ -871,11 +1043,16 @@ module.exports = {
   isFavorite,
   getSingleComment,
   getSinglePotluck,
+  getSeenForCommentsByUserId,
+  getSeenForFavoritesByUserId,
+  getSeenForCommentsRecipeId,
+  getSeenFollowersByUserId,
 /*--------POST Request-------*/
   registerUser,
   addRecipeComment,
   removeRecipeComment,
   addRecipe,
+  addRecipeToGroup,
   addIngredients,
   removeRecipe,
   favoriteRecipe,
@@ -900,4 +1077,7 @@ module.exports = {
   deleteRecipe,
   deleteComments,
   deleteFavorites,
+  seenCommentsChangeByRecipeId,
+  seenFavoritesChangeByUserId,
+  seenFollowersChangeByUserId
 };
