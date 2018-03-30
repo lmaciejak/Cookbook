@@ -170,12 +170,10 @@ class AddRecipe extends React.Component {
              isvegeterian, isvegan, img, redirect, recipe_id, fork, groups, shareOptions } = this.state
 
       let groupDisplay = [{group_name: 'Public', group_id: 0},...groups]
-      console.log(shareOptions)
 
              if(redirect) {
               return <Redirect to={`/cb/${this.props.user.username}/${recipe_id}`}/>
              }
-             console.log(this.state);
         return(
             <div>
               <SearchBar user={this.props.user} />

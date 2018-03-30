@@ -76,7 +76,6 @@ class RegisterUser extends Component {
           })
       })
       .then(res => {
-        console.log('res', res)
         this.setState({
           message: 'success',
           isLoggedIn: true,

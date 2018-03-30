@@ -35,7 +35,6 @@ class UserFaves extends React.Component{
 
   render(){
     const { favoriteRecipes } = this.state
-    console.log("favoriteRecipe: ", favoriteRecipes);
     if(this.props){
       return(
         <div>
