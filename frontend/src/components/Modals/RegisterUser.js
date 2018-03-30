@@ -12,7 +12,7 @@ const customStyles = {
     bottom                : 'auto',
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)',
-    width                 : '25%', 
+    width                 : '25%',
     textAlign             : 'center'
   }
 };
@@ -25,11 +25,11 @@ class RegisterUser extends Component {
 
     this.state = {
       username: '',
-      password: '', 
-      confirmpassword: '', 
-      firstname: '', 
-      lastname: '', 
-      email: '', 
+      password: '',
+      confirmpassword: '',
+      firstname: '',
+      lastname: '',
+      email: '',
       isLoggedIn: false,
       message: '',
       modalIsOpen: false
@@ -59,31 +59,41 @@ class RegisterUser extends Component {
     const { username, password, email, confirmpassword, firstname,  lastname } = this.state;
     axios
       .post("/users/register", {
-          username: username, 
-          password: password, 
-          email: email, 
+          username: username,
+          password: password,
+          email: email,
           first_name: firstname,
           last_name: lastname
+      })
+      .then(() => {
+        axios
+          .post('/users/login',{
+            username: username,
+            password: password
+          })
+          .catch(error => {
+            console.log('login fail after register')
+          })
       })
       .then(res => {
         console.log('res', res)
         this.setState({
-          message: 'success', 
+          message: 'success',
           isLoggedIn: true,
         });
       })
       .catch(err => {
         this.setState({
-          message: `Error registering. ${err.response.data.detail}`, 
+          message: `Error registering. ${err.response.data.detail}`,
         });
-      });  
+      });
   }
 
   render() {
     const { confirmpassword, password, username, email, isLoggedIn } = this.state
-    
-    if(isLoggedIn === true) { 
-      return <Redirect to='/feed' />
+
+    if(isLoggedIn) {
+      return <Redirect to='/cb/feed' />
     }
     return (
       <div className="Modal">
@@ -98,15 +108,15 @@ class RegisterUser extends Component {
         <h2 ref={subtitle => this.subtitle = subtitle}>Register</h2>
         <form onSubmit={this.handleLoginFormSubmit}>
           <input className="input formInput" type="text" placeholder="Username" onChange={this.handleFormInput} name='username' required></input> <br />
-          <input className="input formInput" type="text" placeholder="Firstname" onChange={this.handleFormInput} name='firstname' required></input> <br /> 
-          <input className="input formInput" type="text" placeholder="Lastname" onChange={this.handleFormInput} name='lastname' required></input> <br /> 
-          <input className="input formInput" type="email" placeholder="Email" onChange={this.handleFormInput} name='email' required></input> <br /> 
-          <input className="input formInput" type="password" placeholder="Password" onChange={this.handleFormInput} name='password' required></input> <br /> 
-          <input className="input formInput" type="password" placeholder="Confirm Password" onChange={this.handleFormInput} name='confirmpassword' required></input> <br /> 
+          <input className="input formInput" type="text" placeholder="Firstname" onChange={this.handleFormInput} name='firstname' required></input> <br />
+          <input className="input formInput" type="text" placeholder="Lastname" onChange={this.handleFormInput} name='lastname' required></input> <br />
+          <input className="input formInput" type="email" placeholder="Email" onChange={this.handleFormInput} name='email' required></input> <br />
+          <input className="input formInput" type="password" placeholder="Password" onChange={this.handleFormInput} name='password' required></input> <br />
+          <input className="input formInput" type="password" placeholder="Confirm Password" onChange={this.handleFormInput} name='confirmpassword' required></input> <br />
           <button className="formButton">Register</button>
         </form>
         <p> {this.state.message} </p>
-        <p> {this.state.password !== this.state.confirmpassword && this.state.confirmpassword 
+        <p> {this.state.password !== this.state.confirmpassword && this.state.confirmpassword
               ? 'passwords do not match' : '' } </p>
         <p> {password && password.length < 6 ? 'password must be 6 characters' : ''} </p>
 

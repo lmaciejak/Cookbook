@@ -33,6 +33,7 @@ class Feed extends React.Component {
       });
   }
 
+
   render() {
     console.log(this.state.followeedata);
 
