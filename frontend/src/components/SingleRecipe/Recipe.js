@@ -335,7 +335,6 @@ class SingleRecipe extends React.Component {
         forkedFrom: username
       })
       .then(res => {
-        console.log("forking response: ", res);
         this.setState({
           recipe_id: res.data.recipe_id
         })
