@@ -100,19 +100,18 @@ class SingleRecipe extends React.Component {
           })
       })
       .then( () => {
-        axios
-          .patch(`/users/seenCommentsChangeByRecipeId/${this.props.user.recipeID}`)
-          .then( () => {
-            this.setState({
-              seenCommentsArray: true
+          axios
+            .patch(`/users/seenCommentsChangeByRecipeId/${this.props.user.recipeID}`)
+            .then( () => {
+              this.setState({
+                seenCommentsArray: true
+              })
             })
-          })
       })
       .catch(error => {
         console.log("error in Recipe componentDidMount: ", error);
       });
     }
-
 
   handleClickLike = e => {
     e.preventDefault();

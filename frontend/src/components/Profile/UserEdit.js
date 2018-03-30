@@ -50,7 +50,6 @@ class UserEdit extends React.Component{
 
   render(){
     const {  usernameInput, relogin, firstnameInput, lastnameInput, emailInput, message } = this.state
-    console.log(this.props)
     if (this.props.user) {
         return(
           <div>

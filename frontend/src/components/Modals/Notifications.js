@@ -102,7 +102,6 @@ class Notifications extends Component {
     const { seenComments, seenFavorites, seenFollowers } = this.state
     var notificationButton = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0? "New Notifications": "No Notifications";
     var notificationClass = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0? "button formButton alert": "button formButton";
-
     return (
       <div className="Modal">
         <div>
