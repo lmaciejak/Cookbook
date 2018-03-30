@@ -8,6 +8,7 @@ import "./SearchBar.css";
 import cookbooklogo from "../../images/cookbooknamelogo.png";
 import writingicon from "../../images/writingiconorange.png";
 import hearticon from "../../images/hearticonorange.png";
+import groupicon from "../../images/groupicon.png";
 
 function getSuggestionValue(suggestion) {
   return suggestion;
@@ -147,7 +148,7 @@ class Searchbar extends Component {
   }
 
   render() {
-    console.log();
+    console.log("searchbar: ", this.props.user);
     const { value, suggestions, redirectLanding } = this.state;
     const inputProps = {
       placeholder: "Search by recipe, username, full name",
@@ -188,6 +189,15 @@ class Searchbar extends Component {
             >
               <img src={hearticon} className="heartIcon" />
               <span className="tooltiptext2">Favorite recipes </span>
+            </Link>
+          </div>
+          <div className="tooltip3">
+            <Link
+              to='/cb/groups'
+              className="searchlink"
+              >
+              <img src={groupicon} className="groupIcon" />
+              <span className="tooltiptext3">Groups</span>
             </Link>
           </div>
         </div>

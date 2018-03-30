@@ -21,11 +21,11 @@ function getSingleUser(req, res, next) {
 }
 
 function getSingleUserFavorites(req, res, next) {
-  db.any(`SELECT recipe_name, recipe, img
+  db.any(`SELECT recipe_name, recipe, img, users.user_id, recipes.recipe_id, USERname
           FROM recipes
           INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
           INNER JOIN users ON(users.user_id=favorites.user_id)
-          WHERE users.user_id=$1`, [req.params.userID])
+          WHERE users.user_id=$1;`, [req.params.userID])
     .then(data => {
       res.json(data);
     })
