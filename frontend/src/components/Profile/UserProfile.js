@@ -259,6 +259,7 @@ class UserProfile extends React.Component {
 
   renderAllUserRecipes = () => {
     const { allusersRecipes } = this.state;
+    console.log("allusersRecipesSSSSSSS: ", allusersRecipes);
     return (
       <div className="userProfileAllRecipes">
         {allusersRecipes

@@ -321,9 +321,10 @@ function getIngredientsByRecipeId(req, res, next) {
 }
 
 function getAllRecentUsersRecipes(req, res, next) {
-  db.any(`SELECT *
+  db.any(`SELECT recipes.*, users.username
           FROM recipes
-          WHERE user_id=${req.params.userID}
+          INNER JOIN users ON(users.user_id=recipes.user_id)
+          WHERE recipes.user_id=${req.params.userID}
           ORDER BY recipe_timestamp DESC;`)
     .then(data => {
       res.json(data);
