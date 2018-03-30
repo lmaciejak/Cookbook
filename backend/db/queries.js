@@ -347,9 +347,9 @@ function getSingleComment(req, res, next) {
 function getSinglePotluck (req, res, next) {
   db.task('get-everything', t => {
     return t.batch([
-        t.any(`SELECT * FROM potlucks WHERE potlucks.potluck_id=${req.params.potluckID}`),
+        t.any(`SELECT to_char("potluck_date", 'DD/MM/YYYY') AS potluck_date, to_char("potluck_time", 'HH12:MI AM') AS potluck_time, potlucks.user_id AS organizer_id, users.username, potluck_name, potluck_description, potluck_location FROM potlucks JOIN users ON (potlucks.user_id=users.user_id) WHERE potlucks.potluck_id=${req.params.potluckID}`),
         t.any(`SELECT * FROM potluckinvitations WHERE potluckinvitations.potluck_id=${req.params.potluckID}`),
-        t.any(`SELECT * FROM potluckitems WHERE potluckitems.potluck_id=${req.params.potluckID}`)
+        t.any(`SELECT * FROM potluckitems LEFT JOIN users ON (potluckitems.user_id = users.user_id) WHERE potluckitems.potluck_id=${req.params.potluckID}`)
       ]);
     })
     .then( (data) => {
@@ -640,6 +640,52 @@ function createPotluck (req, res, next) {
     });
 }
 
+
+function addUserToItem(req, res, next) {
+  return db.none(
+    "UPDATE potluckitems SET user_id=${user_id} WHERE potluckitems.item_id=${item_id}",
+    {
+      user_id: req.user.user_id,
+      item_id: req.body.item_id
+    })
+  .then(data => {
+    res.json("success");
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
+function removeUserFromItem(req, res, next) {
+  return db.none(
+    "UPDATE potluckitems SET user_id=NULL WHERE potluckitems.item_id=${item_id}",
+    {
+      item_id: req.body.item_id
+    })
+  .then(data => {
+    res.json("success");
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
+function addPotluckItem (req, res, next) {
+  return db.none(
+    "INSERT INTO potluckitems (potluck_id, item_name) VALUES (${potluck_id}, ${item_name})",
+    {
+      potluck_id: req.body.potluck_id,
+      item_name: req.body.item_name
+    }
+  )
+  .then(data => {
+    res.json("success")
+  })
+  .catch(error => {
+    res.json(error)
+  })
+}
+
 /*------------------------------PATCH Request-----------------------------------*/
 function editUser(req, res, next) {
   return db.none(
@@ -842,6 +888,9 @@ module.exports = {
   leaveGroup,
   loginUser,
   createPotluck,
+  addUserToItem,
+  removeUserFromItem,
+  addPotluckItem, 
 /*----------PATCH Request-------*/
   editUser,
   editRecipe,

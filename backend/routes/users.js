@@ -28,7 +28,7 @@ router.get('/userFollowsGroup/:userID/:groupID', db.userFollowsGroup);
 router.get('/getAllGroupFollowers/:groupID', db.getAllGroupFollowers);
 router.get('/isfavorite/:recipeID', loginRequired, db.isFavorite)
 router.get('/getsinglecomment/:commentID', loginRequired, db.getSingleComment)
-router.get('/getsinglepotluck/:potluckID', loginRequired, db.getSinglePotluck)
+router.get('/getsinglepotluck/:potluckID', db.getSinglePotluck)
 
 /*------------------------------POST Request------------------------------------*/
 router.post('/register', db.registerUser);
@@ -47,6 +47,9 @@ router.post('/joinGroup', loginRequired, db.joinGroup);
 router.post('/leaveGroup', loginRequired, db.leaveGroup);
 router.post('/login', db.loginUser);
 router.post('/createpotluck', loginRequired, db.createPotluck); 
+router.post('/addUserToItem', loginRequired, db.addUserToItem)
+router.post('/removeUserFromItem', loginRequired, db.removeUserFromItem)
+router.post('/addPotluckItem', db.addPotluckItem)
 
 /*-----------------------------PATCH Request------------------------------------*/
 router.patch('/edit/:userID', loginRequired, db.editUser);
