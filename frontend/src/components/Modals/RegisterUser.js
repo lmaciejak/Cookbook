@@ -32,7 +32,8 @@ class RegisterUser extends Component {
       email: '',
       isLoggedIn: false,
       message: '',
-      modalIsOpen: false
+      modalIsOpen: false,
+      loggedInForRegister: false
     }
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -44,6 +45,21 @@ class RegisterUser extends Component {
 
   closeModal() {
     this.setState({modalIsOpen: false, message: ''});
+  }
+
+  componentDidMount() {
+    axios
+     .get("/isloggedIn")
+     .then(res => {
+       this.setState({
+         loggedInForRegister: res.data
+       })
+     })
+     .catch( (err) => {
+       this.setState({
+         loggedInForRegister: err.response.status
+       })
+     })
   }
 
   handleFormInput = e => {
@@ -97,7 +113,7 @@ class RegisterUser extends Component {
     return (
       <div className="Modal">
       <div>
-      <button className="button formButton" onClick={this.openModal}>Register</button>
+      {this.state.loggedInForRegister !== "loggedIn"? <button className="button formButton" onClick={this.openModal}>Register</button>: ""}
       <Modal
         isOpen={this.state.modalIsOpen}
         onRequestClose={this.closeModal}

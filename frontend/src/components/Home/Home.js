@@ -43,8 +43,8 @@ class Home extends React.Component {
               <h1>Eat. Share. Repeat. </h1>
               <div className="landButton">
               <LoginUser className="button" />
-              <RegisterUser className="button" /></div>
-
+              <RegisterUser className="button" />
+              </div>
             </div>
           </div>
           <div>

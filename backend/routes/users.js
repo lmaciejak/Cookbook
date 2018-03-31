@@ -67,5 +67,4 @@ router.patch('/seenCommentsChangeByRecipeId/:recipeID', loginRequired, db.seenCo
 router.patch('/seenFavoritesChangeByUserId/:userID', loginRequired, db.seenFavoritesChangeByUserId);
 router.patch('/seenFollowersChangeByUserId/:userID', loginRequired, db.seenFollowersChangeByUserId);
 
-
 module.exports = router;
