@@ -1,17 +1,32 @@
 import React from "react"
 import axios from 'axios'
-import LoginUser from '../Modals/LoginUser'
+import { Link } from 'react-router-dom'
 
 class UserEdit extends React.Component{
   constructor(props){
     super(props)
 
     this.state = {
+      user: '',
       usernameInput: '',
       firstnameInput: '',
       lastnameInput: '',
       emailInput: '',
+      imageInput: '',
       message: ''
+    }
+  }
+
+  componentDidMount() {
+    if(!this.props.user){
+      axios
+        .get('/users')
+        .then(res => {
+          this.setState({ user: res.data[0]})
+        })
+        .catch(error => {
+          console.log('error in edit page')
+        })
     }
   }
 
@@ -21,14 +36,16 @@ class UserEdit extends React.Component{
     })
   }
 
-  submitEdit = () =>{
-    const { usernameInput, firstnameInput, lastnameInput, emailInput, relogin } = this.state
 
-      axios.patch(`/users/edit/${this.props.user[0].user_id}`,{
-        username: usernameInput,
-        first_name: firstnameInput,
-        last_name: lastnameInput,
-        email: emailInput
+  submitEdit = () =>{
+    const { user, usernameInput, firstnameInput, lastnameInput, imageInput, emailInput, relogin } = this.state
+
+      axios.patch(`/users/edit/${user.user_id}`,{
+        username: usernameInput ? usernameInput : user.username,
+        first_name: firstnameInput ? firstnameInput: user.first_name,
+        last_name: lastnameInput ? lastnameInput : user.last_name,
+        imageInput: imageInput ? imageInput : user.user_img,
+        email: emailInput ? emailInput : user.email
       })
       .then(
         axios.get('/users/logout')
@@ -38,7 +55,8 @@ class UserEdit extends React.Component{
             firstnameInput: '',
             lastnameInput: '',
             emailInput: '',
-            message: 'Changes done'
+            imageInput: '',
+            message: 'Changes done. Login again from the Home page.'
           })
         })
         .catch(error =>{
@@ -49,57 +67,96 @@ class UserEdit extends React.Component{
 
 
   render(){
-    const {  usernameInput, relogin, firstnameInput, lastnameInput, emailInput, message } = this.state
-    if (this.props.user) {
+    const {  user, usernameInput, firstnameInput, lastnameInput, imageInput, emailInput, message } = this.state
+
+    if (user) {
         return(
-          <div>
-            <h2>Edit Profile Information for {this.props.user.username}</h2>
-            <div>
-              <label>
-                  New Username: {" "}
+          <div className="formContainer">
+            <div className="formStyle">
+            <h1 className="formHeader">Edit Profile Information for {user.username}</h1>
+
+
+          <div className="formSection">
+              <div className="formInnerWrap">
+                      <label className="formlabels">
+                          New Username: {" "}
+                          <input
+                            type='text'
+                            value={usernameInput}
+                            name='usernameInput'
+                            onChange={this.userInput}
+                            />
+                        </label>
+                </div>
+            </div>
+
+
+            <div className="formSection">
+              <div className="formInnerWrap">
+                <label className="formlabels">
+                    New Profile Image: {" "}
+                    <input
+                      type='text'
+                      value={imageInput}
+                      name='imageInput'
+                      onChange={this.userInput}
+                      />
+                  </label>
+              </div>
+            </div>
+
+
+            <div className="formSection">
+              <div className="formInnerWrap">
+                <label className="formlabels">
+                  New First Name: {" "}
                   <input
                     type='text'
-                    value={usernameInput}
-                    name='usernameInput'
+                    value={firstnameInput}
+                    name='firstnameInput'
                     onChange={this.userInput}
                     />
                 </label>
+              </div>
             </div>
-            <div>
-              <label>
-                New First Name: {" "}
-                <input
-                  type='text'
-                  value={firstnameInput}
-                  name='firstnameInput'
-                  onChange={this.userInput}
-                  />
-              </label>
+
+
+            <div className="formSection">
+              <div className="formInnerWrap">
+                <label className="formlabels">
+                  New Last Name: {" "}
+                  <input
+                    type='text'
+                    value={lastnameInput}
+                    name='lastnameInput'
+                    onChange={this.userInput}
+                    />
+                </label>
+              </div>
             </div>
-            <div>
-              <label>
-                New Last Name: {" "}
-                <input
-                  type='text'
-                  value={lastnameInput}
-                  name='lastnameInput'
-                  onChange={this.userInput}
-                  />
-              </label>
+
+
+            <div className="formSection">
+              <div className="formInnerWrap">
+                <div className="formlabels">
+                  <label className="formlabels">
+                    New Email: {" "}
+                    <input
+                      type='text'
+                      value={emailInput}
+                      name='emailInput'
+                      onChange={this.userInput}
+                      />
+                  </label>
+                </div>
+              </div>
             </div>
-            <div>
-              <label>
-                New Email: {" "}
-                <input
-                  type='text'
-                  value={emailInput}
-                  name='emailInput'
-                  onChange={this.userInput}
-                  />
-              </label>
+
+            
+              {message}
+            <button onClick={this.submitEdit} className="formButton">Submit Changes</button>
+            <Link to='/'>Return to Home Page</Link>
             </div>
-            {message}
-            <button onClick={this.submitEdit}>Submit Changes</button>
           </div>
         )
   }

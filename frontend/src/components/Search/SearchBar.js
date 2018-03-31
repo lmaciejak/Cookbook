@@ -221,6 +221,13 @@ class Searchbar extends Component {
             >
               Logout
             </a>
+            <a
+              id="contact"
+              className="menu-item"
+              href={`/cb/profile/${this.props.user.user_id}/edit`}
+              >
+              Edit Profile
+            </a>
           </Menu>
         </div>
 
