@@ -64,7 +64,6 @@ class CreateGroup extends React.Component{
           group_description: group_description
         })
         .then(res => {
-          console.log(res)
           this.setState({
             group_name: '',
             group_description: '',

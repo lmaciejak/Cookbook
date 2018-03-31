@@ -100,7 +100,6 @@ class UserProfile extends React.Component {
         axios
           .get(`/users/followers/${this.props.id}`)
           .then(res => {
-            console.log("followers", res.data);
             this.setState({
               userFollowers: res.data
             });
@@ -113,7 +112,6 @@ class UserProfile extends React.Component {
         axios
           .get(`/users/following/${this.props.id}`)
           .then(res => {
-            console.log("following", res.data);
             this.setState({
               userFollowing: res.data
             });
@@ -212,7 +210,6 @@ class UserProfile extends React.Component {
       axios
         .get(`/users/profile/${this.props.id}/favorites`)
         .then(res => {
-          console.log("res favorites", res);
           this.setState({
             allusersRecipes: res.data
           });
@@ -289,7 +286,7 @@ class UserProfile extends React.Component {
     if (this.props.user && this.state.user) {
       return (
         <div>
-        <Notifications id={this.props.id} user={this.props.user.username}/>
+        <Notifications id={this.props.user.user_id} user={this.props.user.username}/>
           <Searchbar user={this.props.user} />
           <div className="userProfileContainer">
             <div className="userProfileHeading">

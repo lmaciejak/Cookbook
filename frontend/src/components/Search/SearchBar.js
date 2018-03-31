@@ -56,7 +56,6 @@ class Searchbar extends Component {
     axios
       .get(`/users/logout`)
       .then(res => {
-        console.log("res", res);
         this.setState({
           message: res.data,
           redirectLanding: true
@@ -74,8 +73,6 @@ class Searchbar extends Component {
   };
 
   handleModalClick = e => {
-    console.log("close modal: this ", this);
-
     this.setState({
       modalIsOpen: false
     });
@@ -90,7 +87,6 @@ class Searchbar extends Component {
   }
 
   onChange = (event, { newValue, method }) => {
-    console.log(newValue);
     this.setState({
       value: newValue
     });
@@ -100,8 +96,6 @@ class Searchbar extends Component {
     fetch(`/users/searchbyrecipe/${value}`)
       .then(response => response.json())
       .then(data => {
-        console.log("data", data);
-
         const dataFormatted = data.map((elem, index) => {
           if (index === 0) {
             return { title: "recipe name", info: elem };
@@ -148,7 +142,6 @@ class Searchbar extends Component {
   }
 
   render() {
-    console.log("searchbar: ", this.props.user);
     const { value, suggestions, redirectLanding } = this.state;
     const inputProps = {
       placeholder: "Search by recipe, username, full name",

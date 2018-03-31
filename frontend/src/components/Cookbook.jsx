@@ -83,7 +83,6 @@ class Cookbook extends React.Component {
   }
 
   renderSingleRecipe = props =>{
-    console.log('rendering single recipe')
     const { username, recipeID } = props.match.params
     const { user } = this.state
     return(

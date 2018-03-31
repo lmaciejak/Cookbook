@@ -37,7 +37,6 @@ class EditRecipe extends React.Component{
       axios
         .get(`/users/getingredients/${this.props.match.params.recipeID}`)
         .then(res => {
-          console.log("ingredients: ", res.data)
           this.setState({
             ingredients: res.data
           });

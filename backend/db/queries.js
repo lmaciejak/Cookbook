@@ -321,9 +321,10 @@ function getIngredientsByRecipeId(req, res, next) {
 }
 
 function getAllRecentUsersRecipes(req, res, next) {
-  db.any(`SELECT *
+  db.any(`SELECT recipes.*, users.username
           FROM recipes
-          WHERE user_id=${req.params.userID}
+          INNER JOIN users ON(users.user_id=recipes.user_id)
+          WHERE recipes.user_id=${req.params.userID}
           ORDER BY recipe_timestamp DESC;`)
     .then(data => {
       res.json(data);
@@ -524,7 +525,6 @@ function addRecipe(req, res, next) {
 }
 
 function addRecipeToGroup(req, res, next) {
-  console.log("recipe to group", req.body)
   return db.none(
     "INSERT INTO grouprecipes (recipe_id, user_id, group_id)"
   + "VALUES (${recipe_id}, ${user_id}, ${group_id})",
@@ -535,7 +535,6 @@ function addRecipeToGroup(req, res, next) {
   }
   )
   .then(() => {
-    console.log('success')
     res.json('success');
   })
   .catch(error => {
@@ -883,7 +882,6 @@ function deleteFavorites(req, res, next) {
 }
 
 function seenCommentsChangeByRecipeId(req, res, next) {
-  console.log("seenCommentsChangeByRecipeId: ", req.params.recipeID);
   return db.none(
     `UPDATE comments
      SET seen=TRUE
