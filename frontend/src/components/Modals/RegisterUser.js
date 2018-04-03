@@ -47,7 +47,7 @@ class RegisterUser extends Component {
     this.setState({modalIsOpen: false, message: ''});
   }
 
-  componentDidMount() {
+  componentWillMount() {
     axios
      .get("/isloggedIn")
      .then(res => {

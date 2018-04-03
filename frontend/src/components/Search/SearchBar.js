@@ -249,7 +249,7 @@ class Searchbar extends Component {
                     className="searchLink"
                     onClick={this.handleModalClick}
                   >
-                    <p> {elem.identifier} </p>
+                    <p key={Math.random()}> {elem.identifier} </p>
                   </Link>
                 );
               })

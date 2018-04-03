@@ -42,7 +42,6 @@ class GroupMembers extends React.Component{
 
   render(){
     const { members, group_name } = this.state
-    console.log(members)
     if(members !== []){
       return(
         <div>
@@ -50,7 +49,7 @@ class GroupMembers extends React.Component{
           {members.map(member =>{
             let path = `/cb/profile/${member.user_id}`
             return(
-              <div>
+              <div key={Math.random()}>
                 <p><Link to={path}>{member.username}</Link></p>
               </div>
             )

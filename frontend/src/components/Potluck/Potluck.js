@@ -143,7 +143,7 @@ class Potluck extends Component {
     });
     axios
       .post(`/users/changePotluckRSVP/${this.props.potluckID["potluckID"]}`, {
-        invitee_rsvp: e.target.value, 
+        invitee_rsvp: e.target.value,
         user_id: e.target.id
       })
       .then(() =>{
@@ -227,8 +227,8 @@ class Potluck extends Component {
                   ? potluck_invitations.map(elem => (
                       <tr>
                         {" "}
-                        <td> {elem.username} </td>{" "}
-                        <td>
+                        <td key={Math.random()}> {elem.username} </td>{" "}
+                        <td key={Math.random()}>
                           {elem.invitee_rsvp
                             ? elem.invitee_rsvp
                             : "no response"}{" "}
@@ -273,8 +273,8 @@ class Potluck extends Component {
                 {potluck_items
                   ? potluck_items.map(elem => (
                       <tr>
-                        <td> {elem.item_name} </td>
-                        <td>
+                        <td key={Math.random()}> {elem.item_name} </td>
+                        <td key={Math.random()}>
                           {elem.user_id ? (
                             elem.username
                           ) : (

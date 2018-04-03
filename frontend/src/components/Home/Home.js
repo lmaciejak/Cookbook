@@ -156,7 +156,7 @@ class Home extends React.Component {
         </div>
 
         <div className="landingPageFeatured">
-          {favorites.map(recipe => <RecipeBox recipe={recipe} />)}
+          {favorites.map(recipe => <RecipeBox recipe={recipe} key={Math.random()} />)}
         </div>
       </div>
     );
