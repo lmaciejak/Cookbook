@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, Route, Switch } from "react-router-dom";
+import { Redirect } from 'react-router';
 import axios from "axios";
 import RecipeBox from "../SingleRecipe/RecipeBox";
 import Recipe from "../SingleRecipe/Recipe";
@@ -252,9 +253,10 @@ class UserProfile extends React.Component {
       });
   };
 
-  renderUserEdit = () => {
-    const { user } = this.state;
-    return <UserEdit user={user} />;
+  renderUserEdit = props => {
+    const { user } = this.state
+    const { id } = props.match.params;
+    return <UserEdit user={user[0]} id={id}/>;
   };
 
   renderAllUserRecipes = () => {
@@ -274,7 +276,9 @@ class UserProfile extends React.Component {
   };
 
   updateProfileImage = (e) => {
-    console.log("CLIKKKKKKKKKK")
+    return(
+      <Redirect to={`/cb/profile/${this.props.user.user_id}/edit`} />
+    )
   }
 
   render() {
@@ -316,7 +320,7 @@ class UserProfile extends React.Component {
               </div>
             </div>
             <div className="userProfileSelectContainer">
-              <p> See {this.state.user[0].username}s </p>
+              <p> See {this.state.user[0].username +"'s" }</p>
               <div class="select-style">
                 <select onChange={this.handleSelectValue}>
                   <option value="mostTop">Top Recipes</option>
@@ -336,7 +340,6 @@ class UserProfile extends React.Component {
                 path="/cb/profile/:id/favorites"
                 render={this.renderUserFavorites}
               />
-              <Route path="/cb/profile/:id/edit" render={this.renderUserEdit} />
             </Switch>
           </div>
         </div>

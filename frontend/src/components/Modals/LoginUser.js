@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import axios from "axios"
 import { Redirect } from "react-router-dom"
 
+
 const customStyles = {
   content : {
     top                   : '50%',
@@ -26,11 +27,26 @@ class LoginUser extends Component {
       password: '',
       isLoggedIn: false,
       message: '',
-      modalIsOpen: false
+      modalIsOpen: false,
+      loggedIn: false
     }
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
+ componentDidMount() {
+   axios
+    .get("/isloggedIn")
+    .then(res => {
+      this.setState({
+        loggedIn: res.data
+      })
+    })
+    .catch( (err) => {
+      this.setState({
+        loggedIn: err.response.status
+      })
+    })
+ }
 
   openModal() {
     this.setState({modalIsOpen: true});
@@ -57,7 +73,7 @@ class LoginUser extends Component {
       })
       .then(res => {
         this.setState({
-          message: 'success',
+          message: "success",
           isLoggedIn: true,
         });
       })
@@ -70,6 +86,19 @@ class LoginUser extends Component {
       });
   }
 
+  handleClickLogOut = () => {
+    axios
+      .get("/users/logout")
+      .then( (res) => {
+        this.setState({
+          loggedIn: false
+        })
+      })
+      .catch( (err) => {
+        console.log(err);
+      })
+  }
+
   render() {
     if(this.state.isLoggedIn === true) {
       return <Redirect to='/cb/feed' />
@@ -77,7 +106,7 @@ class LoginUser extends Component {
     return (
       <div className="Modal">
       <div>
-      <button className="button formButton" onClick={this.openModal}>Log in</button>
+      {this.state.loggedIn === "loggedIn"? <button onClick={this.handleClickLogOut} className="button formButton">Log Out</button> :<button className="button formButton" onClick={this.openModal}>Log in</button>}
       <Modal
         isOpen={this.state.modalIsOpen}
         onRequestClose={this.closeModal}
@@ -90,7 +119,7 @@ class LoginUser extends Component {
           <input className="input formInput" type="password" placeholder="Password" onChange={this.handleFormInput} name='password'></input>
           <button className="formButton">Log in</button>
         </form>
-        <p> {this.state.message} </p>
+        <p>{this.state.message}</p>
       </Modal>
       </div>
       </div>
