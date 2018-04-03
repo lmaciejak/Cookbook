@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router'
 import { Redirect } from 'react-router'
 import Feed from './Feed/Feed'
 import UserProfile from './Profile/UserProfile'
+import UserEdit from "./Profile/UserEdit";
 import Recipe from './SingleRecipe/Recipe'
 import LoginUser from './Modals/LoginUser'
 import RegisterUser from './Modals/RegisterUser'
@@ -63,6 +64,9 @@ class Cookbook extends React.Component {
   renderUserProfile = props =>{
     const { id } = props.match.params
     const { user, fetchingUser } = this.state
+
+    console.log("ID MOFO   !!   ", id)
+
     if (fetchingUser){
       return(
         <div>loading profile</div>
@@ -104,6 +108,20 @@ class Cookbook extends React.Component {
     }
   }
 
+  renderUserEdit = props => {
+    const { user, fetchingUser } = this.state
+    const { id } = props.match.params;
+    if(fetchingUser){
+      return(<div>loading edit page</div>)
+    }
+    else if(!user){
+      return(<Redirect to='/' />)
+    }
+    else {
+      return (<UserEdit user={user} id={id}/>);
+    }
+  };
+
   renderGroups = () =>{
     const { user } = this.state
     return(
@@ -139,7 +157,7 @@ class Cookbook extends React.Component {
         <Route path='/cb/groups/:groupID' component={Groups} />
         <Route exact path='/cb/profile/:id' render={this.renderUserProfile} />
         <Route path='/cb/profile/:id/favorites' render={this.renderUserProfile} />
-        <Route path='/cb/profile/:id/edit' component={UserProfile} />
+        <Route path='/cb/profile/:id/edit' component={UserEdit} />
         <Route path='/cb/addrecipe' render={this.renderAddRecipe} />
         <Route path='/cb/editRecipe/:recipeID' component={EditRecipe} />
         <Route exact path='/cb/:username/:recipeID' render={this.renderSingleRecipe} />

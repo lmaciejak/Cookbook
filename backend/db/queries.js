@@ -1024,24 +1024,23 @@ function changePotluckRSVP(req, res, next) {
 
 /*------------------------------PATCH Request-----------------------------------*/
 function editUser(req, res, next) {
-  return db
-    .none(
-      `UPDATE users
-     SET username=$1, email=$2, first_name=$3, last_name=$4
+
+  return db.none(
+    `UPDATE users
+     SET username=$1, email=$2, first_name=$3, last_name=$4, user_img=$5
      WHERE user_id=${req.params.userID};`,
-      [
-        req.body.username,
-        req.body.email,
-        req.body.first_name,
-        req.body.last_name
-      ]
-    )
-    .then(data => {
-      res.json("success");
-    })
-    .catch(error => {
-      res.json(error);
-    });
+    [
+      req.body.username,
+      req.body.email, req.body.first_name,
+      req.body.last_name, req.body.imageInput
+    ]
+  )
+  .then(data => {
+    res.json("success");
+  })
+  .catch(error => {
+    res.json(error);
+  });
 }
 
 function editRecipe(req, res, next) {
@@ -1214,21 +1213,17 @@ function seenFavoritesChangeByUserId(req, res, next) {
 }
 
 function seenFollowersChangeByUserId(req, res, next) {
-  return db
-    .none(
-      `UPDATE followings SET seen=TRUE
-     WHERE followings.seen
-     IN(SELECT seen
-     FROM followings
-     INNER JOIN users ON(users.user_id=followings.follower_id)
-     WHERE followee_id=${req.params.userID});`
-    )
-    .then(data => {
-      res.json("success");
-    })
-    .catch(error => {
-      res.json(error);
-    });
+  return db.none(
+    `UPDATE followings
+     SET seen=TRUE
+     WHERE followee_id=${req.params.userID};`
+  )
+  .then(data => {
+    res.json("success");
+  })
+  .catch(error => {
+    res.json(error);
+  });
 }
 
 module.exports = {
