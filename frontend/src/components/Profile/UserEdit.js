@@ -152,7 +152,7 @@ class UserEdit extends React.Component{
               </div>
             </div>
 
-            
+
               {message}
             <button onClick={this.submitEdit} className="formButton">Submit Changes</button>
             <Link to='/'>Return to Home Page</Link>

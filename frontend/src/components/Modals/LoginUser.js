@@ -47,7 +47,7 @@ class LoginUser extends Component {
       })
     })
  }
- 
+
   openModal() {
     this.setState({modalIsOpen: true});
   }
@@ -119,7 +119,7 @@ class LoginUser extends Component {
           <input className="input formInput" type="password" placeholder="Password" onChange={this.handleFormInput} name='password'></input>
           <button className="formButton">Log in</button>
         </form>
-        <p> {this.state.message} </p>
+        <p>{this.state.message}</p>
       </Modal>
       </div>
       </div>
