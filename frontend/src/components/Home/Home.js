@@ -49,7 +49,7 @@ class Slideshow extends React.Component {
           <div style={{ height: 500 }}>
             <img
               style={{ width: "100%", height: "auto" }}
-              src="https://images.pexels.com/photos/7765/food.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              src="https://images.pexels.com/photos/271458/pexels-photo-271458.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
               maxHeight="100%"
               className="slideshowImage"
             />
@@ -62,28 +62,37 @@ class Slideshow extends React.Component {
               className="slideshowImage"
             />
           </div>
-
           <div style={{ height: 500 }}>
           <img
             style={{ width: "100%", height: "auto" }}
-            src="https://images.pexels.com/photos/70862/pexels-photo-70862.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+            src="https://images.pexels.com/photos/313715/pexels-photo-313715.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
             maxHeight="100%"
             className="slideshowImage"
           />
         </div>
 
           <div style={{ height: 500 }}>
-            <img
-              style={{ width: "100%", height: "auto" }}
-              src="https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
-              maxHeight="100%"
-              className="slideshowImage"
-            />
-          </div>
+          <img
+            style={{ width: "100%", height: "auto" }}
+            src="https://images.pexels.com/photos/175754/pexels-photo-175754.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+            maxHeight="100%"
+            className="slideshowImage"
+          />
+        </div>
+
+        <div style={{ height: 500 }}>
+        <img
+          style={{ width: "100%", height: "auto" }}
+          src="https://images.pexels.com/photos/890479/pexels-photo-890479.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+          maxHeight="100%"
+          className="slideshowImage"
+        />
+      </div>
+        
           <div style={{ height: 500 }}>
             <img
               style={{ width: "100%", height: "auto" }}
-              src="https://images.pexels.com/photos/262947/pexels-photo-262947.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+              src="https://images.pexels.com/photos/11415/befa5c7cfca376be94eddaf5af8d72f6.jpg?auto=compress&cs=tinysrgb&dpr=2&h=350"
               maxHeight="100%"
               className="slideshowImage"
             />
@@ -135,7 +144,7 @@ class Home extends React.Component {
         <div className="landingPhoto">
           <Slideshow />
           <div className="header">
-            <h1>Eat. Share. Repeat. </h1>
+            <h1>Share. Eat. Repeat. </h1>
           </div>
         </div>
         <div className="LandingFavoritesContainer">
@@ -151,3 +160,5 @@ class Home extends React.Component {
 }
 
 export default Home;
+
+// "https://images.pexels.com/photos/159887/pexels-photo-159887.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
