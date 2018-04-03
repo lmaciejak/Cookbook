@@ -1,0 +1,82 @@
+h1 {
+  color: #f1c97d;
+}
+
+.right.carousel-control, .left.carousel-control {
+  display: none;
+}
+
+.searchbarLanding { 
+  padding-bottom: 10px; 
+}
+
+.carousel-indicators li { visibility: hidden; }
+
+.landingPhoto {
+padding-top: 40px; 
+}
+
+.carousel { 
+  -webkit-filter: grayscale(20%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(20%);
+}
+
+.slideshowImage { 
+  zoom: -100%; 
+}
+
+
+.landingPageFeatured {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.landingPageHeader {
+  width: 50%;
+  margin: 10px auto;
+}
+
+.header img {
+  width: 10%;
+  margin-left: 32%;
+  margin-right: auto;
+}
+
+.header {
+  position: absolute;
+  margin-left: 20%;
+  margin-right: auto;
+  z-index: 0;
+  margin-top: -20%; 
+  color: rgb(255, 251, 4);
+}
+
+.Modal {
+  z-index: 4;
+}
+
+.LandingFavoritesContainer{ 
+  margin-top: 20px; 
+}
+
+.header h1 {
+  font-size: 90px;
+  margin: 0;
+  text-shadow: 7px 7px 7px #000000;
+}
+
+.landButton {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  width: 70%;
+  margin-left: 42%;
+  margin-right: auto;
+}
+
+.button {
+  margin-left: 20px;
+}
