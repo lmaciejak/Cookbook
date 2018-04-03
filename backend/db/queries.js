@@ -591,6 +591,22 @@ function getFollowingNotInvitedPotluck(req, res, next) {
     });
 }
 
+function getAllPotlucksUserCreatedAndInvited(req, res, next) {
+  db
+  .task("get-everything", t => {
+    return t.batch([
+      t.any(`SELECT * FROM potluckinvitations JOIN potlucks ON (potluckinvitations.potluck_id = potlucks.potluck_id) WHERE potluckinvitations.user_id=${req.user.user_id}`),
+      t.any(`SELECT * FROM potlucks WHERE potlucks.user_id=${req.user.user_id}`)
+    ]);
+  })
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 /*-------------------------------POST Request----------------------------------*/
 function registerUser(req, res, next) {
   return authHelpers
@@ -1261,6 +1277,8 @@ module.exports = {
   getSeenForCommentsRecipeId,
   getSeenFollowersByUserId,
   getFollowingNotInvitedPotluck,
+  getAllPotlucksUserCreatedAndInvited,
+
   /*--------POST Request-------*/
   registerUser,
   addRecipeComment,

@@ -209,12 +209,12 @@ class Potluck extends Component {
       <div className="Potluckpage">
         <Searchbar user={this.props.user} />
         <div className="PotluckContainer">
-          <h2> Potluck Name: {potluck_info.potluck_name} </h2>
-          <h2> Potluck Date: {potluck_info.potluck_date} </h2>
-          <h2> Potluck Time: {potluck_info.potluck_time} </h2>
-          <h2> Potluck Location: {potluck_info.potluck_location} </h2>
-          <h2> Organizer: {potluck_info.username} </h2>
-          <div className="PotluckDishes">
+          <h2> {potluck_info.potluck_name} </h2>
+          <h2> <img className="potluckCalendarImage" src="https://png.icons8.com/metro/1600/calendar.png"/> {potluck_info.potluck_date} </h2>
+          <h2> <img className="potluckTimeImage" src="http://cdn.onlinewebfonts.com/svg/img_374773.png" /> {potluck_info.potluck_time} </h2>
+          <h2> <img className="potluckLocationImage" src="https://d30y9cdsu7xlg0.cloudfront.net/png/11205-200.png" /> {potluck_info.potluck_location} </h2>
+          <h2> Organized by {potluck_info.username} </h2>
+          <div className="potluckInvitees">
             <h2> Invitees </h2>
             <table>
               <tbody>
@@ -252,6 +252,7 @@ class Potluck extends Component {
                   : ""}
               </tbody>
             </table>
+            </div> 
             <p> Invite friends </p>
 
             <Select
@@ -263,6 +264,7 @@ class Potluck extends Component {
             />
 
             <button onClick={this.submitInvite}> Submit </button>
+            <div className="PotluckDishes">
             <h2> Things to bring </h2>
             <table>
               <tbody>

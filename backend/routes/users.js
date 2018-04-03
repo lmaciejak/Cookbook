@@ -37,6 +37,7 @@ router.get('/seenFavorites/:userID', loginRequired, db.getSeenForFavoritesByUser
 router.get('/seenCommentsByRecipeId/:recipeID', loginRequired, db.getSeenForCommentsRecipeId);
 router.get('/seenFollowers/:userID', loginRequired, db.getSeenFollowersByUserId);
 router.get('/getNewInviteesPotluck/:potluckID/:organizerID', loginRequired, db.getFollowingNotInvitedPotluck)
+router.get('/getAllPotlucksUserCreatedAndInvited', loginRequired, db.getAllPotlucksUserCreatedAndInvited)
 
 /*------------------------------POST Request------------------------------------*/
 router.post('/register', db.registerUser);
