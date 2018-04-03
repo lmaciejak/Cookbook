@@ -29,12 +29,14 @@ router.get('/getSingleGroup/:groupID', db.getSingleGroup);
 router.get('/userFollowsGroup/:userID/:groupID', db.userFollowsGroup);
 router.get('/allGroupFollows/:userID', db.getUserGroupFollows);
 router.get('/getAllGroupFollowers/:groupID', db.getAllGroupFollowers);
+router.get('/getsinglepotluck/:potluckID', db.getSinglePotluck)
 router.get('/isfavorite/:recipeID', loginRequired, db.isFavorite);
 router.get('/getsinglecomment/:commentID', loginRequired, db.getSingleComment);
 router.get('/seenComments/:userID', loginRequired, db.getSeenForCommentsByUserId);
 router.get('/seenFavorites/:userID', loginRequired, db.getSeenForFavoritesByUserId);
 router.get('/seenCommentsByRecipeId/:recipeID', loginRequired, db.getSeenForCommentsRecipeId);
 router.get('/seenFollowers/:userID', loginRequired, db.getSeenFollowersByUserId);
+router.get('/getNewInviteesPotluck/:potluckID/:organizerID', loginRequired, db.getFollowingNotInvitedPotluck)
 
 /*------------------------------POST Request------------------------------------*/
 router.post('/register', db.registerUser);
@@ -53,6 +55,13 @@ router.post('/deleteGroup', loginRequired, db.deleteGroup);
 router.post('/joinGroup', loginRequired, db.joinGroup);
 router.post('/leaveGroup', loginRequired, db.leaveGroup);
 router.post('/login', db.loginUser);
+router.post('/createpotluck', loginRequired, db.createPotluck); 
+router.post('/addUserToItem', loginRequired, db.addUserToItem);
+router.post('/removeUserFromItem', loginRequired, db.removeUserFromItem);
+router.post('/addPotluckItem', loginRequired, db.addPotluckItem);
+router.post('/inviteUserToPotluck', loginRequired, db.inviteUserToPotluck); 
+router.post('/addInviteeToPotluck/:potluckID', loginRequired, db.addInviteeToPotluck);
+router.post('/changePotluckRSVP/:potluckID', loginRequired, db.changePotluckRSVP);
 
 /*-----------------------------PATCH Request------------------------------------*/
 router.patch('/edit/:userID', loginRequired, db.editUser);
