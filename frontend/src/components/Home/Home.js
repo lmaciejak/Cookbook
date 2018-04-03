@@ -83,7 +83,7 @@ class Slideshow extends React.Component {
         <div style={{ height: 500 }}>
         <img
           style={{ width: "100%", height: "auto" }}
-          src="https://images.pexels.com/photos/890479/pexels-photo-890479.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+          src="https://images.pexels.com/photos/688803/pexels-photo-688803.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
           maxHeight="100%"
           className="slideshowImage"
         />
