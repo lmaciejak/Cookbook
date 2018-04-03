@@ -915,12 +915,9 @@ function seenFavoritesChangeByUserId(req, res, next) {
 
 function seenFollowersChangeByUserId(req, res, next) {
   return db.none(
-    `UPDATE followings SET seen=TRUE
-     WHERE followings.seen
-     IN(SELECT seen
-     FROM followings
-     INNER JOIN users ON(users.user_id=followings.follower_id)
-     WHERE followee_id=${req.params.userID});`
+    `UPDATE followings
+     SET seen=TRUE
+     WHERE followee_id=${req.params.userID};`
   )
   .then(data => {
     res.json("success");
