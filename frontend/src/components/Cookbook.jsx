@@ -11,6 +11,7 @@ import Groups from './Groups/Groups'
 import AddRecipe from './SingleRecipe/AddRecipe'
 import EditRecipe from './SingleRecipe/EditRecipe'
 import Potluck from './Potluck/Potluck';
+import PotluckList from './Potluck/PotluckList';
 
 class Cookbook extends React.Component {
   constructor() {
@@ -118,6 +119,14 @@ class Cookbook extends React.Component {
     )
   }
 
+  renderPotluckList = props =>{
+    const { user } = this.state
+    const { potluckID } = props.match.params
+    return(
+      <PotluckList user={user} potluckID={props.match.params} />
+    )
+  }
+
 
   render() {
     const { user } = this.state
@@ -126,6 +135,7 @@ class Cookbook extends React.Component {
       <Switch>
         <Route exact path='/cb/groups' render={this.renderGroups} />
         <Route path='/cb/potluck/:potluckID' render={this.renderPotluck} />
+        <Route path='/cb/potlucks' render={this.renderPotluckList} />
         <Route path='/cb/groups/:groupID' component={Groups} />
         <Route exact path='/cb/profile/:id' render={this.renderUserProfile} />
         <Route path='/cb/profile/:id/favorites' render={this.renderUserProfile} />
