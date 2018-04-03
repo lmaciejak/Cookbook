@@ -986,8 +986,8 @@ function addInviteeToPotluck(req, res, next) {
       const invitees = req.body.invitees;
       const queries = invitees.map(invitee => {
         return t.none(
-          "INSERT INTO potluckinvitations (potluck_id, user_id) " +
-            "VALUES (${potluckID}, ${userID})",
+          "INSERT INTO potluckinvitations (potluck_id, user_id, seen) " +
+            "VALUES (${potluckID}, ${userID}, false)",
           {
             potluckID: req.params.potluckID,
             userID: invitee.value

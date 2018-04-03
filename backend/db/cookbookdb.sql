@@ -170,9 +170,9 @@ INSERT INTO potlucks (user_id, potluck_name, potluck_description, potluck_date, 
   VALUES (1, 'Barbecue', 'Throwing a barbecue party in my backyard', '2018-04-10', '02:00:00', 'My house'), 
   (2, 'Annual Cookout', 'Get ready for the best cookout yet', '2018-04-20', '04:00:00', 'Central Park'); 
 
-INSERT INTO potluckinvitations (potluck_id, user_id, invitee_rsvp)
-  VALUES (1, 2, 'yes'), (1, 3, 'yes'), (1, 4, 'no'), (1, 5, 'yes'), (1, 6, 'maybe'),
-  (2, 3, 'no'), (2, 4, 'maybe'), (2, 5, 'yes'), (2, 6, 'yes'); 
+INSERT INTO potluckinvitations (potluck_id, user_id, invitee_rsvp, seen)
+  VALUES (1, 2, 'yes', false), (1, 3, 'yes', false), (1, 4, 'no', false), (1, 5, 'yes', false), (1, 6, 'maybe', false),
+  (2, 3, 'no', false), (2, 4, 'maybe', false), (2, 5, 'yes', false), (2, 6, 'yes', false); 
 
 INSERT INTO potluckitems (potluck_id, user_id, item_name, item_type)
   VALUES (1, 3, 'Brownies', 'dessert'), (1, 2, 'Cups', 'utensils'), (1, 5, 'Chicken parm', 'main'), 
