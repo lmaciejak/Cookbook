@@ -78,6 +78,36 @@ CREATE TABLE ingredients (
   name VARCHAR,
   notes VARCHAR);
 
+CREATE TABLE potlucks (
+  potluck_id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
+  potluck_name VARCHAR NOT NULL,
+  potluck_description VARCHAR, 
+  potluck_date DATE, 
+  potluck_time TIME, 
+  potluck_location VARCHAR);
+
+CREATE TABLE potluckinvitations (
+  invite_id SERIAL PRIMARY KEY,
+  potluck_id INTEGER REFERENCES potlucks,
+  user_id INTEGER REFERENCES users,
+  seen BOOLEAN,
+  invitee_rsvp VARCHAR);
+
+CREATE TABLE potluckitems (
+  item_id SERIAL PRIMARY KEY,
+  potluck_id INTEGER REFERENCES potlucks,
+  user_id INTEGER REFERENCES users, 
+  item_name VARCHAR, 
+  item_type VARCHAR, 
+  recipe_id INTEGER REFERENCES recipes);
+
+CREATE TABLE potluckmessages (
+  potluckmessage_id SERIAL PRIMARY KEY,
+  potluck_id INTEGER REFERENCES potlucks,
+  user_id INTEGER REFERENCES users,
+  comments_timestamp timestamp not null default CURRENT_TIMESTAMP);
+
 /* username: test password: testtest
    username: Mary password: marymary
    username: Larry password: larrylarry  */
@@ -134,4 +164,19 @@ INSERT INTO ingredients (recipe_id, food_id, amount, name, notes)
   (7, 2, '1pound', 'salt', 'medium'), (7, 2, '2pound', 'chicken', 'large');
 
 INSERT INTO groupowners (user_id, group_name, group_description)
-  VALUES (3, 'Bronx Cooks', 'we from the bronx bro')
+  VALUES (3, 'Bronx Cooks', 'we from the bronx bro');
+
+INSERT INTO potlucks (user_id, potluck_name, potluck_description, potluck_date, potluck_time, potluck_location)
+  VALUES (1, 'Barbecue', 'Throwing a barbecue party in my backyard', '2018-04-10', '02:00:00', 'My house'), 
+  (2, 'Annual Cookout', 'Get ready for the best cookout yet', '2018-04-20', '04:00:00', 'Central Park'); 
+
+INSERT INTO potluckinvitations (potluck_id, user_id, invitee_rsvp)
+  VALUES (1, 2, 'yes'), (1, 3, 'yes'), (1, 4, 'no'), (1, 5, 'yes'), (1, 6, 'maybe'),
+  (2, 3, 'no'), (2, 4, 'maybe'), (2, 5, 'yes'), (2, 6, 'yes'); 
+
+INSERT INTO potluckitems (potluck_id, user_id, item_name, item_type)
+  VALUES (1, 3, 'Brownies', 'dessert'), (1, 2, 'Cups', 'utensils'), (1, 5, 'Chicken parm', 'main'), 
+  (2, 5, 'Cake', 'dessert'), (2, 6, 'Soda', 'beverage'); 
+
+INSERT INTO potluckitems (potluck_id, item_name, item_type)
+  VALUES (1, 'Soda', 'beverage'); 
