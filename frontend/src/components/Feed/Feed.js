@@ -46,7 +46,7 @@ class Feed extends React.Component {
             {this.state.followeedata
               ? this.state.followeedata.map(elem => {
                   return (
-                    <div className="feedBox">
+                    <div className="feedBox" key={Math.random()}>
                       <div className="feedBoxDescription">
                         <h4 className="feedRecipeName"> {elem.recipe_name} </h4>
                         <div className="feedRecipeIcons">

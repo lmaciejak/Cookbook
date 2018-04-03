@@ -39,7 +39,7 @@ class UserFaves extends React.Component{
       return(
         <div>
             {favoriteRecipes.map(recipe =>(
-              <RecipeBox recipe={recipe} />
+              <RecipeBox recipe={recipe} key={Math.random()} />
             ))}
         </div>
       )

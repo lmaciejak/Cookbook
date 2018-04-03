@@ -79,7 +79,6 @@ class Groups extends React.Component{
 
 
   render(){
-    console.log('Black',this.state)
     return(
       <div>
         {this.props.user ?  <Searchbar user={this.props.user} /> : <div></div>}

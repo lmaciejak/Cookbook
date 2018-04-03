@@ -29,12 +29,12 @@ class LoginUser extends Component {
       message: '',
       modalIsOpen: false,
       loggedIn: false,
-      toggle: false
+      toggle: false,
     }
     this.openModal = this.openModal.bind(this);
     this.closeModalLogin = this.closeModalLogin.bind(this);
   }
- componentDidMount() {
+ componentWillMount() {
    axios
     .get("/isloggedIn")
     .then(res => {

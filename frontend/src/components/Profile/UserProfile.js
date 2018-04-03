@@ -264,7 +264,7 @@ class UserProfile extends React.Component {
     return (
       <div className="userProfileAllRecipes">
         {allusersRecipes
-          ? allusersRecipes.map(recipe => <RecipeBox recipe={recipe} />)
+          ? allusersRecipes.map(recipe => <RecipeBox recipe={recipe} key={Math.random()}/>)
           : ""}
       </div>
     );
@@ -321,7 +321,7 @@ class UserProfile extends React.Component {
             </div>
             <div className="userProfileSelectContainer">
               <p> See {this.state.user[0].username +"'s" }</p>
-              <div class="select-style">
+              <div className="select-style">
                 <select onChange={this.handleSelectValue}>
                   <option value="mostTop">Top Recipes</option>
                   <option value="mostRecent">Recent Recipes</option>

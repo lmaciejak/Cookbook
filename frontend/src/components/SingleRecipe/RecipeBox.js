@@ -33,7 +33,7 @@ class RecipeBox extends React.Component{
         <Link to={`/cb/${user_id}/${recipe_id}`}> <img src={img} alt="recipeImg" style={styles.img} /></Link>
         <div className="recipeInfo">
         <h4>Chef {username}</h4>
-        <div className="favorites" title="Favorites"> <i class="fas fa-file-alt"></i> <p className="fav">{favorites_count}</p> </div>
+        <div className="favorites" title="Favorites"> <i className="fas fa-file-alt"></i> <p className="fav">{favorites_count}</p> </div>
         </div>
       </div>
     )
