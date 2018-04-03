@@ -91,6 +91,7 @@ CREATE TABLE potluckinvitations (
   invite_id SERIAL PRIMARY KEY,
   potluck_id INTEGER REFERENCES potlucks,
   user_id INTEGER REFERENCES users,
+  seen BOOLEAN,
   invitee_rsvp VARCHAR);
 
 CREATE TABLE potluckitems (
