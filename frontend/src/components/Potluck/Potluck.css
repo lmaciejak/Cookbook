@@ -5,3 +5,15 @@
   display: flex; 
   flex-direction: column; 
 }
+
+.potluckTimeImage { 
+  width: 10%; 
+}
+
+.potluckLocationImage { 
+  width: 10%; 
+}
+
+.potluckCalendarImage { 
+  width: 10%; 
+}
