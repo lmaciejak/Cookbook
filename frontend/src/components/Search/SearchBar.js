@@ -228,6 +228,13 @@ class Searchbar extends Component {
               >
               Edit Profile
             </a>
+            <a
+            id="contact"
+            className="menu-item"
+            href={`/cb/potlucks`}
+            >
+            My potlucks
+          </a>
           </Menu>
         </div>
 
