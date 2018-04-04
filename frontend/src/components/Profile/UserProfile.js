@@ -286,7 +286,6 @@ class UserProfile extends React.Component {
     if (this.props.user && this.state.user) {
       return (
         <div>
-        <Notifications id={this.props.user.user_id} user={this.props.user.username}/>
           <Searchbar user={this.props.user} />
           <div className="userProfileContainer">
             <div className="userProfileHeading">
