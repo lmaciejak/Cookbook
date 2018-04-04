@@ -36,7 +36,8 @@ router.get('/seenComments/:userID', loginRequired, db.getSeenForCommentsByUserId
 router.get('/seenFavorites/:userID', loginRequired, db.getSeenForFavoritesByUserId);
 router.get('/seenCommentsByRecipeId/:recipeID', loginRequired, db.getSeenForCommentsRecipeId);
 router.get('/seenFollowers/:userID', loginRequired, db.getSeenFollowersByUserId);
-router.get('/getNewInviteesPotluck/:potluckID/:organizerID', loginRequired, db.getFollowingNotInvitedPotluck)
+router.get('/seenPotluckInvitation/:userID', loginRequired, db.getSeenPotluckInvitation);
+router.get('/getNewInviteesPotluck/:potluckID/:organizerID', loginRequired, db.getFollowingNotInvitedPotluck);
 router.get('/getAllPotlucksUserCreatedAndInvited', loginRequired, db.getAllPotlucksUserCreatedAndInvited)
 router.get('/getforkedrecipes/:recipeID', loginRequired, db.getForkedRecipes)
 
@@ -77,5 +78,6 @@ router.patch('/deleteFavorites', loginRequired, db.deleteFavorites);
 router.patch('/seenCommentsChangeByRecipeId/:recipeID', loginRequired, db.seenCommentsChangeByRecipeId);
 router.patch('/seenFavoritesChangeByUserId/:userID', loginRequired, db.seenFavoritesChangeByUserId);
 router.patch('/seenFollowersChangeByUserId/:userID', loginRequired, db.seenFollowersChangeByUserId);
+router.patch('/seenPotluckChangeByUserID/:userID/:potluckID', loginRequired, db.seenPotluckChangeByUserID);
 
 module.exports = router;

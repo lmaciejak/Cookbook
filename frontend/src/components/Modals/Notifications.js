@@ -27,7 +27,8 @@ class Notifications extends Component {
       modalIsOpen: false,
       seenComments: false,
       seenFavorites: false,
-      seenFollowers: false
+      seenFollowers: false,
+      seenPotluckInvitation: false
     }
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -86,6 +87,15 @@ class Notifications extends Component {
             })
           })
       })
+      .then( () => {
+        axios
+          .get(`/users/seenPotluckInvitation/${this.props.id}`)
+          .then( (res) => {
+            this.setState({
+              seenPotluckInvitation: res.data
+            })
+          })
+      })
       .catch( (err) => {
         console.log(err);
       })
@@ -99,9 +109,9 @@ class Notifications extends Component {
   }
 
   render() {
-    const { seenComments, seenFavorites, seenFollowers } = this.state
-    var notificationButton = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0? "New Notifications": "No Notifications";
-    var notificationClass = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0? "button formButton alert": "button formButton";
+    const { seenComments, seenFavorites, seenFollowers, seenPotluckInvitation } = this.state
+    var notificationButton = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0 || seenPotluckInvitation.length > 0? "New Notifications": "No Notifications";
+    var notificationClass = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0 || seenPotluckInvitation.length > 0? "button formButton alert": "button formButton";
     return (
       <div className="Modal">
         <div>
@@ -131,7 +141,12 @@ class Notifications extends Component {
                   </li>
                 ))
               :""}
-                {(seenComments.length === 0 && seenFavorites.length === 0 && seenFollowers.length === 0)? "There no any notifications": ""}
+                {seenPotluckInvitation.length > 0? seenPotluckInvitation.map( (info) => (
+                  <li className="ingredientList" key={Math.random()}>
+                    <Link to={`/cb/potluck/${info.potluck_id}`}>{info.username} invited you to {info.potluck_name}<br/>more info...</Link>
+                  </li>
+                )): ""}
+                {(seenComments.length === 0 && seenFavorites.length === 0 && seenFollowers.length === 0 && seenPotluckInvitation.length === 0)? "There no any notifications": ""}
             </ul>
           <button className="xButton" onClick={this.closeModal}>x</button>
           </Modal>
