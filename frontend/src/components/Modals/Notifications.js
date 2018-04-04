@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import axios from "axios";
 import { Link } from "react-router-dom";
+import notificationicon from "../../images/notification.png";
 
 const customStyles = {
   content : {
@@ -101,11 +102,11 @@ class Notifications extends Component {
   render() {
     const { seenComments, seenFavorites, seenFollowers } = this.state
     var notificationButton = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0? "New Notifications": "No Notifications";
-    var notificationClass = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0? "button formButton alert": "button formButton";
+    var notificationClass = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0? "alert notificationButton": "noAlert notificationButton";
     return (
       <div className="Modal">
-        <div>
-          <button className={notificationClass} onClick={this.openModal}>{notificationButton}</button>
+      <img src={notificationicon} className={notificationClass} onClick={this.openModal} /> 
+          
           <Modal
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModal}
@@ -136,7 +137,6 @@ class Notifications extends Component {
           <button className="xButton" onClick={this.closeModal}>x</button>
           </Modal>
         </div>
-      </div>
     );
   }
 }
