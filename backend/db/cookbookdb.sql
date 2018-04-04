@@ -34,6 +34,7 @@ CREATE TABLE recipes (
   isVegan BOOLEAN,
   fork BOOLEAN,
   forkedFrom VARCHAR,
+  forkedID INTEGER,
   public BOOLEAN,
   recipe_timestamp timestamp not null default CURRENT_TIMESTAMP);
 
@@ -82,9 +83,9 @@ CREATE TABLE potlucks (
   potluck_id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users,
   potluck_name VARCHAR NOT NULL,
-  potluck_description VARCHAR, 
-  potluck_date DATE, 
-  potluck_time TIME, 
+  potluck_description VARCHAR,
+  potluck_date DATE,
+  potluck_time TIME,
   potluck_location VARCHAR);
 
 CREATE TABLE potluckinvitations (
@@ -97,9 +98,9 @@ CREATE TABLE potluckinvitations (
 CREATE TABLE potluckitems (
   item_id SERIAL PRIMARY KEY,
   potluck_id INTEGER REFERENCES potlucks,
-  user_id INTEGER REFERENCES users, 
-  item_name VARCHAR, 
-  item_type VARCHAR, 
+  user_id INTEGER REFERENCES users,
+  item_name VARCHAR,
+  item_type VARCHAR,
   recipe_id INTEGER REFERENCES recipes);
 
 CREATE TABLE potluckmessages (
@@ -145,7 +146,8 @@ INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeteria
     (1, 'Chia Blueberry Parfait', 'Stir salad', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, false, false),
     (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description',false, false, true),
     (2, 'Chicken and Kebabs', 'Stir salad', 'https://images.pexels.com/photos/111131/meat-vegetables-gemuesepiess-mushrooms-111131.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, false),
-    (3, 'fried chicken', '1.test1, 2.test2, 3.test3, 4.test4', 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Fried-Chicken-Leg.jpg', 'some description', false, true, true);
+    (3, 'fried chicken', '1.test1, 2.test2, 3.test3, 4.test4', 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Fried-Chicken-Leg.jpg', 'some description', false, true, true),
+    (2, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, false);
 
 INSERT INTO favorites (recipe_id, user_id)
   VALUES (1, 2), (1, 3), (2, 2), (2,3), (3,2), (4, 2), (5, 1), (6,1);
@@ -167,16 +169,16 @@ INSERT INTO groupowners (user_id, group_name, group_description)
   VALUES (3, 'Bronx Cooks', 'we from the bronx bro');
 
 INSERT INTO potlucks (user_id, potluck_name, potluck_description, potluck_date, potluck_time, potluck_location)
-  VALUES (1, 'Barbecue', 'Throwing a barbecue party in my backyard', '2018-04-10', '02:00:00', 'My house'), 
-  (2, 'Annual Cookout', 'Get ready for the best cookout yet', '2018-04-20', '04:00:00', 'Central Park'); 
+  VALUES (1, 'Barbecue', 'Throwing a barbecue party in my backyard', '2018-04-10', '02:00:00', 'My house'),
+  (2, 'Annual Cookout', 'Get ready for the best cookout yet', '2018-04-20', '04:00:00', 'Central Park');
 
 INSERT INTO potluckinvitations (potluck_id, user_id, invitee_rsvp, seen)
   VALUES (1, 2, 'yes', false), (1, 3, 'yes', false), (1, 4, 'no', false), (1, 5, 'yes', false), (1, 6, 'maybe', false),
-  (2, 3, 'no', false), (2, 4, 'maybe', false), (2, 5, 'yes', false), (2, 6, 'yes', false); 
+  (2, 3, 'no', false), (2, 4, 'maybe', false), (2, 5, 'yes', false), (2, 6, 'yes', false);
 
 INSERT INTO potluckitems (potluck_id, user_id, item_name, item_type)
-  VALUES (1, 3, 'Brownies', 'dessert'), (1, 2, 'Cups', 'utensils'), (1, 5, 'Chicken parm', 'main'), 
-  (2, 5, 'Cake', 'dessert'), (2, 6, 'Soda', 'beverage'); 
+  VALUES (1, 3, 'Brownies', 'dessert'), (1, 2, 'Cups', 'utensils'), (1, 5, 'Chicken parm', 'main'),
+  (2, 5, 'Cake', 'dessert'), (2, 6, 'Soda', 'beverage');
 
 INSERT INTO potluckitems (potluck_id, item_name, item_type)
-  VALUES (1, 'Soda', 'beverage'); 
+  VALUES (1, 'Soda', 'beverage');

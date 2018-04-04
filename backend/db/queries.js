@@ -376,6 +376,22 @@ function getSingleRecipeById(req, res, next) {
     });
 }
 
+function getForkedRecipes(req, res, next) {
+  db
+    .any(
+      `SELECT recipes.user_id, recipes.recipe_id, users.username, forkedfrom
+      FROM recipes
+      JOIN users ON (recipes.user_id = users.user_id)
+      WHERE forkedID=${req.params.recipeID}`
+    )
+    .then(data => {
+      res.json(data)
+    })
+    .catch(error => {
+      res.json(error)
+    })
+}
+
 function getIngredientsByRecipeId(req, res, next) {
   db
     .any(
@@ -663,8 +679,8 @@ function removeRecipeComment(req, res, next) {
 function addRecipe(req, res, next) {
   return db
     .one(
-      "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, public)" +
-        " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${public})" +
+      "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, forkedID, public)" +
+        " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${forkedID}, ${public})" +
         " RETURNING recipe_id, user_id",
       {
         user_id: req.user.user_id,
@@ -676,6 +692,7 @@ function addRecipe(req, res, next) {
         isvegan: req.body.isvegan,
         fork: req.body.fork,
         forkedFrom: req.body.forkedFrom,
+        forkedID: req.body.forkedID,
         public: req.body.public
       }
     )
@@ -1025,8 +1042,8 @@ function changePotluckRSVP(req, res, next) {
     .none(
       "UPDATE potluckinvitations SET invitee_rsvp=${invitee_rsvp} WHERE user_id=${user_id} AND potluck_id=${potluckID}",
       {
-        invitee_rsvp: req.body.invitee_rsvp, 
-        user_id: req.body.user_id, 
+        invitee_rsvp: req.body.invitee_rsvp,
+        user_id: req.body.user_id,
         potluckID: req.params.potluckID
       }
     )
@@ -1278,6 +1295,7 @@ module.exports = {
   getSeenFollowersByUserId,
   getFollowingNotInvitedPotluck,
   getAllPotlucksUserCreatedAndInvited,
+  getForkedRecipes,
 
   /*--------POST Request-------*/
   registerUser,
@@ -1302,7 +1320,7 @@ module.exports = {
   addPotluckItem,
   inviteUserToPotluck,
   addInviteeToPotluck,
-  changePotluckRSVP, 
+  changePotluckRSVP,
   /*----------PATCH Request-------*/
   editUser,
   editRecipe,
