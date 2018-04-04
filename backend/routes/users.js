@@ -38,6 +38,7 @@ router.get('/seenCommentsByRecipeId/:recipeID', loginRequired, db.getSeenForComm
 router.get('/seenFollowers/:userID', loginRequired, db.getSeenFollowersByUserId);
 router.get('/getNewInviteesPotluck/:potluckID/:organizerID', loginRequired, db.getFollowingNotInvitedPotluck)
 router.get('/getAllPotlucksUserCreatedAndInvited', loginRequired, db.getAllPotlucksUserCreatedAndInvited)
+router.get('/getforkedrecipes/:recipeID', loginRequired, db.getForkedRecipes)
 
 /*------------------------------POST Request------------------------------------*/
 router.post('/register', db.registerUser);
@@ -56,11 +57,11 @@ router.post('/deleteGroup', loginRequired, db.deleteGroup);
 router.post('/joinGroup', loginRequired, db.joinGroup);
 router.post('/leaveGroup', loginRequired, db.leaveGroup);
 router.post('/login', db.loginUser);
-router.post('/createpotluck', loginRequired, db.createPotluck); 
+router.post('/createpotluck', loginRequired, db.createPotluck);
 router.post('/addUserToItem', loginRequired, db.addUserToItem);
 router.post('/removeUserFromItem', loginRequired, db.removeUserFromItem);
 router.post('/addPotluckItem', loginRequired, db.addPotluckItem);
-router.post('/inviteUserToPotluck', loginRequired, db.inviteUserToPotluck); 
+router.post('/inviteUserToPotluck', loginRequired, db.inviteUserToPotluck);
 router.post('/addInviteeToPotluck/:potluckID', loginRequired, db.addInviteeToPotluck);
 router.post('/changePotluckRSVP/:potluckID', loginRequired, db.changePotluckRSVP);
 
