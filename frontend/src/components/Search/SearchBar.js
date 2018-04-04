@@ -196,15 +196,19 @@ class Searchbar extends Component {
         </div>
         <div>
           <Menu right className="burgerMenu">
-            <a id="contact" className="menu-item" href="/cb/feed">
-              Feed
-            </a>
             <a
               id="contact"
               className="menu-item"
               href={`/cb/profile/${this.props.user.user_id}`}
             >
               Profile
+            </a>
+            <a
+              id="contact"
+              className="menu-item"
+              href={`/cb/profile/${this.props.user.user_id}/edit`}
+              >
+              Edit Profile
             </a>
             <a
               id="contact"
@@ -216,24 +220,20 @@ class Searchbar extends Component {
             <a
               id="contact"
               className="menu-item"
-              href="/"
-              onClick={this.handleClickLogout}
+              href={`/cb/potlucks`}
             >
-              Logout
+              My potlucks
+            </a>
+            <a id="contact" className="menu-item" href="/cb/feed">
+              Feed
             </a>
             <a
               id="contact"
               className="menu-item"
-              href={`/cb/profile/${this.props.user.user_id}/edit`}
-              >
-              Edit Profile
-            </a>
-            <a
-            id="contact"
-            className="menu-item"
-            href={`/cb/potlucks`}
-            >
-            My potlucks
+              href="/"
+              onClick={this.handleClickLogout}
+          >
+            Logout
           </a>
           </Menu>
         </div>
