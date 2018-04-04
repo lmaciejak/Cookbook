@@ -36,7 +36,8 @@ router.get('/seenComments/:userID', loginRequired, db.getSeenForCommentsByUserId
 router.get('/seenFavorites/:userID', loginRequired, db.getSeenForFavoritesByUserId);
 router.get('/seenCommentsByRecipeId/:recipeID', loginRequired, db.getSeenForCommentsRecipeId);
 router.get('/seenFollowers/:userID', loginRequired, db.getSeenFollowersByUserId);
-router.get('/getNewInviteesPotluck/:potluckID/:organizerID', loginRequired, db.getFollowingNotInvitedPotluck)
+router.get('/seenPotluckInvitation/:userID', loginRequired, db.getSeenPotluckInvitation);
+router.get('/getNewInviteesPotluck/:potluckID/:organizerID', loginRequired, db.getFollowingNotInvitedPotluck);
 router.get('/getAllPotlucksUserCreatedAndInvited', loginRequired, db.getAllPotlucksUserCreatedAndInvited)
 
 /*------------------------------POST Request------------------------------------*/
@@ -56,11 +57,11 @@ router.post('/deleteGroup', loginRequired, db.deleteGroup);
 router.post('/joinGroup', loginRequired, db.joinGroup);
 router.post('/leaveGroup', loginRequired, db.leaveGroup);
 router.post('/login', db.loginUser);
-router.post('/createpotluck', loginRequired, db.createPotluck); 
+router.post('/createpotluck', loginRequired, db.createPotluck);
 router.post('/addUserToItem', loginRequired, db.addUserToItem);
 router.post('/removeUserFromItem', loginRequired, db.removeUserFromItem);
 router.post('/addPotluckItem', loginRequired, db.addPotluckItem);
-router.post('/inviteUserToPotluck', loginRequired, db.inviteUserToPotluck); 
+router.post('/inviteUserToPotluck', loginRequired, db.inviteUserToPotluck);
 router.post('/addInviteeToPotluck/:potluckID', loginRequired, db.addInviteeToPotluck);
 router.post('/changePotluckRSVP/:potluckID', loginRequired, db.changePotluckRSVP);
 
@@ -76,5 +77,6 @@ router.patch('/deleteFavorites', loginRequired, db.deleteFavorites);
 router.patch('/seenCommentsChangeByRecipeId/:recipeID', loginRequired, db.seenCommentsChangeByRecipeId);
 router.patch('/seenFavoritesChangeByUserId/:userID', loginRequired, db.seenFavoritesChangeByUserId);
 router.patch('/seenFollowersChangeByUserId/:userID', loginRequired, db.seenFollowersChangeByUserId);
+router.patch('/seenPotluckChangeByUserID/:userID/:potluckID', loginRequired, db.seenPotluckChangeByUserID);
 
 module.exports = router;
