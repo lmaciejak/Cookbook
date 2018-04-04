@@ -110,9 +110,8 @@ class Cookbook extends React.Component {
 
   renderPotluckList = props =>{
     const { user } = this.state
-    const { potluckID } = props.match.params
     return(
-      <PotluckList user={user} potluckID={props.match.params} />
+      <PotluckList user={user}  />
     )
   }
 

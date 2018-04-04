@@ -1,0 +1,32 @@
+.potlucksHeaderImage { 
+    position: fixed; 
+    /* top: -50%; */
+     top: -0.1%; 
+    /* left: -50%; */
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    /* background-image: url(./images/compphoto2.jpeg); */
+    background-image: url('https://images.pexels.com/photos/5876/food-salad-healthy-vegetables.jpg?auto=compress&cs=tinysrgb&dpr=2&h=350');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover; 
+}
+
+.potluckContainer { 
+  background-color: rgba(255, 255, 255, 0.932); 
+  display: flex; 
+  flex-direction: column; 
+  z-index: 2;
+  /* margin-left: 40%; 
+  margin-right: auto;  */
+  padding: 20px; 
+  padding-bottom: 30px; 
+  /* width: 100%;  */
+  margin-top: 160px; 
+}
+
+.potluckpage { 
+  display: flex; 
+  justify-content: center; 
+}
