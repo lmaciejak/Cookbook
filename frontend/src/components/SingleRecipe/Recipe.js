@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router"
 import axios from "axios";
 import Searchbar from "../Search/SearchBar";
+import ForkedBy from '../Modals/ForkedBy'
 import hearticon from "../../images/orange-hearts.png";
 import veganicon from "../../images/vegan3.png";
 import vegetarianicon from "../../images/vegetarian3.png";
@@ -41,6 +42,12 @@ class SingleRecipe extends React.Component {
 
   componentWillReceiveProps(props) {
     this.loadsRecipe();
+  }
+
+  componentDidUpdate(prevProps,prevState){
+    if(prevProps !== this.props){
+      this.loadsRecipe()
+    }
   }
 
   loadsRecipe = () => {
@@ -449,20 +456,13 @@ class SingleRecipe extends React.Component {
             { this.props.id !== user_id? (fork?
             <div>
               <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}>Fork</button>
-              <label>
-                Forked By{" "}
-                <select>
-                  {forkList.map(fork => {
-                    let path = `/cb/${fork.user_id}/${fork.recipe_id}`
-                    return(
-                      <option>{fork.username} : 'recipe'</option>
-                    )
-                  })}
-                </select>
-              </label>
             </div>
             : ""): ""}
+
             { forkedFrom? <p>forked from {forkedFrom}</p>: ""}
+
+            { forkList.length !== 0 ? <ForkedBy forks={forkList} /> : ''}
+
             <div className="singleRecipeLeft">
               <h3 className="singleRecipeIngredientsTitle"> Ingredients </h3>
               <ul type="none">
@@ -473,13 +473,14 @@ class SingleRecipe extends React.Component {
                     ))
                   :"There are no any ingredients"}
               </ul>
+
               <h3 className="singleRecipeIngredientsTitle">Directions</h3>
               <p> {recipe}</p>
-
               <h3 className="singleRecipeIngredientsTitle">
                 {" "}
                 Leave a comment{" "}
               </h3>
+
               <form onSubmit={this.handleSubmit}>
                 <textarea
                   placeholder="leave your comment"
@@ -488,6 +489,7 @@ class SingleRecipe extends React.Component {
                 />
                 <button className="singleRecipeSubmit">Submit</button>
               </form>
+
               <h3 className="singleRecipeIngredientsTitle"> Comments </h3>
               <ul className="commentList" type="none">
                 {comments
