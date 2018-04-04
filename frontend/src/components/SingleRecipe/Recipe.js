@@ -30,7 +30,6 @@ class SingleRecipe extends React.Component {
       fork: "",
       forkedFrom: "",
       forked: false,
-      forkList: [],
       seenCommentsArray: [],
     };
   }
@@ -44,7 +43,6 @@ class SingleRecipe extends React.Component {
   }
 
   loadsRecipe = () => {
-    const { username, forkedFrom, forkList } = this.state
     axios
       .get(`/users/singlerecipe/${this.props.user.recipeID}`)
       .then(res => {
@@ -114,24 +112,13 @@ class SingleRecipe extends React.Component {
               })
             })
       })
-      .then(() => {
-        axios
-          .get(`/users/getforkedrecipes/${this.props.user.recipeID}`)
-          .then(res => {
-            this.setState({
-              forkList: res.data
-            })
-          })
-      })
       .catch(error => {
         console.log("error in Recipe componentDidMount: ", error);
       });
     }
 
-
   handleClickLike = e => {
     e.preventDefault();
-    const { username, forkedFrom, forkList } = this.state
     axios
       .post("/users/favorite", {
         recipe_id: this.props.user.recipeID,
@@ -345,8 +332,7 @@ class SingleRecipe extends React.Component {
         isvegeterian: isvegeterian,
         isvegan: isvegan,
         fork: fork,
-        forkedFrom: username,
-        forkedID: this.props.user.recipeID
+        forkedFrom: username
       })
       .then(res => {
         this.setState({
@@ -387,14 +373,12 @@ class SingleRecipe extends React.Component {
       comment,
       fork,
       forked,
-      forkedFrom,
-      forkList
+      forkedFrom
     } = this.state;
     if (forked) {
       return(<Redirect to={`/cb/profile/${this.props.id}`} />)
     }
     if (this.props.user) {
-      console.log('list of forks', forkList)
       return (
         <div>
           <Searchbar user={this.props.userinfo}/>
@@ -446,22 +430,7 @@ class SingleRecipe extends React.Component {
             { this.props.id === user_id?
               <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
             }
-            { this.props.id !== user_id? (fork?
-            <div>
-              <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}>Fork</button>
-              <label>
-                Forked By{" "}
-                <select>
-                  {forkList.map(fork => {
-                    let path = `/cb/${fork.user_id}/${fork.recipe_id}`
-                    return(
-                      <option>{fork.username} : 'recipe'</option>
-                    )
-                  })}
-                </select>
-              </label>
-            </div>
-            : ""): ""}
+            { this.props.id !== user_id? (fork? <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}>Fork</button> : ""): ""}
             { forkedFrom? <p>forked from {forkedFrom}</p>: ""}
             <div className="singleRecipeLeft">
               <h3 className="singleRecipeIngredientsTitle"> Ingredients </h3>
