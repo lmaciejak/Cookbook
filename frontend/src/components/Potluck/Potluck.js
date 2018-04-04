@@ -11,7 +11,6 @@ import Searchbar from "../Search/SearchBar";
 class Potluck extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       message: "",
       potluck_info: [],
@@ -20,7 +19,9 @@ class Potluck extends Component {
       suggestedItem: "",
       following: [],
       selectedValues: "",
-      selectedRsvpValue: ""
+      selectedRsvpValue: "",
+      allInvitees: "",
+      seenPotluck: false
     };
   }
 
@@ -31,26 +32,35 @@ class Potluck extends Component {
         this.setState({
           potluck_info: res.data[0][0],
           potluck_invitations: res.data[1],
-          potluck_items: res.data[2]
+          potluck_items: res.data[2],
+          allInvitees: res.data[1]
         });
       })
       .then(() => {
         axios
-          .get(
-            `/users/getNewInviteesPotluck/${
-              this.props.potluckID["potluckID"]
-            }/${this.state.potluck_info.organizer_id}`
-          )
+          .get(`/users/getNewInviteesPotluck/${this.props.potluckID["potluckID"]}/${this.state.potluck_info.organizer_id}`)
           .then(res => {
-            console.log("res", res);
             this.setState({
               following: res.data
             });
           });
       })
+      .then( () => {
+        this.state.allInvitees.filter( invitee => {
+          if (this.props.user.user_id === invitee.user_id) {
+            axios
+              .patch(`/users/seenPotluckChangeByUserID/${this.props.user.user_id}/${invitee.potluck_id}`)
+              .then( () => {
+                this.setState({
+                  seenPotluck: true
+                })
+              })
+           }
+        })
+      })
       .catch(err => {
         this.setState({
-          message: `${err.response.data}`
+          message: `${err.response}`
         });
       });
   }
@@ -136,25 +146,24 @@ class Potluck extends Component {
   };
 
   handleRsvpSelect = e => {
-    console.log('e.target%%%', e.target)
     const { selectedRsvpValue } = this.state;
     this.setState({
       selectedRsvpValue: e.target.value
     });
     axios
       .post(`/users/changePotluckRSVP/${this.props.potluckID["potluckID"]}`, {
-        invitee_rsvp: e.target.value, 
+        invitee_rsvp: e.target.value,
         user_id: e.target.id
       })
-      .then(() =>{
-      axios
-        .get(`/users/getsinglepotluck/${this.props.potluckID["potluckID"]}`)
-        .then(res => {
-          console.log('res!!!!!!!!!!', res)
-          this.setState({
-            potluck_invitations: res.data[1],
-          });
-        })})
+      .then(() => {
+        axios
+          .get(`/users/getsinglepotluck/${this.props.potluckID["potluckID"]}`)
+          .then(res => {
+            this.setState({
+              potluck_invitations: res.data[1],
+            });
+          })
+       })
       .catch(err => {
         this.setState({
           message: `${err.response.data}`
@@ -163,8 +172,6 @@ class Potluck extends Component {
   };
 
   submitInvite = e => {
-    console.log("HELLOOOOOOOO");
-    console.log("selected", this.state.selectedValues);
     axios
       .post(`/users/addInviteeToPotluck/${this.props.potluckID["potluckID"]}`, {
         invitees: this.state.selectedValues
@@ -177,7 +184,6 @@ class Potluck extends Component {
             }/${this.state.potluck_info.organizer_id}`
           )
           .then(res => {
-            console.log("res", res);
             this.setState({
               following: res.data,
               selectedValues: ""
@@ -199,7 +205,6 @@ class Potluck extends Component {
   };
 
   render(props) {
-    console.log("selectedValues", this.state.selectedValues);
     const { potluck_info, potluck_items, potluck_invitations } = this.state;
     const stateOptions = this.state.following.map(elem => ({
       value: elem.user_id,
@@ -227,8 +232,8 @@ class Potluck extends Component {
                   ? potluck_invitations.map(elem => (
                       <tr>
                         {" "}
-                        <td> {elem.username} </td>{" "}
-                        <td>
+                        <td key={Math.random()}> {elem.username} </td>{" "}
+                        <td key={Math.random()}>
                           {elem.invitee_rsvp
                             ? elem.invitee_rsvp
                             : "no response"}{" "}
@@ -252,7 +257,7 @@ class Potluck extends Component {
                   : ""}
               </tbody>
             </table>
-            </div> 
+            </div>
             <p> Invite friends </p>
 
             <Select
@@ -275,8 +280,8 @@ class Potluck extends Component {
                 {potluck_items
                   ? potluck_items.map(elem => (
                       <tr>
-                        <td> {elem.item_name} </td>
-                        <td>
+                        <td key={Math.random()}> {elem.item_name} </td>
+                        <td key={Math.random()}>
                           {elem.user_id ? (
                             elem.username
                           ) : (

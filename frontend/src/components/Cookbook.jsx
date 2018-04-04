@@ -19,11 +19,11 @@ class Cookbook extends React.Component {
     super();
     this.state = {
       user: '',
-      fetchingUser: true
+      fetchingUser: true,
     }
   }
 
-  loggedInUser = () =>{
+  loggedInUser = () => {
     axios.get('/users')
     .then(response =>{
       if(response.data){
@@ -39,94 +39,65 @@ class Cookbook extends React.Component {
   }
 
   componentDidMount(){
-    this.loggedInUser()
+    this.loggedInUser();
   }
 
   renderAddRecipe = props => {
     const { user, fetchingUser } = this.state
-    if(fetchingUser){
-      return(
-        <div>loading</div>
-      )
-    }
-    else if(!user){
-      return(
-        <Redirect to='/' />
-      )
-    }
-    else {
-      return(
-        <AddRecipe user={user} />
-      )
+    if (fetchingUser) {
+      return <div>loading</div>
+    } else if(!user) {
+      return <Redirect to='/' />
+    } else {
+      return <AddRecipe user={user} />
     }
   }
 
-  renderUserProfile = props =>{
+  renderUserProfile = props => {
     const { id } = props.match.params
     const { user, fetchingUser } = this.state
-
-    console.log("ID MOFO   !!   ", id)
-
-    if (fetchingUser){
-      return(
-        <div>loading profile</div>
-      )
-    }
-    else if(!user){
-        return(
-          <Redirect to='/' />
-        )
-    }
-    else {
-      return(
-        <UserProfile user={user} id={id}/>
-      )
+    if (fetchingUser) {
+      return <div>loading profile</div>
+    } else if (!user) {
+        return <Redirect to='/' />
+    } else {
+      return <UserProfile user={user} id={id}/>
     }
   }
 
-  renderSingleRecipe = props =>{
+  renderSingleRecipe = props => {
     const { username, recipeID } = props.match.params
     const { user } = this.state
-    return(
-      <Recipe id={user.user_id} user={props.match.params}  userinfo={user} />
-    )
+    return <Recipe id={user.user_id} user={props.match.params}  userinfo={user} />
   }
 
   renderUserFeed = props =>{
     const { id } = props.match.params
     const { user, fetchingUser } = this.state
-    if(fetchingUser){
+    if (fetchingUser) {
       return(<div>loading feed my guy</div>)
-    }
-    else if(!user){
-      return(<Redirect to='/' />)
-    }
-    else {
-      return(
-        <Feed user={user} />
-      )
+    } else if (!user) {
+      return <Redirect to='/' />
+    } else {
+      return <Feed user={user} />
     }
   }
 
   renderUserEdit = props => {
     const { user, fetchingUser } = this.state
     const { id } = props.match.params;
-    if(fetchingUser){
-      return(<div>loading edit page</div>)
-    }
-    else if(!user){
-      return(<Redirect to='/' />)
-    }
-    else {
-      return (<UserEdit user={user} id={id}/>);
+    if (fetchingUser) {
+      return <div>loading edit page</div>
+    } else if (!user) {
+      return <Redirect to='/' />
+    } else {
+      return <UserEdit user={user} id={id}/>
     }
   };
 
   renderGroups = () =>{
     const { user } = this.state
-    return(
-      <Groups user={user} />
-    )
+    return <Groups user={user} />
   }
 
   renderPotluck = props =>{

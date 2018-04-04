@@ -28,12 +28,13 @@ class LoginUser extends Component {
       isLoggedIn: false,
       message: '',
       modalIsOpen: false,
-      loggedIn: false
+      loggedIn: false,
+      toggle: false,
     }
     this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.closeModalLogin = this.closeModalLogin.bind(this);
   }
- componentDidMount() {
+ componentWillMount() {
    axios
     .get("/isloggedIn")
     .then(res => {
@@ -52,7 +53,7 @@ class LoginUser extends Component {
     this.setState({modalIsOpen: true});
   }
 
-  closeModal() {
+  closeModalLogin() {
     this.setState({modalIsOpen: false, message: ''});
   }
 
@@ -109,10 +110,10 @@ class LoginUser extends Component {
       {this.state.loggedIn === "loggedIn"? <button onClick={this.handleClickLogOut} className="button formButton">Log Out</button> :<button className="button formButton" onClick={this.openModal}>Log in</button>}
       <Modal
         isOpen={this.state.modalIsOpen}
-        onRequestClose={this.closeModal}
+        onRequestClose={this.closeModalLogin}
         style={customStyles}
       >
-      <button className="xButton" onClick={this.closeModal}>x</button>
+      <button className="xButton" onClick={this.closeModalLogin}>x</button>
         <h2 ref={subtitle => this.subtitle = subtitle}>Log In</h2>
         <form onSubmit={this.handleLoginFormSubmit}>
           <input className="input formInput" type="text" placeholder="Username" onChange={this.handleFormInput} name='username'></input>

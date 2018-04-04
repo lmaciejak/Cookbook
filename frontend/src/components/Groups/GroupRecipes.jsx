@@ -50,7 +50,7 @@ class GroupRecipes extends React.Component{
         <h1>Recipes for {group.group_name}</h1>
         <div>
           {recipes.map(recipe => (
-            <RecipeBox recipe={recipe} />
+            <RecipeBox recipe={recipe} key={Math.random()} />
           ))}
         </div>
       </div>

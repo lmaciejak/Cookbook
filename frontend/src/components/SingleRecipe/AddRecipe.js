@@ -221,8 +221,8 @@ class AddRecipe extends React.Component {
                 <div className="formSection"><span>3</span>Ingredients</div>
                 <div className="formInnerWrap">
                     {ingredients.map((ingredient, idx) =>(
-                        <div className="ingredients">
-                        <label className="formLabels"> <b>{`Ingredient ${idx + 1}`}</b>
+                        <div className="ingredients" key={Math.random()}>
+                        <label className="formLabels"> <b key={Math.random()}>{`Ingredient ${idx + 1}`}</b>
                         <input
                             list="ingredients"
                             value ={ingredient.name}
@@ -231,7 +231,7 @@ class AddRecipe extends React.Component {
                          />
                          <datalist id="ingredients">
                             {ingredientsList.map(ingredient =>
-                            <option value={ingredient}> {ingredient}</option>)}
+                            <option key={Math.random()} value={ingredient}> {ingredient}</option>)}
                          </datalist>
                             {/* {ingredientsList.map(ingredient =>
                             <option value={ingredient}> {ingredient}</option>)} */}
@@ -312,8 +312,9 @@ class AddRecipe extends React.Component {
                 <div className="formSection"><span>6</span>Share Options
                   <label className="formLabels">
                     {groupDisplay.map(group => (
-                      <label>
+                      <label key={Math.random()}>
                         {group.group_name}
+                        key={Math.random()}
                         <input
                           name={group.group_name}
                           value={group.group_id}

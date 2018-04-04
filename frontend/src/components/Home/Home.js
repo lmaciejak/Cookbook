@@ -88,7 +88,7 @@ class Slideshow extends React.Component {
           className="slideshowImage"
         />
       </div>
-        
+
           <div style={{ height: 500 }}>
             <img
               style={{ width: "100%", height: "auto" }}
@@ -137,8 +137,12 @@ class Home extends React.Component {
             />
           </Link>
           <div className="landButton">
-            <LoginUser className="button" />
-            <RegisterUser className="button" />
+            <button className="button" onClick={() => { this.child1.closeModal()}}>
+              <LoginUser ref={instance => { this.child = instance; }} />
+            </button>
+            <button className="button" onClick={() => { this.child.closeModalLogin()}}>
+              <RegisterUser ref={instance => { this.child1 = instance; }} />
+            </button>
           </div>
         </div>
         <div className="landingPhoto">
@@ -152,7 +156,7 @@ class Home extends React.Component {
         </div>
 
         <div className="landingPageFeatured">
-          {favorites.map(recipe => <RecipeBox recipe={recipe} />)}
+          {favorites.map(recipe => <RecipeBox recipe={recipe} key={Math.random()} />)}
         </div>
       </div>
     );

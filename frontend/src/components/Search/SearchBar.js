@@ -202,15 +202,19 @@ class Searchbar extends Component {
         </div>
         <div>
           <Menu right className="burgerMenu">
-            <a id="contact" className="menu-item" href="/cb/feed">
-              Feed
-            </a>
             <a
               id="contact"
               className="menu-item"
               href={`/cb/profile/${this.props.user.user_id}`}
             >
               Profile
+            </a>
+            <a
+              id="contact"
+              className="menu-item"
+              href={`/cb/profile/${this.props.user.user_id}/edit`}
+              >
+              Edit Profile
             </a>
             <a
               id="contact"
@@ -226,20 +230,16 @@ class Searchbar extends Component {
           >
             Add Recipe
           </a>
-            <a
+      <a
               id="contact"
               className="menu-item"
-              href={`/cb/profile/${this.props.user.user_id}/edit`}
-              >
-              Edit Profile
-            </a>
-            <a
-            id="contact"
-            className="menu-item"
-            href={`/cb/potlucks`}
+              href={`/cb/potlucks`}
             >
-            My potlucks
-          </a>
+              My potlucks
+            </a>
+            <a id="contact" className="menu-item" href="/cb/feed">
+              Feed
+            </a>
           <a
           id="contact"
           className="menu-item"
@@ -276,7 +276,7 @@ class Searchbar extends Component {
                     className="searchLink"
                     onClick={this.handleModalClick}
                   >
-                    <p> {elem.identifier} </p>
+                    <p key={Math.random()}> {elem.identifier} </p>
                   </Link>
                 );
               })
