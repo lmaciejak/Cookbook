@@ -1,6 +1,14 @@
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import List from '../List/List'
+
+// const styles = {
+//   membersContainer: {
+//     width: "100%",
+//     height: "100%"
+//   }
+// }
 
 class GroupMembers extends React.Component{
   constructor(props){
@@ -46,6 +54,7 @@ class GroupMembers extends React.Component{
       return(
         <div>
           <h1>All Members for {group_name}</h1>
+<<<<<<< Updated upstream
           {members.map(member =>{
             let path = `/cb/profile/${member.user_id}`
             return(
@@ -54,13 +63,16 @@ class GroupMembers extends React.Component{
               </div>
             )
           })}
+=======
+          <List users={members} />
+>>>>>>> Stashed changes
         </div>
       )
     }
     else {
       return(
         <div>
-          <h3>No Mmembers Yet</h3>
+          <h3>No Members Yet</h3>
         </div>
       )
     }

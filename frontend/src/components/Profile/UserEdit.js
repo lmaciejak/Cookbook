@@ -40,29 +40,24 @@ class UserEdit extends React.Component{
   submitEdit = () =>{
     const { user, usernameInput, firstnameInput, lastnameInput, imageInput, emailInput, relogin } = this.state
 
-      axios.patch(`/users/edit/${user.user_id}`,{
-        username: usernameInput ? usernameInput : user.username,
-        first_name: firstnameInput ? firstnameInput: user.first_name,
-        last_name: lastnameInput ? lastnameInput : user.last_name,
-        imageInput: imageInput ? imageInput : user.user_img,
-        email: emailInput ? emailInput : user.email
+      axios
+        .patch(`/users/edit/${user.user_id}`,{
+          username: usernameInput ? usernameInput : user.username,
+          first_name: firstnameInput ? firstnameInput: user.first_name,
+          last_name: lastnameInput ? lastnameInput : user.last_name,
+          imageInput: imageInput ? imageInput : user.user_img,
+          email: emailInput ? emailInput : user.email
       })
-      .then(
-        axios.get('/users/logout')
-        .then(() =>{
+        .then(() => {
           this.setState({
             usernameInput: '',
             firstnameInput: '',
             lastnameInput: '',
             emailInput: '',
             imageInput: '',
-            message: 'Changes done. Login again from the Home page.'
+            message: 'Changes done!'
           })
         })
-        .catch(error =>{
-          console.log('this failed you')
-        })
-      )
     }
 
 
@@ -70,6 +65,7 @@ class UserEdit extends React.Component{
     const {  user, usernameInput, firstnameInput, lastnameInput, imageInput, emailInput, message } = this.state
 
     if (user) {
+      let path = `/cb/profile/${user.user_id}`
         return(
           <div className="formContainer">
             <div className="formStyle">
@@ -155,7 +151,7 @@ class UserEdit extends React.Component{
 
               {message}
             <button onClick={this.submitEdit} className="formButton">Submit Changes</button>
-            <Link to='/'>Return to Home Page</Link>
+            <Link to={path}>Back to Profile</Link>
             </div>
           </div>
         )

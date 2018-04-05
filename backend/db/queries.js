@@ -429,9 +429,7 @@ function getMostTopRecipes(req, res, next) {
 }
 
 function getAllGroupFollowers(req, res, next) {
-  db
-    .any(
-      `SELECT users.user_id, username, first_name, last_name, group_name, groupowners.group_id
+  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, groupowners.group_id, user_img
           FROM users
           JOIN groupfollows ON (USERs.user_id=groupfollows.user_id)
           JOIN groupowners ON (groupowners.group_id=groupfollows.group_id)
@@ -1009,8 +1007,8 @@ function changePotluckRSVP(req, res, next) {
     .none(
       "UPDATE potluckinvitations SET invitee_rsvp=${invitee_rsvp} WHERE user_id=${user_id} AND potluck_id=${potluckID}",
       {
-        invitee_rsvp: req.body.invitee_rsvp, 
-        user_id: req.body.user_id, 
+        invitee_rsvp: req.body.invitee_rsvp,
+        user_id: req.body.user_id,
         potluckID: req.params.potluckID
       }
     )
@@ -1284,7 +1282,7 @@ module.exports = {
   addPotluckItem,
   inviteUserToPotluck,
   addInviteeToPotluck,
-  changePotluckRSVP, 
+  changePotluckRSVP,
   /*----------PATCH Request-------*/
   editUser,
   editRecipe,
