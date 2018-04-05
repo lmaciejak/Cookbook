@@ -91,6 +91,7 @@ class UserProfile extends React.Component {
     axios
       .get(`/users/getallrecentusersrecipes/${this.props.id}`)
       .then(res => {
+        console.log("RESSSSSSSSS=====>>>>>: ", res);
         this.setState({
           allusersRecipes: res.data,
           allUserRecipesUnchanged: res.data
@@ -261,6 +262,8 @@ class UserProfile extends React.Component {
 
   renderAllUserRecipes = () => {
     const { allusersRecipes } = this.state;
+    console.log("I'm inside recipeBox");
+    console.log(allusersRecipes);
     return (
       <div className="userProfileAllRecipes">
         {allusersRecipes
@@ -286,7 +289,6 @@ class UserProfile extends React.Component {
     if (this.props.user && this.state.user) {
       return (
         <div>
-        <Notifications id={this.props.user.user_id} user={this.props.user.username}/>
           <Searchbar user={this.props.user} />
           <div className="userProfileContainer">
             <div className="userProfileHeading">
