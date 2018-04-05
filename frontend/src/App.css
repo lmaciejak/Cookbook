@@ -238,3 +238,9 @@ i {
     /* background-color: #e50000; */
   }
 }
+
+.recipeBoxFav {
+  width: 50%;
+  height: 80%;
+  padding-top: 6%;
+}
