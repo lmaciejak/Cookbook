@@ -1,7 +1,41 @@
 .PotluckContainer { 
-  padding-top: 40px; 
+  padding-top: 80px; 
   background-color: white; 
-  width: 30%; 
   display: flex; 
   flex-direction: column; 
+  /* align-items: center;  */
+  /* flex-wrap: wrap;  */
+  margin-left: 40em; 
+  margin-right: 15em; 
+}
+
+.PotluckInfo { 
+  /* width: 30%;  */
+}
+
+.PotluckPage { 
+  background-color: tan; 
+}
+
+.potluckTimeImage { 
+  width: 10%; 
+}
+
+.potluckLocationImage { 
+  width: 10%; 
+}
+
+.potluckCalendarImage { 
+  width: 10%; 
+}
+
+.ReactModal__Overlay {
+  z-index: 1000;
+}
+
+@media only screen and (max-width: 600px) {
+  .PotluckContainer {
+      margin-left: 1em;
+      margin-right: 1em; 
+  }
 }

@@ -1,13 +1,13 @@
 .searchbarLogo {
-  margin-left: 16%;
-  width: 2.5%;
+  margin-left: 220px;
+  width: 35px;
   position: fixed;
   margin-top: 0.3%;
 }
 
 .searchbarLogoName {
   margin-left: 1%;
-  width: 14%;
+  width: 200px;
   position: fixed;
   margin-top: 0.3%;
 }
@@ -20,12 +20,28 @@
   position: fixed;
 }
 
+.hoverIncrease:hover { 
+  transform: scale(1.2, 1.2)
+}
+
+.notificationButton {
+  margin-left: -10%; 
+  width: 70px; 
+  margin-top: -22%; 
+  margin-bottom: 0; 
+}
+
+.noAlert { 
+  width: 35px; 
+  margin-top: 2%; 
+}
+
 .searchbar {
   position: fixed;
   width: 100%;
   /* background-color: #ff5f00; */
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   border-bottom-width: 3px;
   border-bottom-style: solid;
   border-bottom-color: rgb(235, 232, 232);
@@ -33,6 +49,7 @@
   display: flex;
   justify-content: space-between;
   z-index: 40;
+  margin-bottom: -40px; 
 }
 
 .searchInput {
@@ -49,8 +66,8 @@
 
 .react-autosuggest__input {
   margin-top: 6px;
-  width: 280px;
-  height: 10px;
+  width: 320px;
+  height: 30px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
@@ -116,7 +133,7 @@
 }
 
 .writingIcon {
-  width: 2.5%;
+  width: 40px;
   position: fixed;
 }
 
@@ -126,7 +143,7 @@
 }
 
 .heartIcon {
-  width: 2.5%;
+  width: 40px;
   position: fixed;
 }
 
@@ -136,11 +153,21 @@
 }
 
 .groupIcon {
-  width: 2.5%;
+  width: 40px;
   position: fixed;
 }
 
 .groupIcon:hover {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.potluckIcon {
+  width: 40px;
+  position: fixed;
+}
+
+.potluckIcon:hover {
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
@@ -151,9 +178,10 @@
 
 .tooltip1 {
   position: relative;
-  width: 90%;
+  width: 80%;
   /* margin-top: 2%; */
   display: block;
+  margin-left: -15%; 
 }
 
 .tooltip1 .tooltiptext1 {
@@ -168,6 +196,7 @@
   /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
+  margin-left: -30%; 
 }
 
 .tooltip2:hover .tooltiptext2 {
@@ -193,6 +222,7 @@
   /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
+  margin-left: -30%;
 }
 
 .tooltip3:hover .tooltiptext3 {
@@ -218,6 +248,59 @@
   /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
+  margin-left: -30%;
+}
+
+.tooltip4:hover .tooltiptext4 {
+  visibility: visible;
+}
+
+.tooltip4 {
+  position: relative;
+  width: 90%;
+  /* margin-top: 2%; */
+  display: block;
+}
+
+.tooltip4 .tooltiptext4 {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgb(255, 231, 215);
+  color: black;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 5;
+  margin-left: -30%;
+}
+
+.tooltip5:hover .tooltiptext5 {
+  visibility: visible;
+}
+
+.tooltip5 {
+  position: relative;
+  width: 90%;
+  /* margin-top: 2%; */
+  display: block;
+}
+
+.tooltip5 .tooltiptext5 {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgb(255, 231, 215);
+  color: black;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 5;
+  margin-left: -30%;
 }
 
 .menuicons {
@@ -260,6 +343,7 @@
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
   color: white;
+  margin-top: -2.9%; 
 }
 
 .bm-item-list {
@@ -275,3 +359,47 @@
   text-decoration: none;
   color: #bdc3c7;
 }
+
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 15;
+  margin-left: -100%;  
+  margin-top: -0.7%; 
+}
+
+@media only screen and (max-width: 934px) {
+  .menuButton {
+      display: none; 
+  }
+  .notificationButton {
+    margin-left: -50px; 
+  }
+
+
+}
+
+@media only screen and (max-width: 768px) {
+  .searchbarLogoName { 
+    display: none; 
+  }
+  .searchbarLogo {
+    margin-left: 4%;
+  }
+  .notificationButton {
+    margin-left: -60px; 
+  }
+
+}
+
+@media only screen and (max-width: 600px) {
+  .menuButton {
+      display: none; 
+  }
+
+.react-autosuggest__input {
+  margin-left: -10%; 
+  width: 220px;
+}
+
+}
+

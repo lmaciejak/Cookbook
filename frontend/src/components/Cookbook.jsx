@@ -66,7 +66,7 @@ class Cookbook extends React.Component {
   }
 
   renderSingleRecipe = props => {
-    const { username, recipeID } = props.match.params
+    const { userID, recipeID } = props.match.params
     const { user } = this.state
     return <Recipe id={user.user_id} user={props.match.params}  userinfo={user} />
   }
@@ -110,9 +110,8 @@ class Cookbook extends React.Component {
 
   renderPotluckList = props =>{
     const { user } = this.state
-    const { potluckID } = props.match.params
     return(
-      <PotluckList user={user} potluckID={props.match.params} />
+      <PotluckList user={user}  />
     )
   }
 
@@ -131,8 +130,8 @@ class Cookbook extends React.Component {
         <Route path='/cb/profile/:id/edit' component={UserEdit} />
         <Route path='/cb/addrecipe' render={this.renderAddRecipe} />
         <Route path='/cb/editRecipe/:recipeID' component={EditRecipe} />
-        <Route exact path='/cb/:username/:recipeID' render={this.renderSingleRecipe} />
-        <Route path='/cb/:username/:recipeID/edit' component={Recipe} />
+        <Route exact path='/cb/:userID/:recipeID' render={this.renderSingleRecipe} />
+        <Route path='/cb/:userID/:recipeID/edit' component={Recipe} />
         <Route exact path='/cb/feed' render={this.renderUserFeed} />
       </Switch>
     </div> )

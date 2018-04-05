@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router"
 import axios from "axios";
 import Searchbar from "../Search/SearchBar";
+import ForkedBy from '../Modals/ForkedBy'
 import hearticon from "../../images/orange-hearts.png";
 import veganicon from "../../images/vegan3.png";
 import vegetarianicon from "../../images/vegetarian3.png";
@@ -30,6 +31,7 @@ class SingleRecipe extends React.Component {
       fork: "",
       forkedFrom: "",
       forked: false,
+      forkList: [],
       seenCommentsArray: [],
     };
   }
@@ -42,10 +44,19 @@ class SingleRecipe extends React.Component {
     this.loadsRecipe();
   }
 
+  componentDidUpdate(prevProps,prevState){
+    if(prevProps !== this.props){
+      console.log('hi')
+      this.loadsRecipe()
+    }
+  }
+
   loadsRecipe = () => {
+    const { username, forkedFrom, forkList } = this.state
     axios
       .get(`/users/singlerecipe/${this.props.user.recipeID}`)
       .then(res => {
+        console.log('the info ', res.data[0].username)
         this.setState({
           favorites_count: res.data[0].favorites_count,
           username: res.data[0].username,
@@ -112,13 +123,24 @@ class SingleRecipe extends React.Component {
               })
             })
       })
+      .then(() => {
+        axios
+          .get(`/users/getforkedrecipes/${this.props.user.recipeID}`)
+          .then(res => {
+            this.setState({
+              forkList: res.data
+            })
+          })
+      })
       .catch(error => {
         console.log("error in Recipe componentDidMount: ", error);
       });
     }
 
+
   handleClickLike = e => {
     e.preventDefault();
+    const { username, forkedFrom, forkList } = this.state
     axios
       .post("/users/favorite", {
         recipe_id: this.props.user.recipeID,
@@ -332,7 +354,8 @@ class SingleRecipe extends React.Component {
         isvegeterian: isvegeterian,
         isvegan: isvegan,
         fork: fork,
-        forkedFrom: username
+        forkedFrom: username,
+        forkedID: this.props.user.recipeID
       })
       .then(res => {
         this.setState({
@@ -373,12 +396,14 @@ class SingleRecipe extends React.Component {
       comment,
       fork,
       forked,
-      forkedFrom
+      forkedFrom,
+      forkList
     } = this.state;
     if (forked) {
       return(<Redirect to={`/cb/profile/${this.props.id}`} />)
     }
     if (this.props.user) {
+      console.log('list of forks', forkList)
       return (
         <div>
           <Searchbar user={this.props.userinfo}/>
@@ -423,15 +448,26 @@ class SingleRecipe extends React.Component {
             <div className="singleRecipeRight">
               <img src={img} alt="recipe_image" className="singleRecipeImage" />
             </div>
-            <br/>
-            { this.props.id === user_id?
-              <Link to={`/cb/editRecipe/${this.props.user.recipeID}`}><button id="edit_recipe" className="singleRecipeSubmit">Edit Recipe</button></Link>: ""
-            }{" "}
-            { this.props.id === user_id?
-              <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
-            }
-            { this.props.id !== user_id? (fork? <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}>Fork</button> : ""): ""}
-            { forkedFrom? <p>forked from {forkedFrom}</p>: ""}
+            <div className="singleRecipeButtons">
+                <div class="mainButtons">
+                <br/>
+                { this.props.id === user_id?
+                  <Link to={`/cb/editRecipe/${this.props.user.recipeID}`}><button id="edit_recipe" className="singleRecipeSubmit">Edit Recipe</button></Link>: ""
+                }{" "}
+                { this.props.id === user_id?
+                  <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
+                }
+                { this.props.id !== user_id? (fork?             
+                  <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}>Fork</button>
+                : ""): ""}
+                </div> 
+                <div>
+                { forkedFrom? <p>forked from {forkedFrom}</p>: ""} <br/>
+                { forkList.length !== 0 ? <ForkedBy forks={forkList} /> : ''}
+                </div>    
+  
+            </div>
+
             <div className="singleRecipeLeft">
               <h3 className="singleRecipeIngredientsTitle"> Ingredients </h3>
               <ul type="none">
@@ -442,13 +478,14 @@ class SingleRecipe extends React.Component {
                     ))
                   :"There are no any ingredients"}
               </ul>
+
               <h3 className="singleRecipeIngredientsTitle">Directions</h3>
               <p> {recipe}</p>
-
               <h3 className="singleRecipeIngredientsTitle">
                 {" "}
                 Leave a comment{" "}
               </h3>
+
               <form onSubmit={this.handleSubmit}>
                 <textarea
                   placeholder="leave your comment"
@@ -457,6 +494,7 @@ class SingleRecipe extends React.Component {
                 />
                 <button className="singleRecipeSubmit">Submit</button>
               </form>
+
               <h3 className="singleRecipeIngredientsTitle"> Comments </h3>
               <ul className="commentList" type="none">
                 {comments

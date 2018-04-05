@@ -376,6 +376,22 @@ function getSingleRecipeById(req, res, next) {
     });
 }
 
+function getForkedRecipes(req, res, next) {
+  db
+    .any(
+      `SELECT recipes.user_id, recipes.recipe_id, users.username, forkedfrom
+      FROM recipes
+      JOIN users ON (recipes.user_id = users.user_id)
+      WHERE forkedID=${req.params.recipeID}`
+    )
+    .then(data => {
+      res.json(data)
+    })
+    .catch(error => {
+      res.json(error)
+    })
+}
+
 function getIngredientsByRecipeId(req, res, next) {
   db
     .any(
@@ -394,11 +410,17 @@ function getIngredientsByRecipeId(req, res, next) {
 function getAllRecentUsersRecipes(req, res, next) {
   db
     .any(
-      `SELECT recipes.*, users.username
-          FROM recipes
-          INNER JOIN users ON(users.user_id=recipes.user_id)
-          WHERE recipes.user_id=${req.params.userID}
-          ORDER BY recipe_timestamp DESC;`
+      `SELECT recipe_name, recipes.recipe_id, description, recipe, img, recipe_timestamp,isVegeterian, isVegan,
+       COUNT(favorites.recipe_id)
+       AS favorites_count, users.username, users.user_id
+       FROM recipes
+       FULL OUTER JOIN favorites
+       ON(recipes.recipe_id = favorites.recipe_id)
+       INNER JOIN users
+       ON(recipes.user_id = users.user_id)
+       WHERE recipes.user_id=${req.params.userID}
+       GROUP BY recipes.recipe_id, users.user_id
+       ORDER BY recipe_timestamp DESC;`
     )
     .then(data => {
       res.json(data);
@@ -568,24 +590,60 @@ function getSeenFollowersByUserId(req, res, next) {
     });
 }
 
+function getSeenPotluckInvitation(req, res, next) {
+  db
+    .any(
+      `SELECT seen, potlucks.*,
+      (SELECT username FROM users WHERE user_id=potlucks.user_id) AS username
+      FROM potluckinvitations
+      INNER JOIN users ON(users.user_id=potluckinvitations.user_id)
+      INNER JOIN potlucks ON(potlucks.potluck_id=potluckinvitations.potluck_id)
+      WHERE seen=FALSE
+      AND potluckinvitations.user_id=${req.params.userID};`
+    )
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 function getFollowingNotInvitedPotluck(req, res, next) {
   db
     .any(
       `SELECT users.user_id, username, email, first_name, last_name
-    FROM users
-    INNER JOIN followings ON(users.user_id=followings.followee_id)
-    LEFT JOIN potluckinvitations ON (followings.followee_id = potluckinvitations.user_id)
-    WHERE follower_id=${
-      req.user.user_id
-    } AND NOT users.user_id IN (SELECT potluckinvitations.user_id FROM potluckinvitations WHERE potluck_id=${
-        req.params.potluckID
-      }) AND NOT users.user_id=${req.params.organizerID}`
+       FROM users
+       INNER JOIN followings ON(users.user_id=followings.followee_id)
+       LEFT JOIN potluckinvitations ON (followings.followee_id = potluckinvitations.user_id)
+       WHERE follower_id=${req.user.user_id}
+       AND NOT users.user_id
+       IN(SELECT potluckinvitations.user_id
+          FROM potluckinvitations
+          WHERE potluck_id=${req.params.potluckID})
+       AND NOT users.user_id=${req.params.organizerID}`
     )
     .then(data => {
       res.json(data);
     })
     .catch(error => {
       res.json(error);
+    });
+}
+
+function getAllPotlucksUserCreatedAndInvited(req, res, next) {
+  db
+  .task("get-everything", t => {
+    return t.batch([
+      t.any(`SELECT * FROM potluckinvitations JOIN potlucks ON (potluckinvitations.potluck_id = potlucks.potluck_id) WHERE potluckinvitations.user_id=${req.user.user_id}`),
+      t.any(`SELECT * FROM potlucks WHERE potlucks.user_id=${req.user.user_id}`)
+    ]);
+  })
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.log(err);
     });
 }
 
@@ -645,8 +703,8 @@ function removeRecipeComment(req, res, next) {
 function addRecipe(req, res, next) {
   return db
     .one(
-      "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, public)" +
-        " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${public})" +
+      "INSERT INTO recipes (user_id, recipe_name, recipe, description, img, isvegeterian, isvegan, fork, forkedFrom, forkedID, public)" +
+        " VALUES (${user_id}, ${recipe_name}, ${recipe}, ${description}, ${img}, ${isvegeterian}, ${isvegan}, ${fork}, ${forkedFrom}, ${forkedID}, ${public})" +
         " RETURNING recipe_id, user_id",
       {
         user_id: req.user.user_id,
@@ -658,6 +716,7 @@ function addRecipe(req, res, next) {
         isvegan: req.body.isvegan,
         fork: req.body.fork,
         forkedFrom: req.body.forkedFrom,
+        forkedID: req.body.forkedID,
         public: req.body.public
       }
     )
@@ -1195,12 +1254,12 @@ function seenFavoritesChangeByUserId(req, res, next) {
   return db
     .none(
       `UPDATE favorites
-     SET seen=TRUE
-     WHERE favorites.recipe_id
-     IN(SELECT favorites.recipe_id
-     FROM favorites
-     INNER JOIN recipes ON(recipes.recipe_id=favorites.recipe_id)
-     WHERE recipes.user_id=${req.params.userID});`
+       SET seen=TRUE
+       WHERE favorites.recipe_id
+       IN(SELECT favorites.recipe_id
+       FROM favorites
+       INNER JOIN recipes ON(recipes.recipe_id=favorites.recipe_id)
+       WHERE recipes.user_id=${req.params.userID});`
     )
     .then(data => {
       res.json("success");
@@ -1215,6 +1274,21 @@ function seenFollowersChangeByUserId(req, res, next) {
     `UPDATE followings
      SET seen=TRUE
      WHERE followee_id=${req.params.userID};`
+  )
+  .then(data => {
+    res.json("success");
+  })
+  .catch(error => {
+    res.json(error);
+  });
+}
+
+function seenPotluckChangeByUserID(req, res, next) {
+  return db.none(
+    `UPDATE potluckinvitations
+     SET seen=TRUE
+     WHERE user_id=${req.params.userID}
+     AND potluck_id=${req.params.potluckID};`
   )
   .then(data => {
     res.json("success");
@@ -1258,7 +1332,11 @@ module.exports = {
   getSeenForFavoritesByUserId,
   getSeenForCommentsRecipeId,
   getSeenFollowersByUserId,
+  getSeenPotluckInvitation,
   getFollowingNotInvitedPotluck,
+  getAllPotlucksUserCreatedAndInvited,
+  getForkedRecipes,
+
   /*--------POST Request-------*/
   registerUser,
   addRecipeComment,
@@ -1294,5 +1372,6 @@ module.exports = {
   deleteFavorites,
   seenCommentsChangeByRecipeId,
   seenFavoritesChangeByUserId,
-  seenFollowersChangeByUserId
+  seenFollowersChangeByUserId,
+  seenPotluckChangeByUserID,
 };

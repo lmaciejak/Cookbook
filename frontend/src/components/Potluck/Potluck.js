@@ -7,11 +7,11 @@ import "react-select/dist/react-select.css";
 
 import "./Potluck.css";
 import Searchbar from "../Search/SearchBar";
+import PotluckModal from "./PotluckModal";
 
 class Potluck extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       message: "",
       potluck_info: [],
@@ -20,7 +20,9 @@ class Potluck extends Component {
       suggestedItem: "",
       following: [],
       selectedValues: "",
-      selectedRsvpValue: ""
+      selectedRsvpValue: "",
+      allInvitees: "",
+      seenPotluck: false
     };
   }
 
@@ -31,26 +33,35 @@ class Potluck extends Component {
         this.setState({
           potluck_info: res.data[0][0],
           potluck_invitations: res.data[1],
-          potluck_items: res.data[2]
+          potluck_items: res.data[2],
+          allInvitees: res.data[1]
         });
       })
       .then(() => {
         axios
-          .get(
-            `/users/getNewInviteesPotluck/${
-              this.props.potluckID["potluckID"]
-            }/${this.state.potluck_info.organizer_id}`
-          )
+          .get(`/users/getNewInviteesPotluck/${this.props.potluckID["potluckID"]}/${this.state.potluck_info.organizer_id}`)
           .then(res => {
-            console.log("res", res);
             this.setState({
               following: res.data
             });
           });
       })
+      .then( () => {
+        this.state.allInvitees.filter( invitee => {
+          if (this.props.user.user_id === invitee.user_id) {
+            axios
+              .patch(`/users/seenPotluckChangeByUserID/${this.props.user.user_id}/${invitee.potluck_id}`)
+              .then( () => {
+                this.setState({
+                  seenPotluck: true
+                })
+              })
+           }
+        })
+      })
       .catch(err => {
         this.setState({
-          message: `${err.response.data}`
+          message: `${err.response}`
         });
       });
   }
@@ -136,7 +147,6 @@ class Potluck extends Component {
   };
 
   handleRsvpSelect = e => {
-    console.log('e.target%%%', e.target)
     const { selectedRsvpValue } = this.state;
     this.setState({
       selectedRsvpValue: e.target.value
@@ -146,15 +156,15 @@ class Potluck extends Component {
         invitee_rsvp: e.target.value,
         user_id: e.target.id
       })
-      .then(() =>{
-      axios
-        .get(`/users/getsinglepotluck/${this.props.potluckID["potluckID"]}`)
-        .then(res => {
-          console.log('res!!!!!!!!!!', res)
-          this.setState({
-            potluck_invitations: res.data[1],
-          });
-        })})
+      .then(() => {
+        axios
+          .get(`/users/getsinglepotluck/${this.props.potluckID["potluckID"]}`)
+          .then(res => {
+            this.setState({
+              potluck_invitations: res.data[1],
+            });
+          })
+       })
       .catch(err => {
         this.setState({
           message: `${err.response.data}`
@@ -163,8 +173,6 @@ class Potluck extends Component {
   };
 
   submitInvite = e => {
-    console.log("HELLOOOOOOOO");
-    console.log("selected", this.state.selectedValues);
     axios
       .post(`/users/addInviteeToPotluck/${this.props.potluckID["potluckID"]}`, {
         invitees: this.state.selectedValues
@@ -177,7 +185,6 @@ class Potluck extends Component {
             }/${this.state.potluck_info.organizer_id}`
           )
           .then(res => {
-            console.log("res", res);
             this.setState({
               following: res.data,
               selectedValues: ""
@@ -199,7 +206,6 @@ class Potluck extends Component {
   };
 
   render(props) {
-    console.log("selectedValues", this.state.selectedValues);
     const { potluck_info, potluck_items, potluck_invitations } = this.state;
     const stateOptions = this.state.following.map(elem => ({
       value: elem.user_id,
@@ -209,12 +215,15 @@ class Potluck extends Component {
       <div className="Potluckpage">
         <Searchbar user={this.props.user} />
         <div className="PotluckContainer">
-          <h2> Potluck Name: {potluck_info.potluck_name} </h2>
-          <h2> Potluck Date: {potluck_info.potluck_date} </h2>
-          <h2> Potluck Time: {potluck_info.potluck_time} </h2>
-          <h2> Potluck Location: {potluck_info.potluck_location} </h2>
-          <h2> Organizer: {potluck_info.username} </h2>
-          <div className="PotluckDishes">
+        <div className="PotluckInfo" >
+        <PotluckModal />
+          <h2> {potluck_info.potluck_name} </h2>
+          <h2> <img className="potluckCalendarImage" src="https://png.icons8.com/metro/1600/calendar.png"/> {potluck_info.potluck_date} </h2>
+          <h2> <img className="potluckTimeImage" src="http://cdn.onlinewebfonts.com/svg/img_374773.png" /> {potluck_info.potluck_time} </h2>
+          <h2> <img className="potluckLocationImage" src="https://d30y9cdsu7xlg0.cloudfront.net/png/11205-200.png" /> {potluck_info.potluck_location} </h2>
+          <h2> Organized by {potluck_info.username} </h2>
+          </div>
+          <div className="potluckInvitees">
             <h2> Invitees </h2>
             <table>
               <tbody>
@@ -252,6 +261,7 @@ class Potluck extends Component {
                   : ""}
               </tbody>
             </table>
+
             <p> Invite friends </p>
 
             <Select
@@ -263,6 +273,9 @@ class Potluck extends Component {
             />
 
             <button onClick={this.submitInvite}> Submit </button>
+            </div>
+   
+            <div className="PotluckDishes">
             <h2> Things to bring </h2>
             <table>
               <tbody>
@@ -313,7 +326,7 @@ class Potluck extends Component {
             <button onClick={this.addNewItemToList}> Add new item </button>
           </div>
         </div>
-      </div>
+        </div>
     );
   }
 }

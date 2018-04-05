@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import Searchbar from "../Search/SearchBar";
+import './PotluckList.css'
+import PotluckModal from "./PotluckModal";
 
 
 class PotluckList extends Component {
@@ -13,33 +16,21 @@ class PotluckList extends Component {
       potluck_info: [],
       potluck_invitations: [],
       potluck_items: [],
+      userPotluckInvites: [], 
+      userPotluckCreated: []
     };
   }
 
 
   componentDidMount(props) {
     axios
-      .get(`/users/getsinglepotluck/${this.props.potluckID["potluckID"]}`)
+      .get(`/users/getAllPotlucksUserCreatedAndInvited`)
       .then(res => {
+        console.log('resssssss', res)
         this.setState({
-          potluck_info: res.data[0][0],
-          potluck_invitations: res.data[1],
-          potluck_items: res.data[2]
+          userPotluckInvites: res.data[0],
+          userPotluckCreated: res.data[1]
         });
-      })
-      .then(() => {
-        axios
-          .get(
-            `/users/getNewInviteesPotluck/${
-              this.props.potluckID["potluckID"]
-            }/${this.state.potluck_info.organizer_id}`
-          )
-          .then(res => {
-            console.log("res", res);
-            this.setState({
-              following: res.data
-            });
-          });
       })
       .catch(err => {
         this.setState({
@@ -50,12 +41,24 @@ class PotluckList extends Component {
 
   render(props) {
     const { potluck_info, potluck_items, potluck_invitations } = this.state;
+    console.log('this.state', this.state.userPotluckInvites)
+    console.log('this.state', this.state.userPotluckCreated)
+    console.log('this.props%%%%%', this.props)
+    console.log('*********', this.props.user.user_id)
 
     return (
-      <div className="Potluckpage">
-        <div className="PotluckContainer">
+      <div className="potluckpage">
+      <Searchbar user={this.props.user} />
+        <img className="potlucksHeaderImage"  />
+        <div className="potluckContainer">
+        <PotluckModal className="potluckModal" />
       <h1> My Potlucks </h1> 
-      
+
+      <h2> Potlucks I Am Invited To </h2> 
+      {this.state.userPotluckInvites.length > 0 ? this.state.userPotluckInvites.map((elem) => <li> <Link to={`/cb/potluck/${elem.potluck_id}`}> {elem.potluck_name}</Link> </li>) : <li>no potluck invitations</li>}
+
+      <h2> Potlucks I Am Organizing </h2> 
+      {this.state.userPotluckCreated.length > 0 ? this.state.userPotluckCreated.map((elem) => <li> <Link to={`/cb/potluck/${elem.potluck_id}`}> {elem.potluck_name}</Link> </li>) : <li>no potlucks created</li>}
         </div>
       </div>
     );
@@ -64,4 +67,3 @@ class PotluckList extends Component {
 
 export default PotluckList;
 
-// <Searchbar user={this.props.user} />
