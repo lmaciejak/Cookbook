@@ -15,7 +15,7 @@ import Notifications from "../Modals/Notifications";
 
 
 function getSuggestionValue(suggestion) {
-  return suggestion;
+  return suggestion.identifier;
 }
 
 function renderSuggestion(suggestion) {
@@ -91,6 +91,7 @@ class Searchbar extends Component {
   }
 
   onChange = (event, { newValue, method }) => {
+    console.log('NEWVALUE', newValue)
     this.setState({
       value: newValue
     });
@@ -134,7 +135,7 @@ class Searchbar extends Component {
     { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
   ) => {
     this.setState({
-      finalSuggestion: [suggestionValue],
+      finalSuggestion: [suggestion],
       redirect: true,
       value: "",
       modalIsOpen: true
