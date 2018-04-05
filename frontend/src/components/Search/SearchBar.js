@@ -15,7 +15,7 @@ import Notifications from "../Modals/Notifications";
 
 
 function getSuggestionValue(suggestion) {
-  return suggestion;
+  return suggestion.identifier;
 }
 
 function renderSuggestion(suggestion) {
@@ -91,6 +91,7 @@ class Searchbar extends Component {
   }
 
   onChange = (event, { newValue, method }) => {
+    console.log('NEWVALUE', newValue)
     this.setState({
       value: newValue
     });
@@ -134,7 +135,7 @@ class Searchbar extends Component {
     { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
   ) => {
     this.setState({
-      finalSuggestion: [suggestionValue],
+      finalSuggestion: [suggestion],
       redirect: true,
       value: "",
       modalIsOpen: true
@@ -176,7 +177,7 @@ class Searchbar extends Component {
         <div className="menuicons">
           <div className="tooltip1">
             <Link to={`/cb/addrecipe`} className="searchLink">
-              <img src={writingicon} className="writingIcon" />
+              <img src={writingicon} className="writingIcon menuButton" />
               <span className="tooltiptext1"> Add recipe </span>
             </Link>
           </div>
@@ -185,7 +186,7 @@ class Searchbar extends Component {
               to='/cb/groups'
               className="searchlink"
               >
-              <img src={groupicon} className="groupIcon" />
+              <img src={groupicon} className="groupIcon menuButton" />
               <span className="tooltiptext3">Groups</span>
             </Link>
           </div>
@@ -194,7 +195,7 @@ class Searchbar extends Component {
             to='/cb/potlucks'
             className="searchlink"
             >
-            <img src={potluckicon} className="potluckIcon" />
+            <img src={potluckicon} className="potluckIcon menuButton" />
             <span className="tooltiptext4">Potlucks</span>
           </Link>
         </div>

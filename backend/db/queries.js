@@ -410,11 +410,17 @@ function getIngredientsByRecipeId(req, res, next) {
 function getAllRecentUsersRecipes(req, res, next) {
   db
     .any(
-      `SELECT recipes.*, users.username
-          FROM recipes
-          INNER JOIN users ON(users.user_id=recipes.user_id)
-          WHERE recipes.user_id=${req.params.userID}
-          ORDER BY recipe_timestamp DESC;`
+      `SELECT recipe_name, recipes.recipe_id, description, recipe, img, recipe_timestamp,isVegeterian, isVegan,
+       COUNT(favorites.recipe_id)
+       AS favorites_count, users.username, users.user_id
+       FROM recipes
+       FULL OUTER JOIN favorites
+       ON(recipes.recipe_id = favorites.recipe_id)
+       INNER JOIN users
+       ON(recipes.user_id = users.user_id)
+       WHERE recipes.user_id=${req.params.userID}
+       GROUP BY recipes.recipe_id, users.user_id
+       ORDER BY recipe_timestamp DESC;`
     )
     .then(data => {
       res.json(data);
@@ -445,9 +451,7 @@ function getMostTopRecipes(req, res, next) {
 }
 
 function getAllGroupFollowers(req, res, next) {
-  db
-    .any(
-      `SELECT users.user_id, username, first_name, last_name, group_name, groupowners.group_id
+  db.any(`SELECT users.user_id, username, first_name, last_name, group_name, groupowners.group_id, user_img
           FROM users
           JOIN groupfollows ON (USERs.user_id=groupfollows.user_id)
           JOIN groupowners ON (groupowners.group_id=groupfollows.group_id)

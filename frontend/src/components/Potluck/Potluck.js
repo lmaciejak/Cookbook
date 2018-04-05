@@ -7,6 +7,7 @@ import "react-select/dist/react-select.css";
 
 import "./Potluck.css";
 import Searchbar from "../Search/SearchBar";
+import PotluckModal from "./PotluckModal";
 
 class Potluck extends Component {
   constructor(props) {
@@ -211,17 +212,22 @@ class Potluck extends Component {
       label: elem.username
     }));
     return (
-      <div className="Potluckpage">
+      <div className="PotluckFullPage">
         <Searchbar user={this.props.user} />
+        <div className="Potluckpage">
+        <img className="potluckPageHeaderImage"  />
         <div className="PotluckContainer">
+        <div className="PotluckInfo" >
+        <PotluckModal className="potluckModalEventPage"/>
           <h2> {potluck_info.potluck_name} </h2>
           <h2> <img className="potluckCalendarImage" src="https://png.icons8.com/metro/1600/calendar.png"/> {potluck_info.potluck_date} </h2>
           <h2> <img className="potluckTimeImage" src="http://cdn.onlinewebfonts.com/svg/img_374773.png" /> {potluck_info.potluck_time} </h2>
           <h2> <img className="potluckLocationImage" src="https://d30y9cdsu7xlg0.cloudfront.net/png/11205-200.png" /> {potluck_info.potluck_location} </h2>
           <h2> Organized by {potluck_info.username} </h2>
+          </div>
           <div className="potluckInvitees">
             <h2> Invitees </h2>
-            <table>
+            <table className="potluckTable">
               <tbody>
                 <tr>
                   <th> Invitee </th>
@@ -257,7 +263,7 @@ class Potluck extends Component {
                   : ""}
               </tbody>
             </table>
-            </div>
+
             <p> Invite friends </p>
 
             <Select
@@ -266,12 +272,16 @@ class Potluck extends Component {
               value={this.state.selectedValues}
               onChange={this.handleInvitationSelect}
               options={stateOptions}
+              className="potluckInviteFriendSelect"
+              placeholder="Invite friends"
             />
 
             <button onClick={this.submitInvite}> Submit </button>
+            </div>
+   
             <div className="PotluckDishes">
             <h2> Things to bring </h2>
-            <table>
+            <table className="potluckTable">
               <tbody>
                 <tr>
                   <th> Dish/thing to bring </th>
@@ -312,7 +322,7 @@ class Potluck extends Component {
             </table>
             <input
               type="text"
-              placeholder="suggested item name here"
+              placeholder="suggest item"
               name="suggestedItem"
               value={this.state.suggestedItem}
               onChange={this.handleFormInput}
@@ -320,7 +330,8 @@ class Potluck extends Component {
             <button onClick={this.addNewItemToList}> Add new item </button>
           </div>
         </div>
-      </div>
+        </div>
+        </div>
     );
   }
 }

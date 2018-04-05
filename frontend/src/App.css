@@ -244,3 +244,8 @@ h4 {
   border-radius: 3px;
   outline: none;
 }
+.recipeBoxFav {
+  width: 50%;
+  height: 80%;
+  padding-top: 6%;
+}
