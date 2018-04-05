@@ -87,13 +87,20 @@ textarea {
   border: 0.7px solid rgb(187, 187, 187);
 }
 
+.singleRecipeButtons{
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  padding: 5px;
+}
+
 .singleRecipeSubmit {
   background-color: rgb(255, 125, 65);
   color: white;
   border: none;
   border-radius: 3px;
-  width: 12%;
   outline: none;
+  margin: 5px;
 }
 
 .singleRecipeCommentEdit {
@@ -113,16 +120,4 @@ textarea {
 .commentList {
   list-style: none;
   padding-left: 3%;
-}
-
-#delete_recipe {
-  position: absolute;
-  left: 520px;
-  top: 380px;
-}
-
-#edit_recipe {
-  position: absolute;
-  left: 240px;
-  top: 380px;
 }

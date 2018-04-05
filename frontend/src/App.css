@@ -239,6 +239,13 @@ i {
   }
 }
 
+.forkByButton{
+  background-color: rgb(255, 125, 65);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+}
 .recipeBoxFav {
   width: 50%;
   height: 80%;

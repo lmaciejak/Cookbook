@@ -8,7 +8,13 @@
   display: flex; 
   flex-direction: column; 
   justify-content: center;
+  padding-top: 8%;
+  width: calc(100% - 20px);
+  MAX-WIDTH: 1750PX;
+  MARGIN: 0 AUTO;
 }
+
+
 
 .userProfileName { 
   margin-top: -0.1%; 
@@ -22,6 +28,8 @@
   margin-top: 1%;
 }
 
+
+
 .userProfileSelectContainer { 
   display: flex; 
   justify-content: center;
@@ -31,7 +39,10 @@
 .userProfileHeading { 
   display: flex; 
   justify-content: center;
+  MAX-WIDTH: 1050PX;
+  MARGIN: 0 AUTO;
 }
+
 
 .userProfileFollowInfo { 
   margin-top: 5%; 
@@ -39,6 +50,34 @@
   justify-content: space-around;
   width: 300px;
   margin-left: -18.2%; 
+}
+
+@media only screen and (max-width: 768px) {
+  .userProfileContainer { 
+    margin-top: 35px;
+    width:98%;
+  }
+  .userProfileFollowButtons { 
+    display: block;
+  }
+
+  .userProfileHeading {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userProfileFollowInfo { 
+    margin-top: 5%; 
+    display: flex; 
+    justify-content: space-around;
+    width: 300px;
+    margin-left: 0; 
+  }
+
+  .userProfileName { 
+    margin: 0; 
+  }
+
 }
 
 .userProfileFollowButton { 
@@ -101,5 +140,6 @@
 
 .userProfileAllRecipes { 
   display: flex; 
-  justify-content: center; 
+  justify-content: center;
+  flex-wrap: wrap; 
 }
