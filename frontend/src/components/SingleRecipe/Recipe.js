@@ -499,17 +499,19 @@ class SingleRecipe extends React.Component {
               <ul className="commentList" type="none">
                 {comments
                   ? comments.map(comment => (
-                      <li key={Math.random()}>
-                        <strong>{comment.username}</strong>
+                      <p key={Math.random()}>
+                        <strong>
+                          {comment.username}
+                        </strong>
                         {": "}
                         {comment.comment}{" "}
                         {comment.user_id === this.props.id ? (
-                          <button
-                            onClick={this.handleClickEdit}
-                            id={comment.comments_id}
-                            className="singleRecipeCommentEdit"
-                          >edit/delete</button>) : ""}
-                      </li>))
+                        <button onClick={this.handleClickEdit} id={comment.comments_id} className="singleRecipeCommentEdit">
+                          Edit/Delete
+                        </button>)
+                        :
+                        ""}
+                      </p>))
                   : "There are no any comments"}
               </ul>
             </div>

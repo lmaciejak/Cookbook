@@ -36,7 +36,7 @@ class LoginUser extends Component {
   }
  componentWillMount() {
    axios
-    .get("/isloggedIn")
+    .get('/users')
     .then(res => {
       this.setState({
         loggedIn: res.data
@@ -116,8 +116,8 @@ class LoginUser extends Component {
       <button className="xButton" onClick={this.closeModalLogin}>x</button>
         <h2 ref={subtitle => this.subtitle = subtitle}>Log In</h2>
         <form onSubmit={this.handleLoginFormSubmit}>
-          <input className="input formInput" type="text" placeholder="Username" onChange={this.handleFormInput} name='username'></input>
-          <input className="input formInput" type="password" placeholder="Password" onChange={this.handleFormInput} name='password'></input>
+          <input className="input formInput" type="text" placeholder="Username" onChange={this.handleFormInput} name='username' value={this.state.username}></input>
+          <input className="input formInput" type="password" placeholder="Password" onChange={this.handleFormInput} name='password' value={this.state.password}></input>
           <button className="formButton">Log in</button>
         </form>
         <p>{this.state.message}</p>
