@@ -7,6 +7,7 @@ import SingleGroup from './SingleGroup'
 import GroupMembers from './GroupMembers'
 import GroupRecipes from './GroupRecipes'
 import Searchbar from "../Search/SearchBar";
+import './Groups.css'
 
 class Groups extends React.Component{
   constructor(props){

@@ -46,6 +46,7 @@ class SingleRecipe extends React.Component {
 
   componentDidUpdate(prevProps,prevState){
     if(prevProps !== this.props){
+      console.log('hi')
       this.loadsRecipe()
     }
   }
@@ -55,6 +56,7 @@ class SingleRecipe extends React.Component {
     axios
       .get(`/users/singlerecipe/${this.props.user.recipeID}`)
       .then(res => {
+        console.log('the info ', res.data[0].username)
         this.setState({
           favorites_count: res.data[0].favorites_count,
           username: res.data[0].username,
@@ -497,17 +499,19 @@ class SingleRecipe extends React.Component {
               <ul className="commentList" type="none">
                 {comments
                   ? comments.map(comment => (
-                      <li key={Math.random()}>
-                        <strong>{comment.username}</strong>
+                      <p key={Math.random()}>
+                        <strong>
+                          {comment.username}
+                        </strong>
                         {": "}
                         {comment.comment}{" "}
                         {comment.user_id === this.props.id ? (
-                          <button
-                            onClick={this.handleClickEdit}
-                            id={comment.comments_id}
-                            className="singleRecipeCommentEdit"
-                          >edit/delete</button>) : ""}
-                      </li>))
+                        <button onClick={this.handleClickEdit} id={comment.comments_id} className="singleRecipeCommentEdit">
+                          Edit/Delete
+                        </button>)
+                        :
+                        ""}
+                      </p>))
                   : "There are no any comments"}
               </ul>
             </div>
