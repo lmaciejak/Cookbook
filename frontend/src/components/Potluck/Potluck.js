@@ -212,11 +212,13 @@ class Potluck extends Component {
       label: elem.username
     }));
     return (
-      <div className="Potluckpage">
+      <div className="PotluckFullPage">
         <Searchbar user={this.props.user} />
+        <div className="Potluckpage">
+        <img className="potluckPageHeaderImage"  />
         <div className="PotluckContainer">
         <div className="PotluckInfo" >
-        <PotluckModal />
+        <PotluckModal className="potluckModalEventPage"/>
           <h2> {potluck_info.potluck_name} </h2>
           <h2> <img className="potluckCalendarImage" src="https://png.icons8.com/metro/1600/calendar.png"/> {potluck_info.potluck_date} </h2>
           <h2> <img className="potluckTimeImage" src="http://cdn.onlinewebfonts.com/svg/img_374773.png" /> {potluck_info.potluck_time} </h2>
@@ -225,7 +227,7 @@ class Potluck extends Component {
           </div>
           <div className="potluckInvitees">
             <h2> Invitees </h2>
-            <table>
+            <table className="potluckTable">
               <tbody>
                 <tr>
                   <th> Invitee </th>
@@ -270,6 +272,8 @@ class Potluck extends Component {
               value={this.state.selectedValues}
               onChange={this.handleInvitationSelect}
               options={stateOptions}
+              className="potluckInviteFriendSelect"
+              placeholder="Invite friends"
             />
 
             <button onClick={this.submitInvite}> Submit </button>
@@ -277,7 +281,7 @@ class Potluck extends Component {
    
             <div className="PotluckDishes">
             <h2> Things to bring </h2>
-            <table>
+            <table className="potluckTable">
               <tbody>
                 <tr>
                   <th> Dish/thing to bring </th>
@@ -318,13 +322,14 @@ class Potluck extends Component {
             </table>
             <input
               type="text"
-              placeholder="suggested item name here"
+              placeholder="suggest item"
               name="suggestedItem"
               value={this.state.suggestedItem}
               onChange={this.handleFormInput}
             />
             <button onClick={this.addNewItemToList}> Add new item </button>
           </div>
+        </div>
         </div>
         </div>
     );
