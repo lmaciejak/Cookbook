@@ -29,12 +29,6 @@ const styles = {
 const List = ({ users }) =>(
   <div style={styles.userContainer}>
     {users.map(user =>(
-<<<<<<< Updated upstream
-      <div key={Math.random()}>
-      <h3>{user.first_name} + '' + {user.last_name}</h3>
-      <p>{user.username}</p>
-      <p>{user.email}</p>
-=======
       <div style={styles.userWrap}>
       <div style={styles.userInfo}>
         <h2 style={styles.username}>{user.username}</h2>
@@ -43,7 +37,6 @@ const List = ({ users }) =>(
       <div style={styles.imgBox}>
         <img src={user.user_img} alt='user image' style={styles.img}/>
       </div>
->>>>>>> Stashed changes
       </div>
     ))}
   </div>
