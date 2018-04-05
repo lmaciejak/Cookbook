@@ -40,7 +40,7 @@ class ForkedBy extends React.Component{
     return(
       <div className='Modal'>
         <div>
-          {this.props.forks !== [] ? <button className="button formButton" onClick={this.openModal}>Forked By</button> : ""}
+          {this.props.forks !== [] ? <button className="forkByButton" onClick={this.openModal}>Forked By</button> : ""}
           <Modal
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModalLogin}

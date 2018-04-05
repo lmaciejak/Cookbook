@@ -232,3 +232,11 @@ i {
     background-color: #e50000;
   }
 }
+
+.forkByButton{
+  background-color: rgb(255, 125, 65);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+}

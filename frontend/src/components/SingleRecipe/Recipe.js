@@ -447,22 +447,25 @@ class SingleRecipe extends React.Component {
             <div className="singleRecipeRight">
               <img src={img} alt="recipe_image" className="singleRecipeImage" />
             </div>
-            <br/>
-            { this.props.id === user_id?
-              <Link to={`/cb/editRecipe/${this.props.user.recipeID}`}><button id="edit_recipe" className="singleRecipeSubmit">Edit Recipe</button></Link>: ""
-            }{" "}
-            { this.props.id === user_id?
-              <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
-            }
-            { this.props.id !== user_id? (fork?
-            <div>
-              <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}>Fork</button>
+            <div className="singleRecipeButtons">
+                <div class="mainButtons">
+                <br/>
+                { this.props.id === user_id?
+                  <Link to={`/cb/editRecipe/${this.props.user.recipeID}`}><button id="edit_recipe" className="singleRecipeSubmit">Edit Recipe</button></Link>: ""
+                }{" "}
+                { this.props.id === user_id?
+                  <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
+                }
+                { this.props.id !== user_id? (fork?             
+                  <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}>Fork</button>
+                : ""): ""}
+                </div> 
+                <div>
+                { forkedFrom? <p>forked from {forkedFrom}</p>: ""} <br/>
+                { forkList.length !== 0 ? <ForkedBy forks={forkList} /> : ''}
+                </div>    
+  
             </div>
-            : ""): ""}
-
-            { forkedFrom? <p>forked from {forkedFrom}</p>: ""}
-
-            { forkList.length !== 0 ? <ForkedBy forks={forkList} /> : ''}
 
             <div className="singleRecipeLeft">
               <h3 className="singleRecipeIngredientsTitle"> Ingredients </h3>
