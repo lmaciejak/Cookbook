@@ -91,6 +91,7 @@ class UserProfile extends React.Component {
     axios
       .get(`/users/getallrecentusersrecipes/${this.props.id}`)
       .then(res => {
+        console.log("RESSSSSSSSS=====>>>>>: ", res);
         this.setState({
           allusersRecipes: res.data,
           allUserRecipesUnchanged: res.data
@@ -261,6 +262,8 @@ class UserProfile extends React.Component {
 
   renderAllUserRecipes = () => {
     const { allusersRecipes } = this.state;
+    console.log("I'm inside recipeBox");
+    console.log(allusersRecipes);
     return (
       <div className="userProfileAllRecipes">
         {allusersRecipes
