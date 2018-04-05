@@ -6,21 +6,6 @@ import './Groups.css'
 const AllGroups = ({ user, groups }) => {
   return(
     <div>
-<<<<<<< Updated upstream
-      <h1>Groups Page</h1>
-      <p>Find groups below</p>
-      <div></div>
-      {groups.map(group => {
-        let path = `/cb/groups/${group.group_id}`
-        return(
-          <div key={Math.random()}>
-            {" "}
-            <Link to={path}>{group.group_name}</Link>
-            {" "}
-          </div>
-        )
-      })}
-=======
       <div className='allgroups-container'>
         <p className='group-main-header'>Groups of Cookbook</p>
         <div>
@@ -39,7 +24,6 @@ const AllGroups = ({ user, groups }) => {
           })}
         </div>
       </div>
->>>>>>> Stashed changes
     </div>
   )
 }

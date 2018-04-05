@@ -54,18 +54,7 @@ class GroupMembers extends React.Component{
       return(
         <div>
           <h1>All Members for {group_name}</h1>
-<<<<<<< Updated upstream
-          {members.map(member =>{
-            let path = `/cb/profile/${member.user_id}`
-            return(
-              <div key={Math.random()}>
-                <p><Link to={path}>{member.username}</Link></p>
-              </div>
-            )
-          })}
-=======
           <List users={members} />
->>>>>>> Stashed changes
         </div>
       )
     }
