@@ -344,7 +344,7 @@ class UserProfile extends React.Component {
         </div>
       );
     } else {
-      return <div>loading profile</div>;
+      return <div>loading profile dude</div>;
     }
   }
 }

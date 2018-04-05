@@ -52,7 +52,7 @@ class ForkedBy extends React.Component{
             {this.props.forks.map(fork => {
               let path = `/cb/${fork.user_id}/${fork.recipe_id}`
               return(
-                <p>{fork.username} : <Link to={path}>Their Fork</Link></p>
+                <p>{fork.username} : <Link to={path} onClick={this.closeModalLogin}>Their Fork</Link></p>
               )
             })}
           </ul>
