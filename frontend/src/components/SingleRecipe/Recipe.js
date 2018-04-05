@@ -46,6 +46,7 @@ class SingleRecipe extends React.Component {
 
   componentDidUpdate(prevProps,prevState){
     if(prevProps !== this.props){
+      console.log('hi')
       this.loadsRecipe()
     }
   }
@@ -55,6 +56,7 @@ class SingleRecipe extends React.Component {
     axios
       .get(`/users/singlerecipe/${this.props.user.recipeID}`)
       .then(res => {
+        console.log('the info ', res.data[0].username)
         this.setState({
           favorites_count: res.data[0].favorites_count,
           username: res.data[0].username,
