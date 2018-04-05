@@ -176,7 +176,7 @@ class Searchbar extends Component {
         <div className="menuicons">
           <div className="tooltip1">
             <Link to={`/cb/addrecipe`} className="searchLink">
-              <img src={writingicon} className="writingIcon" />
+              <img src={writingicon} className="writingIcon menuButton" />
               <span className="tooltiptext1"> Add recipe </span>
             </Link>
           </div>
@@ -185,7 +185,7 @@ class Searchbar extends Component {
               to='/cb/groups'
               className="searchlink"
               >
-              <img src={groupicon} className="groupIcon" />
+              <img src={groupicon} className="groupIcon menuButton" />
               <span className="tooltiptext3">Groups</span>
             </Link>
           </div>
@@ -194,7 +194,7 @@ class Searchbar extends Component {
             to='/cb/potlucks'
             className="searchlink"
             >
-            <img src={potluckicon} className="potluckIcon" />
+            <img src={potluckicon} className="potluckIcon menuButton" />
             <span className="tooltiptext4">Potlucks</span>
           </Link>
         </div>

@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 import Searchbar from "../Search/SearchBar";
 import './PotluckList.css'
+import PotluckModal from "./PotluckModal";
 
 
 class PotluckList extends Component {
@@ -50,6 +51,7 @@ class PotluckList extends Component {
       <Searchbar user={this.props.user} />
         <img className="potlucksHeaderImage"  />
         <div className="potluckContainer">
+        <PotluckModal className="potluckModal" />
       <h1> My Potlucks </h1> 
 
       <h2> Potlucks I Am Invited To </h2> 
