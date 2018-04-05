@@ -39,7 +39,7 @@ class Feed extends React.Component {
       <div>
         <Searchbar user={this.props.user} />
         <div className="feedContainer">
-          <h2> Explore meals your friends and family are cooking</h2>
+          <h2 className="feedHead"> Explore meals your friends and family are cooking</h2>
 
           <div className="feedBoxContainer">
             {" "}
@@ -50,19 +50,6 @@ class Feed extends React.Component {
                       <div className="feedBoxDescription">
                         <h4 className="feedRecipeName"> {elem.recipe_name} </h4>
                         <div className="feedRecipeIcons">
-                          <Link
-                            to={`/cb/profile/${elem.user_id}`}
-                            className="singleRecipeUsernameLink"
-                          >
-                            <img
-                              src="https://cdn0.iconfinder.com/data/icons/kitchen-and-cooking/512/salting_cooking_hand_sprinkle_salt_flat_design_icon-256.png"
-                              className="feedRecipeChefIcon"
-                            />
-                            <p className="feedRecipeUsername">
-                              {" "}
-                              {elem.username}{" "}
-                            </p>
-                          </Link>
                           <img
                             src="http://www.iconsplace.com/download/orange-hearts-512.gif"
                             className="feedRecipeChefIcon"
@@ -79,6 +66,21 @@ class Feed extends React.Component {
                       >
                         <img className="feedImage" src={elem.img} />
                       </Link>
+                      <div>
+                      <Link
+                            to={`/cb/profile/${elem.user_id}`}
+                            className="singleRecipeUsernameLink"
+                          >
+                            <img
+                              src="https://cdn0.iconfinder.com/data/icons/kitchen-and-cooking/512/salting_cooking_hand_sprinkle_salt_flat_design_icon-256.png"
+                              className="feedRecipeChefIcon"
+                            />
+                            <p className="feedRecipeUsername">
+                              {" "}
+                              {elem.username}{" "}
+                            </p>
+                          </Link>
+                      </div>  
                     </div>
                   );
                 })
