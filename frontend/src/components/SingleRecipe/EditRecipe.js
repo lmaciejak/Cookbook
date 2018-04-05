@@ -182,7 +182,7 @@ class EditRecipe extends React.Component{
                 <div className="formSection"><span>3</span>Ingredients</div>
                 <div className="formInnerWrap">
                     {ingredients.map((ingredient, idx) =>(
-                        <div className="ingredients" key={Math.random()}>
+                        <div className="ingredients">
                         <label className="formLabels"> <b>{`Ingredient ${idx + 1}`}</b>
                         <input
                             list="ingredients"

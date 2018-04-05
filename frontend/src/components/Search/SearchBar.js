@@ -8,7 +8,11 @@ import "./SearchBar.css";
 import cookbooklogo from "../../images/cookbooknamelogo.png";
 import writingicon from "../../images/writingiconorange.png";
 import hearticon from "../../images/hearticonorange.png";
-import groupicon from "../../images/groupicon.png";
+import groupicon from "../../images/group.png";
+import potluckicon from "../../images/potluck.png";
+import notificationicon from "../../images/notification.png";
+import Notifications from "../Modals/Notifications";
+
 
 function getSuggestionValue(suggestion) {
   return suggestion;
@@ -153,12 +157,13 @@ class Searchbar extends Component {
     return (
       <div className="searchbar">
         <Link to={`/cb/feed`}>
-          <img className="searchbarLogoName" src={cookbooklogo} />
+          <img className="searchbarLogoName hoverIncrease" src={cookbooklogo} />
           <img
-            className="searchbarLogo"
+            className="searchbarLogo hoverIncrease"
             src="http://irfanyurdu.org/wp-content/uploads/2017/04/eat-flat-1.png"
           />
         </Link>
+
         <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -175,15 +180,6 @@ class Searchbar extends Component {
               <span className="tooltiptext1"> Add recipe </span>
             </Link>
           </div>
-          <div className="tooltip2">
-            <Link
-              to={`/cb/profile/${this.props.user.user_id}/favorites`}
-              className="searchLink"
-            >
-              <img src={hearticon} className="heartIcon" />
-              <span className="tooltiptext2">Favorite recipes </span>
-            </Link>
-          </div>
           <div className="tooltip3">
             <Link
               to='/cb/groups'
@@ -193,6 +189,16 @@ class Searchbar extends Component {
               <span className="tooltiptext3">Groups</span>
             </Link>
           </div>
+          <div className="tooltip4">
+          <Link
+            to='/cb/potlucks'
+            className="searchlink"
+            >
+            <img src={potluckicon} className="potluckIcon" />
+            <span className="tooltiptext4">Potlucks</span>
+          </Link>
+        </div>
+        <Notifications id={this.props.user.user_id} user={this.props.user.username}/>
         </div>
         <div>
           <Menu right className="burgerMenu">
@@ -218,6 +224,13 @@ class Searchbar extends Component {
               Favorite Recipes
             </a>
             <a
+            id="contact"
+            className="menu-item"
+            href={`/cb/addrecipe`}
+          >
+            Add Recipe
+          </a>
+      <a
               id="contact"
               className="menu-item"
               href={`/cb/potlucks`}
@@ -227,14 +240,21 @@ class Searchbar extends Component {
             <a id="contact" className="menu-item" href="/cb/feed">
               Feed
             </a>
-            <a
-              id="contact"
-              className="menu-item"
-              href="/"
-              onClick={this.handleClickLogout}
+          <a
+          id="contact"
+          className="menu-item"
+          href={`/cb/groups`}
           >
-            Logout
-          </a>
+          My groups
+        </a>
+          <a
+          id="contact"
+          className="menu-item"
+          href="/"
+          onClick={this.handleClickLogout}
+        >
+          Logout
+        </a>
           </Menu>
         </div>
 
@@ -270,3 +290,14 @@ class Searchbar extends Component {
 }
 
 export default Searchbar;
+
+
+// <div className="tooltip2">
+// <Link
+//   to={`/cb/profile/${this.props.user.user_id}/favorites`}
+//   className="searchLink"
+// >
+//   <img src={hearticon} className="heartIcon" />
+//   <span className="tooltiptext2">Favorite recipes </span>
+// </Link>
+// </div>
