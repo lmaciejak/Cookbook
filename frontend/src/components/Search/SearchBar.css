@@ -1,13 +1,13 @@
 .searchbarLogo {
-  margin-left: 16%;
-  width: 2.5%;
+  margin-left: 220px;
+  width: 35px;
   position: fixed;
   margin-top: 0.3%;
 }
 
 .searchbarLogoName {
   margin-left: 1%;
-  width: 14%;
+  width: 200px;
   position: fixed;
   margin-top: 0.3%;
 }
@@ -366,3 +366,40 @@
   margin-left: -100%;  
   margin-top: -0.7%; 
 }
+
+@media only screen and (max-width: 934px) {
+  .menuButton {
+      display: none; 
+  }
+  .notificationButton {
+    margin-left: -50px; 
+  }
+
+
+}
+
+@media only screen and (max-width: 768px) {
+  .searchbarLogoName { 
+    display: none; 
+  }
+  .searchbarLogo {
+    margin-left: 4%;
+  }
+  .notificationButton {
+    margin-left: -60px; 
+  }
+
+}
+
+@media only screen and (max-width: 600px) {
+  .menuButton {
+      display: none; 
+  }
+
+.react-autosuggest__input {
+  margin-left: -10%; 
+  width: 220px;
+}
+
+}
+
