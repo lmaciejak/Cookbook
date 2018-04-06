@@ -8,32 +8,38 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   position: fixed;
+  display: flex; 
+  justify-content: center; 
 }
 
 .allgroups-container {
   text-align: center;
   position: relative;
-  padding-top: 3.5em;
+  margin-top: 100px;
+  background-color: rgba(255, 255, 255, 0.897); 
+  padding-left: 20px; 
+  padding-right: 20px; 
+  padding-top: 20px;
+  height: 50%; 
 }
 
 .group-main-header {
   font-size: 210%;
-  color: #e90c1a;
+  color: #000000;
 }
 
 .group-header {
   font-size: 160%;
-  color: #e90c1a;
+  color: #000000;
 }
 
 .group-links-wrap {
   height: 20%;
-  width: 60%;
+  width: 100%;
   margin: 0.8em auto 0.8em;
 }
 
 .group-links-container {
-  height: 100%;
   width: 100%;
   background-color: rgb(245,245,245);
   color: #f56607;
@@ -50,7 +56,9 @@
 .single-groups-container {
   text-align: center;
   position: relative;
-  margin: 3.9em auto;
-  width: 65%;
-  background-color: #ffff;
+  margin-top: 100px;
+  width: 45%;
+  background-color: rgba(255, 255, 255, 0.925);
+  height: 80%; 
+  padding-top: 20px; 
 }

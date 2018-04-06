@@ -16,6 +16,10 @@
   box-shadow: 20px 10px 40px -14px rgba(0, 0, 0, 0.25);
 }
 
+.feedBox:hover { 
+  transform: scale(1.02, 1.02)
+}
+
 .feedBoxContainer {
   display: flex;
   flex-wrap: wrap;
