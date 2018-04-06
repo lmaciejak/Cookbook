@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router'
 import GroupButtons from './GroupButtons'
 import Links from './GroupLinks'
+import Searchbar from "../Search/SearchBar";
 
 class SingleGroup extends React.Component{
   constructor(props){
@@ -126,28 +127,30 @@ class SingleGroup extends React.Component{
     }
     if(this.props.user){
       return(
-        <div>
-          <nav>
-            {" "}
-            <Links
-              members={allMembers}
-              userID={this.props.user.user_id}
-              link={memberspath}
-              ownerID={group_owner_id}
-              name='Members'
-              />
-            {" "}
-            <Links
-              members={allMembers}
-              userID={this.props.user.user_id}
-              link={membersrecipespath}
-              ownerID={group_owner_id}
-              name='Group Recipes'
-              />
-          </nav>
-          <h1>{group_name}</h1>
-          <h3>This group was created by {group_owner_name}</h3>
+        <div className='groups-bg'>
+        <Searchbar user={this.props.user} />
+        <div className='single-groups-container'>
+          <h1 className='group-main-header'>{group_name}</h1>
+          <h3 className='group-header'>This group was created by {group_owner_name}</h3>
           <p>{group_description}</p>
+            <nav>
+              {" "}
+              <Links
+                members={allMembers}
+                userID={this.props.user.user_id}
+                link={memberspath}
+                ownerID={group_owner_id}
+                name='Members'
+                />
+              {" "}
+              <Links
+                members={allMembers}
+                userID={this.props.user.user_id}
+                link={membersrecipespath}
+                ownerID={group_owner_id}
+                name='Group Recipes'
+                />
+            </nav>
             <GroupButtons
               userID={this.props.user.user_id}
               ownerID={group_owner_id}
@@ -157,6 +160,7 @@ class SingleGroup extends React.Component{
               leave={this.leaveGroup}
               remove={this.deleteGroup}
               />
+            </div>
         </div>
       )
     }

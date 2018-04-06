@@ -172,7 +172,7 @@ class AddRecipe extends React.Component {
       let groupDisplay = [{group_name: 'Public', group_id: 0},...groups]
 
              if(redirect) {
-              return <Redirect to={`/cb/${this.props.user.username}/${recipe_id}`}/>
+              return <Redirect to={`/cb/${this.props.user.user_id}/${recipe_id}`}/>
              }
         return(
             <div>
@@ -307,7 +307,6 @@ class AddRecipe extends React.Component {
                     {groupDisplay.map(group => (
                       <label key={Math.random()}>
                         {group.group_name}
-                        key={Math.random()}
                         <input
                           name={group.group_name}
                           value={group.group_id}

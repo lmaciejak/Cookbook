@@ -5,7 +5,7 @@ import './Groups.css'
 
 const AllGroups = ({ user, groups }) => {
   return(
-    <div>
+    <div className='groups-bg'>
       <div className='allgroups-container'>
         <p className='group-main-header'>Groups of Cookbook</p>
         <div>
