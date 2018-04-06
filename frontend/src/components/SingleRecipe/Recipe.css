@@ -32,7 +32,9 @@ body {
 }
 
 .singleRecipeIntroLine {
-  background-color: rgb(241, 224, 255);
+  /* background-color:#e2ffd4;  */
+  /* background-color: rgba(209, 255, 4, 0.562); */
+  /* background-color: rgb(241, 224, 255); */
   /* background-color: rgb(255, 234, 163); */
   width: 80%;
   margin-left: 10%;
@@ -44,7 +46,7 @@ body {
 }
 
 .singleRecipeIngredientsTitle {
-  border-bottom: 2px solid rgb(255, 201, 130);
+  border-bottom: 2px solid rgb(255, 216, 164);
 }
 
 .singleRecipeUsername {
