@@ -408,6 +408,7 @@ class SingleRecipe extends React.Component {
         <div>
           <Searchbar user={this.props.userinfo}/>
           <div className="singleRecipeContainer">
+          <div className="recipeBox singleRecipePageBox">
             <div className="singleRecipeIntroLine">
               <h1 className="singleRecipeHeader"> {recipe_name} </h1>
               {isvegan ? (
@@ -516,6 +517,7 @@ class SingleRecipe extends React.Component {
               </ul>
             </div>
           </div>
+        </div>
         </div>
       );
     } else {

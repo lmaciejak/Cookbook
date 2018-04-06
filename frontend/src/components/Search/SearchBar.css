@@ -372,9 +372,20 @@
       display: none; 
   }
   .notificationButton {
-    margin-left: -50px; 
+    margin-left: 40px; 
   }
-
+  .tooltip4 { 
+    display: none; 
+  }
+  .tooltip1 { 
+    display: none; 
+  }
+  .tooltip2 { 
+    display: none; 
+  }
+  .tooltip3 { 
+    display: none; 
+  }
 
 }
 
@@ -386,7 +397,7 @@
     margin-left: 4%;
   }
   .notificationButton {
-    margin-left: -60px; 
+    margin-left: 30px; 
   }
 
 }
@@ -399,6 +410,15 @@
 .react-autosuggest__input {
   margin-left: -10%; 
   width: 220px;
+}
+
+.react-autosuggest__suggestions-container--open {
+  width: 220px;
+  margin-left: -22px; 
+}
+
+.notificationButton {
+  margin-left: 0px; 
 }
 
 }
