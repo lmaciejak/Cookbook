@@ -115,7 +115,10 @@ class Notifications extends Component {
     var notificationClass = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0 || seenPotluckInvitation.length > 0? "alert notificationButton": "noAlert notificationButton";
     return (
       <div className="Modal">
+      <div className="tooltip5">
       <img src={notificationicon} className={notificationClass} onClick={this.openModal} />
+          <span className="tooltiptext5"> {seenComments.length+seenFavorites.length+seenFollowers.length+seenPotluckInvitation.length >= 0 ? seenComments.length+seenFavorites.length+seenFollowers.length+seenPotluckInvitation.length : 0}  Notifications </span>
+      </div>
 
           <Modal
             isOpen={this.state.modalIsOpen}
@@ -147,7 +150,7 @@ class Notifications extends Component {
                     <Link to={`/cb/potluck/${info.potluck_id}`}>{info.username} invited you to {info.potluck_name}<br/>more info...</Link>
                   </li>
                 )): ""}
-                {(seenComments.length === 0 && seenFavorites.length === 0 && seenFollowers.length === 0 && seenPotluckInvitation.length === 0)? "There no any notifications": ""}
+                {(seenComments.length === 0 && seenFavorites.length === 0 && seenFollowers.length === 0 && seenPotluckInvitation.length === 0)? "There are no notifications": ""}
             </ul>
           <button className="xButton" onClick={this.closeModal}>x</button>
           </Modal>

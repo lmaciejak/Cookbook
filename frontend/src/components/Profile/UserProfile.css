@@ -43,6 +43,10 @@
   MARGIN: 0 AUTO;
 }
 
+.selectUserRecipeTagline{ 
+  margin-top: 20px; 
+}
+
 
 .userProfileFollowInfo { 
   margin-top: 5%; 
@@ -54,16 +58,20 @@
 
 @media only screen and (max-width: 768px) {
   .userProfileContainer { 
-    margin-top: 35px;
     width:98%;
   }
   .userProfileFollowButtons { 
     display: block;
   }
 
+  .selectUserRecipeTagline{ 
+    margin-top: 10px; 
+  }
+
   .userProfileHeading {
     flex-direction: column;
     align-items: center;
+    padding-top: 30px; 
   }
 
   .userProfileFollowInfo { 

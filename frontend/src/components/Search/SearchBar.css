@@ -31,6 +31,12 @@
   margin-bottom: 0; 
 }
 
+.notificationButton:hover {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  cursor: pointer;
+}
+
 .noAlert { 
   width: 35px; 
   margin-top: 2%; 
@@ -41,7 +47,7 @@
   width: 100%;
   /* background-color: #ff5f00; */
   padding-top: 10px;
-  padding-bottom: 5px;
+  padding-bottom: 9px;
   border-bottom-width: 3px;
   border-bottom-style: solid;
   border-bottom-color: rgb(235, 232, 232);
@@ -197,6 +203,7 @@
   position: absolute;
   z-index: 1;
   margin-left: -30%; 
+  margin-top: 35px;
 }
 
 .tooltip2:hover .tooltiptext2 {
@@ -249,6 +256,7 @@
   position: absolute;
   z-index: 1;
   margin-left: -30%;
+  margin-top: 35px;
 }
 
 .tooltip4:hover .tooltiptext4 {
@@ -275,6 +283,7 @@
   position: absolute;
   z-index: 5;
   margin-left: -30%;
+  margin-top: 35px; 
 }
 
 .tooltip5:hover .tooltiptext5 {
@@ -319,7 +328,7 @@
   width: 25px;
   height: 15px;
   left: 95%;
-  top: 3.4%;
+  top: 2.7%;
 }
 
 .bm-burger-bars {
@@ -372,9 +381,20 @@
       display: none; 
   }
   .notificationButton {
-    margin-left: -50px; 
+    margin-left: 40px; 
   }
-
+  .tooltip4 { 
+    display: none; 
+  }
+  .tooltip1 { 
+    display: none; 
+  }
+  .tooltip2 { 
+    display: none; 
+  }
+  .tooltip3 { 
+    display: none; 
+  }
 
 }
 
@@ -386,7 +406,7 @@
     margin-left: 4%;
   }
   .notificationButton {
-    margin-left: -60px; 
+    margin-left: 30px; 
   }
 
 }
@@ -399,6 +419,15 @@
 .react-autosuggest__input {
   margin-left: -10%; 
   width: 220px;
+}
+
+.react-autosuggest__suggestions-container--open {
+  width: 220px;
+  margin-left: -22px; 
+}
+
+.notificationButton {
+  margin-left: 0px; 
 }
 
 }
