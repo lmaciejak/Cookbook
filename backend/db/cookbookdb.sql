@@ -139,19 +139,19 @@ INSERT INTO users (username, password, email, first_name, last_name, user_img)
    ('Shaedon','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'stealthy@gmail.com', 'Shaedon',
    'Blackman', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg');
 
-INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeterian, isVegan, fork, forkedFrom)
+INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeterian, isVegan, fork, forkedFrom, forkedID)
   VALUES (2, 'Shrimp Risotto', 'Melt 2 tablespoons butter in medium skillet.',
-  'https://pioneerwoman.files.wordpress.com/2014/07/dsc_35621.jpg', 'some description', false, false, true, null),
+  'https://pioneerwoman.files.wordpress.com/2014/07/dsc_35621.jpg', 'some description', false, false, true, null, null),
    (1, 'Fried Calamari', 'Fry the calamari', 'https://d1alt1wkdk73qo.cloudfront.net/images/guide/01751a3e8de64ce289286aa8b75e4bfe/640x478_ac.jpg', 'some description',
-   false, false, false, null),
-    (1, 'Grilled Salmon', 'Grill Salmon', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, true, null),
-    (1, 'Chia Blueberry Parfait', 'Stir salad', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, false, false, null),
-    (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description',false, false, true, null),
-    (2, 'Chicken and Kebabs', 'Stir salad', 'https://images.pexels.com/photos/111131/meat-vegetables-gemuesepiess-mushrooms-111131.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, false, null),
-    (3, 'fried chicken', '1.test1, 2.test2, 3.test3, 4.test4', 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Fried-Chicken-Leg.jpg', 'some description', false, true, true, null),
-    (2, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, null),
-    (11, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, 'eion'),
-    (4, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, 'eion');
+   false, false, false, null, null),
+    (1, 'Grilled Salmon', 'Grill Salmon', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, true, null, null),
+    (1, 'Chia Blueberry Parfait', 'Stir salad', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, false, false, null, null),
+    (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description',false, false, true, null, null),
+    (2, 'Chicken and Kebabs', 'Stir salad', 'https://images.pexels.com/photos/111131/meat-vegetables-gemuesepiess-mushrooms-111131.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, false, null, null),
+    (3, 'fried chicken', '1.test1, 2.test2, 3.test3, 4.test4', 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Fried-Chicken-Leg.jpg', 'some description', false, true, true, null, null),
+    (2, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, null, null),
+    (11, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, 'eion', 8),
+    (4, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, 'eion', 8);
 
 INSERT INTO favorites (recipe_id, user_id)
   VALUES (1, 2), (1, 3), (2, 2), (2,3), (3,2), (4, 2), (5, 1), (6,1);

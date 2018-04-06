@@ -127,6 +127,7 @@ class SingleRecipe extends React.Component {
         axios
           .get(`/users/getforkedrecipes/${this.props.user.recipeID}`)
           .then(res => {
+            console.log(res.data)
             this.setState({
               forkList: res.data
             })
@@ -458,15 +459,15 @@ class SingleRecipe extends React.Component {
                 { this.props.id === user_id?
                   <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
                 }
-                { this.props.id !== user_id? (fork?             
+                { this.props.id !== user_id? (fork?
                   <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}>Fork</button>
                 : ""): ""}
-                </div> 
+                </div>
                 <div>
                 { forkedFrom? <p>forked from {forkedFrom}</p>: ""} <br/>
                 { forkList.length !== 0 ? <ForkedBy forks={forkList} /> : ''}
-                </div>    
-  
+                </div>
+
             </div>
 
             <div className="singleRecipeLeft">
