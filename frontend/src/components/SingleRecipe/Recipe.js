@@ -46,7 +46,6 @@ class SingleRecipe extends React.Component {
 
   componentDidUpdate(prevProps,prevState){
     if(prevProps !== this.props){
-      console.log('hi')
       this.loadsRecipe()
     }
   }
@@ -56,7 +55,6 @@ class SingleRecipe extends React.Component {
     axios
       .get(`/users/singlerecipe/${this.props.user.recipeID}`)
       .then(res => {
-        console.log('the info ', res.data[0].username)
         this.setState({
           favorites_count: res.data[0].favorites_count,
           username: res.data[0].username,
@@ -403,7 +401,6 @@ class SingleRecipe extends React.Component {
       return(<Redirect to={`/cb/profile/${this.props.id}`} />)
     }
     if (this.props.user) {
-      console.log('list of forks', forkList)
       return (
         <div>
           <Searchbar user={this.props.userinfo}/>
@@ -458,15 +455,15 @@ class SingleRecipe extends React.Component {
                 { this.props.id === user_id?
                   <Link to={`/cb/feed`}><button id="delete_recipe" className="singleRecipeSubmit" onClick={this.handleClickDelete}>Delete Recipe</button></Link>: ""
                 }
-                { this.props.id !== user_id? (fork?             
+                { this.props.id !== user_id? (fork?
                   <button className="singleRecipeSubmit" onClick={this.handleSubmitFork}>Fork</button>
                 : ""): ""}
-                </div> 
+                </div>
                 <div>
                 { forkedFrom? <p>forked from {forkedFrom}</p>: ""} <br/>
                 { forkList.length !== 0 ? <ForkedBy forks={forkList} /> : ''}
-                </div>    
-  
+                </div>
+
             </div>
 
             <div className="singleRecipeLeft">
@@ -521,7 +518,7 @@ class SingleRecipe extends React.Component {
         </div>
       );
     } else {
-      return <div>loading feed</div>;
+      return <div>loading!</div>;
     }
   }
 }

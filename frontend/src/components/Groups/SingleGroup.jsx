@@ -27,7 +27,6 @@ class SingleGroup extends React.Component{
     axios
       .get(`/users/getSingleGroup/${this.props.groupID}`)
       .then(res => {
-        console.log(res)
         this.setState({
           group_name: res.data[0].group_name,
           group_owner_id: res.data[0].user_id,

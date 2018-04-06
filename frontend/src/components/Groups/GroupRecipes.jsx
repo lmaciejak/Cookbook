@@ -44,7 +44,6 @@ class GroupRecipes extends React.Component{
 
   render(){
     const { group, recipes } = this.state
-    console.log(this.state)
     return(
       <div>
         <h1>Recipes for {group.group_name}</h1>
