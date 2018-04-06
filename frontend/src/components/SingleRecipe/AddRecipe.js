@@ -221,21 +221,14 @@ class AddRecipe extends React.Component {
                 <div className="formSection"><span>3</span>Ingredients</div>
                 <div className="formInnerWrap">
                     {ingredients.map((ingredient, idx) =>(
-                        <div className="ingredients" key={Math.random()}>
-                        <label className="formLabels"> <b key={Math.random()}>{`Ingredient ${idx + 1}`}</b>
+                        <div className="ingredients">
+                        <label className="formLabels"> <b>{`Ingredient ${idx + 1}`}</b>
                         <input
                             list="ingredients"
                             value ={ingredient.name}
                             onChange={this.handleIngredientChange(idx)}
                             className="formInput"
                          />
-                         <datalist id="ingredients">
-                            {ingredientsList.map(ingredient =>
-                            <option key={Math.random()} value={ingredient}> {ingredient}</option>)}
-                         </datalist>
-                            {/* {ingredientsList.map(ingredient =>
-                            <option value={ingredient}> {ingredient}</option>)} */}
-
                 Amount:
                   <input
                     type="text"
