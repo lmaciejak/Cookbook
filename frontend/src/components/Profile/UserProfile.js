@@ -262,8 +262,6 @@ class UserProfile extends React.Component {
 
   renderAllUserRecipes = () => {
     const { allusersRecipes } = this.state;
-    console.log("I'm inside recipeBox");
-    console.log(allusersRecipes);
     return (
       <div className="userProfileAllRecipes">
         {allusersRecipes
@@ -347,7 +345,7 @@ class UserProfile extends React.Component {
         </div>
       );
     } else {
-      return <div>loading profile dude</div>;
+      return <div>loading!</div>;
     }
   }
 }

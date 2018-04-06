@@ -45,7 +45,7 @@ class Cookbook extends React.Component {
   renderAddRecipe = props => {
     const { user, fetchingUser } = this.state
     if (fetchingUser) {
-      return <div>loading</div>
+      return <div>loading!</div>
     } else if(!user) {
       return <Redirect to='/' />
     } else {
@@ -57,7 +57,7 @@ class Cookbook extends React.Component {
     const { id } = props.match.params
     const { user, fetchingUser } = this.state
     if (fetchingUser) {
-      return <div>loading profile</div>
+      return <div>loading!</div>
     } else if (!user) {
         return <Redirect to='/' />
     } else {
@@ -75,7 +75,7 @@ class Cookbook extends React.Component {
     const { id } = props.match.params
     const { user, fetchingUser } = this.state
     if (fetchingUser) {
-      return(<div>loading feed my guy</div>)
+      return(<div>loading!</div>)
     } else if (!user) {
       return <Redirect to='/' />
     } else {
@@ -87,7 +87,7 @@ class Cookbook extends React.Component {
     const { user, fetchingUser } = this.state
     const { id } = props.match.params;
     if (fetchingUser) {
-      return <div>loading edit page</div>
+      return <div>loading!</div>
     } else if (!user) {
       return <Redirect to='/' />
     } else {

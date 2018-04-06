@@ -91,7 +91,6 @@ class Searchbar extends Component {
   }
 
   onChange = (event, { newValue, method }) => {
-    console.log('NEWVALUE', newValue)
     this.setState({
       value: newValue
     });
@@ -291,14 +290,3 @@ class Searchbar extends Component {
 }
 
 export default Searchbar;
-
-
-// <div className="tooltip2">
-// <Link
-//   to={`/cb/profile/${this.props.user.user_id}/favorites`}
-//   className="searchLink"
-// >
-//   <img src={hearticon} className="heartIcon" />
-//   <span className="tooltiptext2">Favorite recipes </span>
-// </Link>
-// </div>

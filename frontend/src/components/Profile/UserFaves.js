@@ -46,7 +46,7 @@ class UserFaves extends React.Component{
     }
     else {
       return(
-        <div>loading</div>
+        <div>loading!</div>
       )
     }
   }
