@@ -189,3 +189,4 @@ INSERT INTO potluckitems (potluck_id, user_id, item_name, item_type)
 
 INSERT INTO potluckitems (potluck_id, item_name, item_type)
   VALUES (1, 'Soda', 'beverage');
+
