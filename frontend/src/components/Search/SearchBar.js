@@ -238,16 +238,16 @@ class Searchbar extends Component {
             >
               My potlucks
             </a>
+            <a
+            id="contact"
+            className="menu-item"
+            href={`/cb/groups`}
+            >
+            My groups
+          </a>
             <a id="contact" className="menu-item" href="/cb/feed">
               Feed
             </a>
-          <a
-          id="contact"
-          className="menu-item"
-          href={`/cb/groups`}
-          >
-          My groups
-        </a>
           <a
           id="contact"
           className="menu-item"

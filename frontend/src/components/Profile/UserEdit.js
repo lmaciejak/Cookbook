@@ -1,6 +1,7 @@
 import React from "react"
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import Searchbar from "../Search/SearchBar";
 
 class UserEdit extends React.Component{
   constructor(props){
