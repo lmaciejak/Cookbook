@@ -66,15 +66,17 @@ class Groups extends React.Component{
 
   renderGroupMembers = props =>{
     const { groupID } = props.match.params
+    const { user } = this.state
     return(
-      <GroupMembers groupID={groupID} />
+      <GroupMembers user={user} groupID={groupID} />
     )
   }
 
   renderGroupRecipes = props =>{
     const { groupID } = props.match.params
+    const { user } = this.state
     return(
-      <GroupRecipes groupID={groupID} />
+      <GroupRecipes user={user} groupID={groupID} />
     )
   }
 

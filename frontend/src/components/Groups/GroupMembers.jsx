@@ -2,13 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import List from '../List/List'
+import Searchbar from "../Search/SearchBar";
 
-// const styles = {
-//   membersContainer: {
-//     width: "100%",
-//     height: "100%"
-//   }
-// }
 
 class GroupMembers extends React.Component{
   constructor(props){
@@ -50,11 +45,12 @@ class GroupMembers extends React.Component{
 
   render(){
     const { members, group_name } = this.state
+    console.log(members)
     if(members !== []){
       return(
-        <div>
-          <h1>All Members for {group_name}</h1>
-          <List users={members} />
+        <div className='groups-bg'>
+          <Searchbar user={this.props.user} />
+          <List users={members} name={group_name}/>
         </div>
       )
     }

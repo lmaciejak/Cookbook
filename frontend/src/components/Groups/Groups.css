@@ -1,3 +1,15 @@
+.groups-bg {
+  height: 100%;
+  width: 100%;
+  background-image: url('https://images.interactives.dk/mad-J-kqvSUgCpPhrn6GlJqV9Q.jpg');
+  background-repeat: no;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  position: fixed;
+}
+
 .allgroups-container {
   text-align: center;
   position: relative;
@@ -33,4 +45,12 @@
 .group-links {
   text-decoration: none;
   color: #e90c1a;
+}
+
+.single-groups-container {
+  text-align: center;
+  position: relative;
+  margin: 3.9em auto;
+  width: 65%;
+  background-color: #ffff;
 }
