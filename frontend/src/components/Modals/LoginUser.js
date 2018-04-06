@@ -36,7 +36,7 @@ class LoginUser extends Component {
   }
  componentWillMount() {
    axios
-    .get('/users')
+    .get('/isloggedin')
     .then(res => {
       this.setState({
         loggedIn: res.data
