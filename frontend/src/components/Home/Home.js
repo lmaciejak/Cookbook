@@ -145,6 +145,7 @@ class Home extends React.Component {
             </button>
           </div>
         </div>
+        <div className="landingContainer">
         <div className="landingPhoto">
           <Slideshow />
           <div className="header">
@@ -154,10 +155,12 @@ class Home extends React.Component {
         <div className="LandingFavoritesContainer">
           <h2 className="landingPageHeader">The Best Recipes on Cookbook</h2>
         </div>
-
+<div className="landingPageFeaturedContainer">
         <div className="landingPageFeatured">
           {favorites.map(recipe => <RecipeBox recipe={recipe} key={Math.random()} />)}
+          </div>
         </div>
+      </div>
       </div>
     );
   }
