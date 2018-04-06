@@ -433,14 +433,13 @@ function getAllRecentUsersRecipes(req, res, next) {
 function getMostTopRecipes(req, res, next) {
   db
     .any(
-      `SELECT
-          COUNT(recipes.recipe_id)
-          AS favorites_count, recipe_name, recipe, img
-          FROM recipes
-          INNER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
-          WHERE recipes.USER_id=${req.params.userID}
-          GROUP BY recipes.recipe, recipes.recipe_name, recipes.img
-          ORDER BY favorites_count DESC`
+      `SELECT COUNT(favorites.recipe_id)
+       AS favorites_count, recipe_name, recipe, img
+       FROM recipes
+       FULL OUTER JOIN favorites ON(recipes.recipe_id=favorites.recipe_id)
+       WHERE recipes.USER_id=${req.params.userID}
+       GROUP BY recipes.recipe, recipes.recipe_name, recipes.img
+       ORDER BY favorites_count DESC;`
     )
     .then(data => {
       res.json(data);

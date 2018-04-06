@@ -91,7 +91,6 @@ class UserProfile extends React.Component {
     axios
       .get(`/users/getallrecentusersrecipes/${this.props.id}`)
       .then(res => {
-        console.log("RESSSSSSSSS=====>>>>>: ", res);
         this.setState({
           allusersRecipes: res.data,
           allUserRecipesUnchanged: res.data
@@ -200,6 +199,7 @@ class UserProfile extends React.Component {
       axios
         .get(`/users/getmosttoprecipes/${this.props.id}`)
         .then( (res) => {
+          console.log("mostTop: ", res);
           this.setState({
             allusersRecipes: res.data
           });
