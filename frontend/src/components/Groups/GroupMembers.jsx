@@ -45,7 +45,6 @@ class GroupMembers extends React.Component{
 
   render(){
     const { members, group_name } = this.state
-    console.log(members)
     if(members !== []){
       return(
         <div className='groups-bg'>
@@ -57,7 +56,7 @@ class GroupMembers extends React.Component{
     else {
       return(
         <div>
-          <h3>No Members Yet</h3>
+          <h3>loading members</h3>
         </div>
       )
     }
