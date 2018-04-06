@@ -30,7 +30,7 @@ class RecipeBox extends React.Component{
     return(
       <div className="recipeBox">
         <h3>{recipe_name}</h3>
-        <Link to={`/cb/${user_id}/${recipe_id}`}> <img src={img} alt="recipeImg" style={styles.img} /></Link>
+        <Link to={`/cb/${user_id}/${recipe_id}`}> <img src={img} className="recipeImg" alt="recipeImg" style={styles.img} /></Link>
         <div className="recipeInfo">
         <h4>Chef {username}</h4>
         <div className="favorites" title="Favorites">
