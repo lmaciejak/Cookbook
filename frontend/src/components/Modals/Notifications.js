@@ -115,7 +115,10 @@ class Notifications extends Component {
     var notificationClass = seenComments.length > 0 || seenFavorites.length > 0 || seenFollowers.length >  0 || seenPotluckInvitation.length > 0? "alert notificationButton": "noAlert notificationButton";
     return (
       <div className="Modal">
+      <div className="tooltip5">
       <img src={notificationicon} className={notificationClass} onClick={this.openModal} />
+          <span className="tooltiptext5"> {seenComments.length+seenFavorites.length+seenFollowers.length+seenPotluckInvitation.length}  Notifications </span>
+      </div>
 
           <Modal
             isOpen={this.state.modalIsOpen}

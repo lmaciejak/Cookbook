@@ -26,6 +26,7 @@
   align-items: center; 
   width: 500px;
   z-index: 10; 
+  padding-top: 20px; 
 }
 
 .Potluckpage { 
