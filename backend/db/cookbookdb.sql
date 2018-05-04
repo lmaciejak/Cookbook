@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS cookbookdb;
-CREATE DATABASE cookbookdb;
+-- DROP DATABASE IF EXISTS cookbookdb;
+-- CREATE DATABASE cookbookdb;
 
-\c cookbookdb
+-- \c cookbookdb
 
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY,
