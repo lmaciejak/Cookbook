@@ -161,6 +161,7 @@
 .groupIcon {
   width: 40px;
   position: fixed;
+  display: none; 
 }
 
 .groupIcon:hover {
@@ -241,6 +242,7 @@
   width: 90%;
   /* margin-top: 2%; */
   display: block;
+  display: none; 
 }
 
 .tooltip3 .tooltiptext3 {
@@ -309,7 +311,7 @@
   /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 5;
-  margin-left: -30%;
+  margin-left: -35px; 
 }
 
 .menuicons {
@@ -394,6 +396,9 @@
   }
   .tooltip3 { 
     display: none; 
+  }
+  .tooltip5 .tooltiptext5 {
+    margin-left: -11px; 
   }
 
 }

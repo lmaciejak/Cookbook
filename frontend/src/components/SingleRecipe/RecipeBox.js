@@ -17,7 +17,8 @@ class RecipeBox extends React.Component{
       recipeName: this.props.recipe.recipe_name,
       recipeImg: this.props.recipe.img,
       username: this.props.recipe.username,
-      favorites: this.props.recipe.favorites_count
+      favorites: this.props.recipe.favorites_count, 
+      clickable: this.props.click
     }
   }
 
@@ -30,7 +31,8 @@ class RecipeBox extends React.Component{
     return(
       <div className="recipeBox">
         <h3>{recipe_name}</h3>
-        <Link to={`/cb/${user_id}/${recipe_id}`}> <img src={img} className="recipeImg" alt="recipeImg" style={styles.img} /></Link>
+        {this.state.clickable === 'false' ?  <img src={img} className="recipeImg" alt="recipeImg" style={styles.img} />: <Link to={`/cb/${user_id}/${recipe_id}`}> <img src={img} className="recipeImg" alt="recipeImg" style={styles.img} /></Link>}
+       
         <div className="recipeInfo">
         <h4>Chef {username}</h4>
         <div className="favorites" title="Favorites">
