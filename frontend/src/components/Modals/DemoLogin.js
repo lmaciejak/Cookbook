@@ -23,8 +23,8 @@ class DemoLogin extends Component {
     super();
 
     this.state = {
-      username: '',
-      password: '',
+      username: 'Demo',
+      password: 'larrylarry',
       isLoggedIn: false,
       message: '',
       modalIsOpen: false,
@@ -69,8 +69,8 @@ class DemoLogin extends Component {
     const { username, password } = this.state;
     axios
       .post("/users/login", {
-        username: 'Larry',
-        password: 'larrylarry'
+        username: username,
+        password: password
       })
       .then(res => {
         this.setState({
@@ -116,8 +116,8 @@ class DemoLogin extends Component {
       <button className="xButton" onClick={this.closeModalLogin}>x</button>
         <h2 ref={subtitle => this.subtitle = subtitle}>Log In</h2>
         <form onSubmit={this.handleLoginFormSubmit}>
-          <input className="input formInput" type="text" placeholder="Username" onChange={this.handleFormInput} name='username' value={this.state.username}></input>
-          <input className="input formInput" type="password" placeholder="Password" onChange={this.handleFormInput} name='password' value={this.state.password}></input>
+          <input className="input formInput" type="text" placeholder="Username" name='username' value={this.state.username}></input>
+          <input className="input formInput" type="password" placeholder="Password" name='password' value={this.state.password}></input>
           <button className="formButton">Log in</button>
         </form>
         <p>{this.state.message}</p>
