@@ -118,7 +118,7 @@ INSERT INTO users (username, password, email, first_name, last_name, user_img)
   'test@gmail.com', 'Luiza','Maciejak', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('eion', '$2a$10$3xwk/yyvVXb/zf2n7uR93u1CtmMNhJmrPaIFUu0OjqEPN0Kq3/N7m', 'mary@gmail.com', 'Eion',
   'Snow', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
-   ('Demo', '$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'larry@gmail.com', 'Larry',
+   ('Larry', '$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'larry@gmail.com', 'Larry',
   'Snow', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('David','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'david@gmail.com', 'david',
    'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),

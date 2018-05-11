@@ -23,7 +23,7 @@ class DemoLogin extends Component {
     super();
 
     this.state = {
-      username: 'Demo',
+      username: 'Larry',
       password: 'larrylarry',
       isLoggedIn: false,
       message: '',
@@ -116,7 +116,7 @@ class DemoLogin extends Component {
       <button className="xButton" onClick={this.closeModalLogin}>x</button>
         <h2 ref={subtitle => this.subtitle = subtitle}>Log In</h2>
         <form onSubmit={this.handleLoginFormSubmit}>
-          <input className="input formInput" type="text" placeholder="Username" name='username' value={this.state.username}></input>
+          <input className="input formInput" type="text" placeholder="Username" name='username' value='Demo'></input>
           <input className="input formInput" type="password" placeholder="Password" name='password' value={this.state.password}></input>
           <button className="formButton">Log in</button>
         </form>
