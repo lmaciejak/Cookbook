@@ -269,6 +269,10 @@ padding-top: 40px;
     width: 50%;
     margin: 10px auto;
   }
+
+  .landingPageHeader h2 {
+    color: #f3550c !important; 
+  }
   
   .header img {
     width: 10%;

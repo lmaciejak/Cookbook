@@ -176,4 +176,3 @@ class Home extends React.Component {
 
 export default Home;
 
-// "https://images.pexels.com/photos/159887/pexels-photo-159887.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"

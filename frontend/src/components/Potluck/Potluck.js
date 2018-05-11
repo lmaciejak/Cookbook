@@ -263,9 +263,7 @@ class Potluck extends Component {
                   : ""}
               </tbody>
             </table>
-
-            <p> Invite friends </p>
-
+            
             <Select
               name="form-field-name"
               multi

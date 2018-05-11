@@ -26,13 +26,15 @@
   align-items: center; 
   width: 500px;
   z-index: 10; 
-  padding-top: 20px; 
+  padding-top: 35px; 
+  padding-bottom: 60px; 
 }
 
 .Potluckpage { 
   display: flex; 
   flex-direction: column;
   align-items: center; 
+  margin-bottom: 100px; 
 }
 
 .PotluckInfo { 
@@ -81,6 +83,7 @@
 .potluckTable {
   border-collapse: separate;
   border-spacing: 20px 0;
+  padding-bottom: 25px; 
 }
 
 td {
