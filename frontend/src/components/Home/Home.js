@@ -138,13 +138,18 @@ class Home extends React.Component {
             />
           </Link>
           <div className="landButton">
-            <button className="button" onClick={() => { this.child1.closeModal()}}>
+            <button className="button" onClick={() => { this.child1.closeModal();
+              this.child2.closeModalLogin();}}>
               <LoginUser ref={instance => { this.child = instance; }} />
             </button>
-            <button className="button" onClick={() => { this.child.closeModalLogin()}}>
+            <button className="button" onClick={() => { this.child.closeModalLogin();
+              this.child2.closeModalLogin();}}>
               <RegisterUser ref={instance => { this.child1 = instance; }} />
             </button>
-
+            <button className="button" onClick={() => { this.child.closeModalLogin();
+              this.child1.closeModal();}}>
+            <DemoLogin ref={instance => { this.child2 = instance; }} />
+          </button>
           </div>
         </div>
         <div className="landingContainer">

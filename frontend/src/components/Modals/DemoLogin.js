@@ -69,8 +69,8 @@ class DemoLogin extends Component {
     const { username, password } = this.state;
     axios
       .post("/users/login", {
-        username: username,
-        password: password
+        username: 'Larry',
+        password: 'larrylarry'
       })
       .then(res => {
         this.setState({
