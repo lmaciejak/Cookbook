@@ -107,7 +107,7 @@ class DemoLogin extends Component {
     return (
       <div className="Modal">
       <div>
-      {this.state.loggedIn === "loggedIn"? <button onClick={this.handleClickLogOut} className="button formButton">Log Out</button> :<button className="button formButton" onClick={this.openModal}>Demo</button>}
+      {this.state.loggedIn === "loggedIn"? '' :<button className="button formButton" onClick={this.openModal}>Demo</button>}
       <Modal
         isOpen={this.state.modalIsOpen}
         onRequestClose={this.closeModalLogin}
