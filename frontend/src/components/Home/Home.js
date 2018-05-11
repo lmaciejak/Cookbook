@@ -10,6 +10,7 @@ import "./Home.css";
 import { React_Bootstrap_Carousel } from "react-bootstrap-carousel";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
+import DemoLogin from "../Modals/DemoLogin";
 
 class Slideshow extends React.Component {
   constructor(props) {
@@ -143,6 +144,7 @@ class Home extends React.Component {
             <button className="button" onClick={() => { this.child.closeModalLogin()}}>
               <RegisterUser ref={instance => { this.child1 = instance; }} />
             </button>
+
           </div>
         </div>
         <div className="landingContainer">
