@@ -4,7 +4,7 @@ A Full Stack social recipe sharing app that let's you follow your friends' recip
 
 ![Alt text](./assets/cookbook.gif?raw=true "Landing Page")
 
-![Alt text](./assets/cookbooklogin.png?raw=true "Login")
+![Alt text](./assets/cookbooklogin.gif?raw=true "Login")
 
 ![Alt text](./assets/cookbook-home.png?raw=true "Home Page")
 
