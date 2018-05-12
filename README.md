@@ -27,5 +27,5 @@ Using the react-autosuggest module, users can search for recipes by recipe name 
 
 Users can favorite or unfavorite recipes by clicking on the heart icon. The number of likes is displayed next to the heart. At the bottom of each recipe, users can also add comments. 
 
-![Alt text](./assets/cookbook-like.gif?raw=true "Like/Comment")
+![Alt text](./assets/cookbook-likefinal.gif?raw=true "Like/Comment")
 
