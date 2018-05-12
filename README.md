@@ -4,12 +4,18 @@ A Full Stack social recipe sharing app that let's you follow your friends' recip
 
 ![Alt text](./assets/cookbook.gif?raw=true "Landing Page")
 
+### User Authentication 
+
 ![Alt text](./assets/cookbooklogin.gif?raw=true "Login")
 
-![Alt text](./assets/cookbook-home.png?raw=true "Home Page")
+### Notifications 
 
-![Alt text](./assets/cookbook-potlucklist.png?raw=true "Landing Page")
+Users are notified when they are invited to a Potluck, one of their recipes is favorited, they receive a comment on a recipe post, or when they have a new follower. 
+
+![Alt text](./assets/cookbook-notification.gif?raw=true "Notifications")
+
+
 
 ## Features 
 
-### User Authentication 
+

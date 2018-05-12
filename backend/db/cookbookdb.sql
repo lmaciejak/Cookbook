@@ -176,8 +176,8 @@ INSERT INTO groupowners (user_id, group_name, group_description)
   VALUES (3, 'Bronx Cooks', 'we from the bronx bro');
 
 INSERT INTO potlucks (user_id, potluck_name, potluck_description, potluck_date, potluck_time, potluck_location)
-  VALUES (1, 'Barbecue', 'Throwing a barbecue party in my backyard', '2018-04-10', '02:00:00', 'My house'),
-  (2, 'Annual Cookout', 'Get ready for the best cookout yet', '2018-04-20', '04:00:00', 'Central Park');
+  VALUES (1, 'Barbecue', 'Throwing a barbecue party in my backyard', '2018-04-10', '17:00:00', 'My house'),
+  (2, 'Annual Cookout', 'Get ready for the best cookout yet', '2018-04-20', '14:00:00', 'Central Park');
 
 INSERT INTO potluckinvitations (potluck_id, user_id, invitee_rsvp, seen)
   VALUES (1, 2, 'yes', false), (1, 3, 'yes', false), (1, 4, 'no', false), (1, 5, 'yes', false), (1, 6, 'maybe', false),
