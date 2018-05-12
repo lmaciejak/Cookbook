@@ -21,6 +21,8 @@ Users are notified when they are invited to a Potluck, one of their recipes is f
 
 Using the react-autosuggest module, users can search for recipes by recipe name or other users by username or full name. With each key press, a fetch request is made and the results that are displayed are live updated.  
 
+![Alt text](./assets/cookbook-search.gif?raw=true "Live Search")
+
 ## Forking 
 
 
