@@ -145,7 +145,8 @@ INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeteria
    (1, 'Fried Calamari', 'Fry the calamari', 'https://d1alt1wkdk73qo.cloudfront.net/images/guide/01751a3e8de64ce289286aa8b75e4bfe/640x478_ac.jpg', 'some description',
    false, false, false, null, null),
     (1, 'Grilled Salmon', 'Grill Salmon', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, true, null, null),
-    (1, 'Chia Blueberry Parfait', 'Stir salad', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, false, false, null, null),
+    (1, 'Chia Blueberry Parfait', 'Place the chia seeds in a small bowl. Add the milk, sweetener and vanilla extract, stirring to combine. Place in the refrigerator and let it set overnight. The next morning, remove from the refrigerator and check that the chia seeds have gelled.
+To make the parfait, layer a glass or bowl firstly with half of the chia mixture, then half of the granola, then half of berries. Then repeat.', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, false, false, null, null),
     (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description',false, false, true, null, null),
     (2, 'Chicken and Kebabs', 'Stir salad', 'https://images.pexels.com/photos/111131/meat-vegetables-gemuesepiess-mushrooms-111131.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, false, null, null),
     (3, 'Fried Chicken', '1.test1, 2.test2, 3.test3, 4.test4', 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Fried-Chicken-Leg.jpg', 'some description', false, true, true, null, null),
@@ -160,7 +161,8 @@ INSERT INTO followings (follower_id, followee_id)
   VALUES (1, 2), (1, 3), (2, 1), (2, 3), (3,1), (3,2), (12,1), (12,3);
 
 INSERT INTO comments (recipe_id, user_id, comment)
-  VALUES (1, 1, 'awesome recipe!'), (2, 2, 'love it');
+  VALUES (1, 1, 'awesome recipe!'), (2, 2, 'love it'), (4, 1, 'I really liked this recipe'), 
+  (4, 2, 'Satisfied my sweet tooth');
 
 INSERT INTO foods (food_name, isVegeterian, isVegan)
   VALUES ('shrimp', false, false), ('arborio rice', true, true);
