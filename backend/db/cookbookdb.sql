@@ -119,23 +119,23 @@ INSERT INTO users (username, password, email, first_name, last_name, user_img)
    ('eion', '$2a$10$3xwk/yyvVXb/zf2n7uR93u1CtmMNhJmrPaIFUu0OjqEPN0Kq3/N7m', 'mary@gmail.com', 'Eion',
   'Snow', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Larry', '$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'larry@gmail.com', 'Larry',
-  'Snow', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
+  'Davis', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('David','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'david@gmail.com', 'david',
-   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
+   'Menendez', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Gerado','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'gerado@gmail.com', 'gerado',
-   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
+   'Reeves', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Alton','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Alton@gmail.com', 'Alton',
-   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
-   ('Imani','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Imani@gmail.com', 'imani',
-   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
+   'Rodriguez', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
+   ('Imani','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Imani@gmail.com', 'Imani',
+   'Consumatis', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Tammy','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Tammy@gmail.com', 'tammy',
-   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
+   'Wilk', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Lexus','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'lexus@gmail.com', 'lexus',
-   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
+   'Lee', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Leon','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'leon@gmail.com', 'leon',
-   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
+   'Liu', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Tate','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'Tate@gmail.com', 'Tate',
-   'justice', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
+   'Matherson', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg'),
    ('Shaedon','$2a$10$.MVvgjXGDNY5BspJcHdfqOMr5oEu3AxYiIxjOu8aUiA0LBXlXIWEq', 'stealthy@gmail.com', 'Shaedon',
    'Blackman', 'https://openclipart.org/download/247324/abstract-user-flat-1.svg');
 
@@ -148,7 +148,7 @@ INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeteria
     (1, 'Chia Blueberry Parfait', 'Stir salad', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, false, false, null, null),
     (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description',false, false, true, null, null),
     (2, 'Chicken and Kebabs', 'Stir salad', 'https://images.pexels.com/photos/111131/meat-vegetables-gemuesepiess-mushrooms-111131.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, false, null, null),
-    (3, 'fried chicken', '1.test1, 2.test2, 3.test3, 4.test4', 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Fried-Chicken-Leg.jpg', 'some description', false, true, true, null, null),
+    (3, 'Fried Chicken', '1.test1, 2.test2, 3.test3, 4.test4', 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Fried-Chicken-Leg.jpg', 'some description', false, true, true, null, null),
     (2, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, null, null),
     (11, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, 'eion', 8),
     (4, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, 'eion', 8);
@@ -170,7 +170,10 @@ INSERT INTO ingredients (recipe_id, food_id, amount, name, notes)
   (7, 2, '1pound', 'salt', 'medium'), (7, 2, '2pound', 'chicken', 'large'), (8, 2, '4', 'eggplants', 'fresh'),
   (8, 2, '3 bags', 'mozzarella', 'vegan'), (8, 2, '5', 'tomatoes', 'diced'),
   (9, 2, '4 bags', 'provolone', 'shredded'), (9, 2, '5', 'tomatoes', 'diced'),(9, 2, '10 slices', 'cheddar', 'white/yellow'),
-  (9, 2, '24 oz', 'chicken', 'lean'),(10, 2, '3 bags', 'broccoli', 'crunchy'), (10, 2, '5 bags', 'american cheese', 'sliced');
+  (9, 2, '24 oz', 'chicken', 'lean'),(10, 2, '3 bags', 'broccoli', 'crunchy'), (10, 2, '5 bags', 'american cheese', 'sliced'), 
+  (4, 2, '1/8 cup', 'Chia Seeds', null), (4, 2, '1/2 cup', 'Coconut Milk', null), 
+  (4, 2, '1 Tbsp', 'Raw Honey', null), (4, 2, '1/2 cup', 'Granola', null), 
+  (4, 2, '1/3 cup', 'Blueberries', null);
 
 INSERT INTO groupowners (user_id, group_name, group_description)
   VALUES (3, 'Bronx Cooks', 'we from the bronx bro');
