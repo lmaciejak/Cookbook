@@ -161,7 +161,7 @@ INSERT INTO followings (follower_id, followee_id)
   VALUES (1, 2), (1, 3), (2, 1), (2, 3), (3,1), (3,2), (12,1), (12,3);
 
 INSERT INTO comments (recipe_id, user_id, comment)
-  VALUES (1, 1, 'awesome recipe!'), (2, 2, 'love it'), (4, 1, 'I really liked this recipe'), 
+  VALUES (1, 1, 'awesome recipe!'), (2, 2, 'love it'), (4, 4, 'I really liked this recipe'), 
   (4, 2, 'Satisfied my sweet tooth');
 
 INSERT INTO foods (food_name, isVegeterian, isVegan)
