@@ -51,3 +51,10 @@ Potlucks allow users to create events where they invite friends that they are fo
 In the "Things to Bring" section of potlucks, users can sign up or remove their sign ups for specific things and even suggest new things to bring to the Potluck. 
 
 ![Alt text](./assets/cookbook-potluckthings.gif?raw=true "Potluck Things To Bring")
+
+
+### Fork Recipes 
+
+Forking a recipe is make a copy of a recipe and put your own twist on it. 
+
+![Alt text](./assets/cookbook-fork.gif?raw=true "Fork")
