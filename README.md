@@ -58,3 +58,10 @@ In the "Things to Bring" section of potlucks, users can sign up or remove their 
 Forking a recipe is make a copy of a recipe and put your own twist on it. 
 
 ![Alt text](./assets/cookbook-fork.gif?raw=true "Fork")
+
+
+### User Profile Page
+
+View a user's recipes sorted by top and most recent. Also view the recipes they have favorited. The user profile page also provides information on how many followers and following a specific user has. 
+
+![Alt text](./assets/cookbook-profile.gif?raw=true "Profile")
