@@ -82,16 +82,16 @@ npm start
 
 ## Authors 
 
-⋅⋅*[Xavier Munroe](https://github.com/XavierC4Q)
-⋅⋅*[Umed Ibrohimov](https://github.com/hackrack)
-⋅⋅*[Eion Contaste](https://github.com/EroStark)
-⋅⋅*[Shaedon Blackman](https://github.com/sblackstealth)
+*[Xavier Munroe](https://github.com/XavierC4Q)
+*[Umed Ibrohimov](https://github.com/hackrack)
+*[Eion Contaste](https://github.com/EroStark)
+*[Shaedon Blackman](https://github.com/sblackstealth)
 
 
 
 ## Acknowledgements 
 
-⋅⋅*[Lev Izraelit](https://github.com/lizraeli)
-⋅⋅*[Reed Gaines](https://github.com/crymall)
+*[Lev Izraelit](https://github.com/lizraeli)
+*[Reed Gaines](https://github.com/crymall)
 
 
