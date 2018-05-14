@@ -65,3 +65,33 @@ Forking a recipe is make a copy of a recipe and put your own twist on it.
 View a user's recipes sorted by top and most recent. Also view the recipes they have favorited. The user profile page also provides information on how many followers and following a specific user has. 
 
 ![Alt text](./assets/cookbook-profile.gif?raw=true "Profile")
+
+## Getting Started 
+
+```
+git clone git@github.com:lmaciejak/Cookbook.git
+cd Cookbook/backend 
+npm install
+npm start 
+
+In a new terminal: 
+cd frontend
+npm install 
+npm start
+```
+
+## Authors 
+
+⋅⋅*[Xavier Munroe](https://github.com/XavierC4Q)
+⋅⋅*[Umed Ibrohimov](https://github.com/hackrack)
+⋅⋅*[Eion Contaste](https://github.com/EroStark)
+⋅⋅*[Shaedon Blackman](https://github.com/sblackstealth)
+
+
+
+## Acknowledgements 
+
+⋅⋅*[Lev Izraelit](https://github.com/lizraeli)
+⋅⋅*[Reed Gaines](https://github.com/crymall)
+
+
