@@ -82,6 +82,7 @@ npm start
 
 ## Authors 
 
+* [Luiza Maciejak](https://github.com/lmaciejak)
 * [Xavier Munroe](https://github.com/XavierC4Q)
 * [Umed Ibrohimov](https://github.com/hackrack)
 * [Eion Contaste](https://github.com/EroStark)
