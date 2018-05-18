@@ -144,7 +144,7 @@ INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeteria
   'https://pioneerwoman.files.wordpress.com/2014/07/dsc_35621.jpg', 'some description', false, false, true, null, null),
    (1, 'Fried Calamari', 'Fry the calamari', 'https://d1alt1wkdk73qo.cloudfront.net/images/guide/01751a3e8de64ce289286aa8b75e4bfe/640x478_ac.jpg', 'some description',
    false, false, false, null, null),
-    (1, 'Grilled Salmon', 'Grill Salmon', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, true, null, null),
+    (1, 'Grilled Salmon', 'Season salmon fillets with lemon pepper, garlic powder, and salt. In a small bowl, stir together soy sauce, brown sugar, water, and vegetable oil until sugar is dissolved. Place fish in a large resealable plastic bag with the soy sauce mixture, seal, and turn to coat. Refrigerate for at least 2 hours.Lightly oil grill grate. Place salmon on the preheated grill, and discard marinade. Cook salmon for 6 to 8 minutes per side, or until the fish flakes easily with a fork.', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, true, null, null),
     (1, 'Chia Blueberry Parfait', 'Place the chia seeds in a small bowl. Add the milk, sweetener and vanilla extract, stirring to combine. Place in the refrigerator and let it set overnight. The next morning, remove from the refrigerator and check that the chia seeds have gelled.
 To make the parfait, layer a glass or bowl firstly with half of the chia mixture, then half of the granola, then half of berries. Then repeat.', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, false, false, null, null),
     (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description',false, false, true, null, null),
@@ -175,7 +175,8 @@ INSERT INTO ingredients (recipe_id, food_id, amount, name, notes)
   (9, 2, '24 oz', 'chicken', 'lean'),(10, 2, '3 bags', 'broccoli', 'crunchy'), (10, 2, '5 bags', 'american cheese', 'sliced'), 
   (4, 2, '1/8 cup', 'Chia Seeds', null), (4, 2, '1/2 cup', 'Coconut Milk', null), 
   (4, 2, '1 Tbsp', 'Raw Honey', null), (4, 2, '1/2 cup', 'Granola', null), 
-  (4, 2, '1/3 cup', 'Blueberries', null);
+  (4, 2, '1/3 cup', 'Blueberries', null), (3, 2, '1 pound', 'Salmon Fillet', null), (3, 2, '1/3 cup', 'Soy Sauce', null), 
+  (3, 2, '1/3 cup', 'Brown Sugar', null);
 
 INSERT INTO groupowners (user_id, group_name, group_description)
   VALUES (3, 'Bronx Cooks', 'we from the bronx bro');
