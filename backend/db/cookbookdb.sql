@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS cookbookdb;
-CREATE DATABASE cookbookdb;
+-- DROP DATABASE IF EXISTS cookbookdb;
+-- CREATE DATABASE cookbookdb;
 
-\c cookbookdb
+-- \c cookbookdb
 
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY,
@@ -142,7 +142,7 @@ INSERT INTO users (username, password, email, first_name, last_name, user_img)
 INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeterian, isVegan, fork, forkedFrom, forkedID)
   VALUES (2, 'Shrimp Risotto', 'Melt 2 tablespoons butter in medium skillet.',
   'https://pioneerwoman.files.wordpress.com/2014/07/dsc_35621.jpg', 'some description', false, false, true, null, null),
-   (1, 'Fried Calamari', 'Fry the calamari', 'https://d1alt1wkdk73qo.cloudfront.net/images/guide/01751a3e8de64ce289286aa8b75e4bfe/640x478_ac.jpg', 'some description',
+   (1, 'Fried noodles', 'Fry the noodles.', 'https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350', 'some description',
    false, false, false, null, null),
     (1, 'Grilled Salmon', 'Season salmon fillets with lemon pepper, garlic powder, and salt. In a small bowl, stir together soy sauce, brown sugar, water, and vegetable oil until sugar is dissolved. Place fish in a large resealable plastic bag with the soy sauce mixture, seal, and turn to coat. Refrigerate for at least 2 hours.Lightly oil grill grate. Place salmon on the preheated grill, and discard marinade. Cook salmon for 6 to 8 minutes per side, or until the fish flakes easily with a fork.', 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, true, null, null),
     (1, 'Chia Blueberry Parfait', 'Place the chia seeds in a small bowl. Add the milk, sweetener and vanilla extract, stirring to combine. Place in the refrigerator and let it set overnight. The next morning, remove from the refrigerator and check that the chia seeds have gelled.
