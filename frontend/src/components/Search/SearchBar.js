@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import "./SearchBar.css";
 import cookbooklogo from "../../images/cookbooknamelogo.png";
 import writingicon from "../../images/writingiconorange.png";
+import utensilLogo from "../../images/utensil-logo.png";
 import hearticon from "../../images/hearticonorange.png";
 import groupicon from "../../images/group.png";
 import potluckicon from "../../images/potluck.png";
@@ -160,7 +161,7 @@ class Searchbar extends Component {
           <img className="searchbarLogoName hoverIncrease" src={cookbooklogo} />
           <img
             className="searchbarLogo hoverIncrease"
-            src="http://irfanyurdu.org/wp-content/uploads/2017/04/eat-flat-1.png"
+            src={utensilLogo}
           />
         </Link>
 
@@ -236,16 +237,6 @@ class Searchbar extends Component {
               href={`/cb/potlucks`}
             >
               My potlucks
-            </a>
-            <a
-            id="contact"
-            className="menu-item"
-            href={`/cb/groups`}
-            >
-            My groups
-          </a>
-            <a id="contact" className="menu-item" href="/cb/feed">
-              Feed
             </a>
           <a
           id="contact"

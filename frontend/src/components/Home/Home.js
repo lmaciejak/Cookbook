@@ -6,6 +6,7 @@ import LoginUser from "../Modals/LoginUser";
 import RegisterUser from "../Modals/RegisterUser";
 import { Link, Redirect } from "react-router-dom";
 import cookbooklogo from "../../images/cookbooknamelogo.png";
+import utensilLogo from "../../images/utensil-logo.png";
 import "./Home.css";
 import { React_Bootstrap_Carousel } from "react-bootstrap-carousel";
 import "bootstrap/dist/css/bootstrap.css";
@@ -134,7 +135,7 @@ class Home extends React.Component {
             <img className="searchbarLogoName" src={cookbooklogo} />
             <img
               className="searchbarLogo"
-              src="http://irfanyurdu.org/wp-content/uploads/2017/04/eat-flat-1.png"
+              src={utensilLogo}
             />
           </Link>
           <div className="landButton">

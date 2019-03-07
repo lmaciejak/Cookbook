@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, Route, Switch } from 'react-router-dom';
+import orangeHeartIcon from "../../images/orange-hearts.png";
 
 const styles = {
   img: {
@@ -37,7 +38,7 @@ class RecipeBox extends React.Component{
         <h4>Chef {username}</h4>
         <div className="favorites" title="Favorites">
         <img
-          src="http://www.iconsplace.com/download/orange-hearts-512.gif"
+          src={orangeHeartIcon}
           className="recipeBoxFav"
         />
         <p className="fav">{favorites_count}</p> </div>

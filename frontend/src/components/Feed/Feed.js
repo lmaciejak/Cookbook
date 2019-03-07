@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import "./Feed.css";
 import cheficon from "../../images/cheficon.png";
 import hearticon from "../../images/hearticon.png";
+import orangeHeartIcon from "../../images/orange-hearts.png";
 
 class Feed extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class Feed extends React.Component {
                         <h4 className="feedRecipeName"> {elem.recipe_name} </h4>
                         <div className="feedRecipeIcons">
                           <img
-                            src="http://www.iconsplace.com/download/orange-hearts-512.gif"
+                            src={orangeHeartIcon}
                             className="feedRecipeChefIcon"
                           />
                           <p className="feedRecipeFavorites">
@@ -66,7 +67,7 @@ class Feed extends React.Component {
                       >
                         <img className="feedImage" src={elem.img} />
                       </Link>
-                      <div>
+                      <div className="feedBoxFooter">
                       <Link
                             to={`/cb/profile/${elem.user_id}`}
                             className="singleRecipeUsernameLink"
