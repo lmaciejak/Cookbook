@@ -39,8 +39,9 @@ padding-top: 40px;
 }
 
 .landingPageHeader {
-  width: 470px;
+  text-align: center;
   margin: 10px auto;
+  font-weight: 400;
 }
 
 .header img {
@@ -70,7 +71,7 @@ padding-top: 40px;
 .header h1 {
   font-size: 90px;
   margin: 0;
-  text-shadow: 7px 7px 7px #000000;
+  text-shadow: 3px 2px 3px #000000;
 }
 
 .landButton {
@@ -100,14 +101,11 @@ padding-top: 40px;
   .header h1 { 
    font-size: 6em; 
   }
-  /* .landingPage { 
-    margin-top: 10px; 
-  } */
+
   .landingContainer { 
  margin-top: 0px; 
   }
   .landingPageHeader {
-    width: 45%;
     margin: 10px auto;
   }
  }
@@ -122,11 +120,8 @@ padding-top: 40px;
    .landingPage { 
      margin-top: 10px; 
    }
-   /* .landingContainer { 
-  margin-top: 40px; 
-   } */
+
    .landingPageHeader {
-    width: 60%;
     margin: 10px auto;
   }
   .landButton { 
@@ -173,7 +168,6 @@ padding-top: 40px;
   }
 
   .landingPageHeader {
-    width: 90%;
     margin: 10px auto;
   }
   .landButton { 
@@ -266,7 +260,6 @@ padding-top: 40px;
   }
   
   .landingPageHeader {
-    width: 50%;
     margin: 10px auto;
   }
 

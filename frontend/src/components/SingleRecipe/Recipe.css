@@ -49,8 +49,10 @@ body {
   border-bottom: 2px solid rgb(255, 216, 164);
 }
 
-.singleRecipeUsername {
+.singleRecipeUsernameLink .singleRecipeUsername {
   display: inline;
+  padding-left: 5px;
+  vertical-align: sub; 
 }
 
 .singleRecipeUsernameLink {
@@ -82,7 +84,7 @@ body {
 
 .recipeFavoritesCount {
   display: inline;
-  margin-top: -10%; 
+  vertical-align: super;
 }
 
 .ingredientList {
@@ -143,7 +145,7 @@ textarea {
   width: 40% !important; 
   margin-top: 60px; 
 }
-
+ 
 .singleRecipePageBox:hover { 
   transform: scale(1.0, 1.0) !important; 
 }

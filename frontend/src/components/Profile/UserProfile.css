@@ -33,7 +33,7 @@
 .userProfileSelectContainer { 
   display: flex; 
   justify-content: center;
-  
+  padding-left: 80px;
 }
 
 .userProfileHeading { 
@@ -54,6 +54,7 @@
   justify-content: space-around;
   width: 300px;
   margin-left: -18.2%; 
+  padding-left: 10px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -102,7 +103,7 @@
   padding: 0;
   margin: 0;
   border: 1px solid #ccc;
-  width: 120px;
+  width: 145px;
   height: 25px; 
   border-radius: 3px;
   overflow: hidden;
@@ -110,7 +111,7 @@
   background: #fff;
   position: relative;
   z-index: 1; 
-  margin-top: 1%; 
+  margin-top: 15px; 
   margin-left: 1%; 
 }
 
@@ -131,7 +132,7 @@
 }
 
 .select-style select {
-  padding: 5px 8px;
+  padding: 2px 9px;
   width: 130%;
   border: none;
   box-shadow: none;
