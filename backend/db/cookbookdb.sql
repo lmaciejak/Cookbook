@@ -149,13 +149,13 @@ INSERT INTO recipes (user_id, recipe_name, recipe, img, description, isVegeteria
 To make the parfait, layer a glass or bowl firstly with half of the chia mixture, then half of the granola, then half of berries. Then repeat.', 'https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, false, false, null, null),
     (2, 'Pomegranate Salad', 'Stir salad', 'https://images.pexels.com/photos/5938/food-salad-healthy-lunch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description',false, false, true, null, null),
     (2, 'Chicken and Kebabs', 'Stir salad', 'https://images.pexels.com/photos/111131/meat-vegetables-gemuesepiess-mushrooms-111131.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb', 'some description',false, false, false, null, null),
-    (3, 'Fried Chicken', '1.test1, 2.test2, 3.test3, 4.test4', 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Fried-Chicken-Leg.jpg', 'some description', false, true, true, null, null),
+    (3, 'Avocado Toast', '1.test1, 2.test2, 3.test3, 4.test4', 'https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'some description', false, true, true, null, null),
     (2, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, null, null),
     (11, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, 'eion', 8),
     (4, 'Lasagna', 'This is a demo silly :-D', 'https://www.bixfilms.fr/wp-content/uploads/2018/03/15RECIPE20DIN-articleLarge.jpg', 'My not-so-secret recipe. Enjoy!',false, false, true, 'eion', 8);
 
 INSERT INTO favorites (recipe_id, user_id)
-  VALUES (1, 2), (1, 3), (2, 2), (2,3), (3,2), (4, 2), (5, 1), (6,1);
+  VALUES (1, 2), (1, 3), (2, 2), (2,3), (3,2), (4, 2), (5, 1), (6,1), (7,3);
 
 INSERT INTO followings (follower_id, followee_id)
   VALUES (1, 2), (1, 3), (2, 1), (2, 3), (3,1), (3,2), (12,1), (12,3);
@@ -182,8 +182,8 @@ INSERT INTO groupowners (user_id, group_name, group_description)
   VALUES (3, 'Bronx Cooks', 'we from the bronx bro');
 
 INSERT INTO potlucks (user_id, potluck_name, potluck_description, potluck_date, potluck_time, potluck_location)
-  VALUES (1, 'Barbecue', 'Throwing a barbecue party in my backyard', '2018-04-10', '17:00:00', 'My house'),
-  (2, 'Annual Cookout', 'Get ready for the best cookout yet', '2018-04-20', '14:00:00', 'Central Park');
+  VALUES (1, 'Barbecue', 'Throwing a barbecue party in my backyard', '2019-04-10', '17:00:00', 'My house'),
+  (2, 'Annual Cookout', 'Get ready for the best cookout yet', '2019-04-09', '14:00:00', 'Central Park');
 
 INSERT INTO potluckinvitations (potluck_id, user_id, invitee_rsvp, seen)
   VALUES (1, 2, 'yes', false), (1, 3, 'yes', false), (1, 4, 'no', false), (1, 5, 'yes', false), (1, 6, 'maybe', false),
